@@ -8,6 +8,10 @@ public class Example {
 		System.out.println("Bye World");
 		System.out.println("Rodrigo");
 		System.out.println("shub");
+		System.out.println("Bye World");
+		System.out.println("Jorge was here");
+		System.out.println("TEST");
+
 	}
 
 }

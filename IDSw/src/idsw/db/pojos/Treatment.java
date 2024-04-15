@@ -14,6 +14,7 @@ public class Treatment implements Serializable{
 		private static final long serialVersionUID = -3878390729908698825L;
 		private Integer idTreatment;
 		private String nameTreatment;
+		private String comment_Section;
 		private List<Disease> diseases;
 		private Diagnosis diagnoses;
 		
@@ -36,6 +37,14 @@ public class Treatment implements Serializable{
 
 		public void setNameTreatment(String nameTreatment) {
 			this.nameTreatment = nameTreatment;
+		}
+
+		public String getComment_Section() {
+			return comment_Section;
+		}
+
+		public void setComment_Section(String comment_Section) {
+			this.comment_Section = comment_Section;
 		}
 
 		public List<Disease> getDiseases() {

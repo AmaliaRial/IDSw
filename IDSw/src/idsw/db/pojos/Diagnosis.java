@@ -13,6 +13,7 @@ public class Diagnosis implements Serializable{
 		private Integer idDiagnosis;
 		private String nameDiagnosis;
 		private Date date;
+		private String comment_section;
 		private Disease disease;
 		private Medical_Record medicalRecord;
 		
@@ -54,6 +55,14 @@ public class Diagnosis implements Serializable{
 
 		public Medical_Record getMedicalRecord() {
 			return medicalRecord;
+		}
+
+		public String getComment_section() {
+			return comment_section;
+		}
+
+		public void setComment_section(String comment_section) {
+			this.comment_section = comment_section;
 		}
 
 		public void setMedicalRecord(Medical_Record medicalRecord) {

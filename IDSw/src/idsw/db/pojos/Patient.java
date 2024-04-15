@@ -1,0 +1,101 @@
+package idsw.db.pojos;
+
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.Objects;
+
+public class Patient implements Serializable{
+	
+		/**
+		* 
+	 	*/
+		private static final long serialVersionUID = -4979690235303387303L;
+		private Integer idPatient;
+		private String namePatient;
+		private String surname;
+		private Date dob; //Recordad que para Date hay que importar java.sql.Date
+		private Medical_Record medicalRecord;
+		
+		
+		public Patient() {
+			super();
+		}
+
+
+		public Integer getIdPatient() {
+			return idPatient;
+		}
+
+
+		public void setIdPatient(Integer idPatient) {
+			this.idPatient = idPatient;
+		}
+
+
+		public String getNamePatient() {
+			return namePatient;
+		}
+
+
+		public void setNamePatient(String namePatient) {
+			this.namePatient = namePatient;
+		}
+
+
+		public String getSurname() {
+			return surname;
+		}
+
+
+		public void setSurname(String surname) {
+			this.surname = surname;
+		}
+
+
+		public Date getDob() {
+			return dob;
+		}
+
+
+		public void setDob(Date dob) {
+			this.dob = dob;
+		}
+
+
+		public Medical_Record getMedicalRecord() {
+			return medicalRecord;
+		}
+
+
+		public void setMedicalRecord(Medical_Record medicalRecord) {
+			this.medicalRecord = medicalRecord;
+		}
+
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(idPatient);
+		}
+
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Patient other = (Patient) obj;
+			return Objects.equals(idPatient, other.idPatient);
+		}
+
+
+		@Override
+		public String toString() {
+			return "Patient [idPatient=" + idPatient + ", namePatient=" + namePatient + ", surname=" + surname
+					+ ", dob=" + dob + ", medicalRecord=" + medicalRecord + "]";
+		}
+		
+
+}

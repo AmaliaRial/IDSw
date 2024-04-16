@@ -24,7 +24,7 @@ public class Disease implements Serializable{
 		private String comment_section;
 		private List<Symptom> symptoms;
 		private List<Treatment> treatments;
-		//private VirtualPopulation virtualPopulation;
+		private Virtual_Population virtualPopulation;
 		private List<Diagnosis> diagnoses;
 		
 		
@@ -121,6 +121,16 @@ public class Disease implements Serializable{
 
 		public void setTreatments(List<Treatment> treatments) {
 			this.treatments = treatments;
+		}
+		
+		
+
+		public Virtual_Population getVirtualPopulation() {
+			return virtualPopulation;
+		}
+
+		public void setVirtualPopulation(Virtual_Population virtualPopulation) {
+			this.virtualPopulation = virtualPopulation;
 		}
 
 		public List<Diagnosis> getDiagnoses() {

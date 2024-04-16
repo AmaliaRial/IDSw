@@ -2,6 +2,8 @@ package idsw.db.pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Diagnosis implements Serializable{
@@ -16,9 +18,11 @@ public class Diagnosis implements Serializable{
 		private String comment_section;
 		private Disease disease;
 		private Medical_Record medicalRecord;
+		private List<Treatment> treatments; 
 		
 		public Diagnosis() {
 			super();
+			this.setTreatments(new ArrayList<Treatment>());
 		}
 
 		public Integer getIdDiagnosis() {
@@ -67,6 +71,14 @@ public class Diagnosis implements Serializable{
 
 		public void setMedicalRecord(Medical_Record medicalRecord) {
 			this.medicalRecord = medicalRecord;
+		}
+
+		public List<Treatment> getTreatments() {
+			return treatments;
+		}
+
+		public void setTreatments(List<Treatment> treatments) {
+			this.treatments = treatments;
 		}
 
 		@Override

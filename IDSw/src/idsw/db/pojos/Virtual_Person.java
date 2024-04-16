@@ -42,22 +42,22 @@ public class Virtual_Person implements Serializable{
 		}
 
 
-		public Float getDisease_countdown() {
+		public Integer getDisease_countdown() {
 			return disease_countdown;
 		}
 
 
-		public void setDisease_countdown(Float disease_countdown) {
+		public void setDisease_countdown(Integer disease_countdown) {
 			this.disease_countdown = disease_countdown;
 		}
 
 
-		public Float getImmunity_countdown() {
+		public Integer getImmunity_countdown() {
 			return immunity_countdown;
 		}
 
 
-		public void setImmunity_countdown(Float immunity_countdown) {
+		public void setImmunity_countdown(Integer immunity_countdown) {
 			this.immunity_countdown = immunity_countdown;
 		}
 

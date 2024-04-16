@@ -3,6 +3,7 @@ package idsw.db.pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Virtual_Population implements Serializable{
 	
@@ -10,7 +11,8 @@ public class Virtual_Population implements Serializable{
 		* 
 	 	*/
 		private static final long serialVersionUID = 5867685344047960434L;
-		private Integer initial_population; //this is not the primary key --> equals and hashcode????? Ask Rodrigo
+		private Integer idVirtual_population;
+		private Integer initial_population; 
 		private Float p_infected;
 		private Float p_healthy;
 		private Float p_immune;
@@ -21,6 +23,14 @@ public class Virtual_Population implements Serializable{
 		public Virtual_Population() {
 			super();
 			this.virtual_people = new ArrayList<Virtual_Person>();
+		}
+
+		public Integer getIdVirtual_population() {
+			return idVirtual_population;
+		}
+
+		public void setIdVirtual_population(Integer idVirtual_population) {
+			this.idVirtual_population = idVirtual_population;
 		}
 
 		public Integer getInitial_population() {
@@ -77,6 +87,25 @@ public class Virtual_Population implements Serializable{
 
 		public void setVirtual_people(List<Virtual_Person> virtual_people) {
 			this.virtual_people = virtual_people;
+		}
+		
+		
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(idVirtual_population);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Virtual_Population other = (Virtual_Population) obj;
+			return Objects.equals(idVirtual_population, other.idVirtual_population);
 		}
 
 		@Override

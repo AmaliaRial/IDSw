@@ -16,7 +16,6 @@ public class Virtual_Person implements Serializable{
 		private Float disease_countdown;
 		private Float immunity_countdown;
 		private Virtual_Population virtual_population;
-		//should we add disease?
 		
 		public Virtual_Person() {
 			super();

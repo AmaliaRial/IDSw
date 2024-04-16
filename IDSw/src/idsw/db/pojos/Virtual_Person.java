@@ -13,8 +13,8 @@ public class Virtual_Person implements Serializable{
 		private static final long serialVersionUID = 6152860231636655190L;
 		private Integer idVirtual_Person;
 		private state state;
-		private Float disease_countdown;
-		private Float immunity_countdown;
+		private Integer disease_countdown;
+		private Integer immunity_countdown;
 		private Virtual_Population virtual_population;
 		
 		public Virtual_Person() {

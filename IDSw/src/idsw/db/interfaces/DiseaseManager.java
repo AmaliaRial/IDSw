@@ -7,7 +7,7 @@ import idsw.db.pojos.Symptom;
 
 public interface DiseaseManager {
 
-	public List<Disease> listSixRecentDiseases();
+	public List<Disease> listSixRecentDiseases(); //in SQL: SELECT * FROM disease ORDER BY idDisease DESC LIMIT 6;
 	public List<Disease> listMatchingDiseaseByName(String search);
 	public List<Symptom> listMatchingDiseaseBySymptoms(List<Symptom> symptoms);
 	public Disease getDisease( int idDisease);

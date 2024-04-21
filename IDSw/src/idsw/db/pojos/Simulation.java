@@ -6,6 +6,10 @@ import java.util.Objects;
 
 public class Simulation implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3680356655962648293L;
 	private Integer idSimulation;
 	private Integer totalInfections;
 	private Integer totalDeaths;

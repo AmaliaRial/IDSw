@@ -1,6 +1,6 @@
 package idsw.db.jdbc;
 
-import idsw.db.interfaces.prueba;
+import idsw.db.jdbcInterfaces.prueba;
 
 public class prueba_interfaz implements prueba {
 

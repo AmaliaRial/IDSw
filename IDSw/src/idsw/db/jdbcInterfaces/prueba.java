@@ -1,4 +1,4 @@
-package idsw.db.interfaces;
+package idsw.db.jdbcInterfaces;
 
 public interface prueba {
 

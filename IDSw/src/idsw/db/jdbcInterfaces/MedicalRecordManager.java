@@ -1,4 +1,4 @@
-package idsw.db.interfaces;
+package idsw.db.jdbcInterfaces;
 
 import idsw.db.pojos.Medical_Record;
 

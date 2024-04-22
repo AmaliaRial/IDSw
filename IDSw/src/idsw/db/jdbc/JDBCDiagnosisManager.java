@@ -1,14 +1,19 @@
 package idsw.db.jdbc;
 
+import java.sql.Connection;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.pojos.Diagnosis;
 
 public class JDBCDiagnosisManager implements DiagnosisManager {
+	
+	private Connection c;
+	private ConnectionManager conMan;
 
-	public JDBCDiagnosisManager(ConnectionManager connectionManager) {
-		// TODO Auto-generated constructor stub
+	public JDBCDiagnosisManager(ConnectionManager conMan) {
+		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 
 	@Override

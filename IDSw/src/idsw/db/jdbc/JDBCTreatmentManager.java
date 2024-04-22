@@ -1,14 +1,20 @@
 package idsw.db.jdbc;
 
+import java.sql.Connection;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.TreatmentManager;
 import idsw.db.pojos.Treatment;
 
 public class JDBCTreatmentManager implements TreatmentManager {
+	
+	private Connection c;
+	private ConnectionManager conMan;
 
-	public JDBCTreatmentManager(ConnectionManager connectionManager) {
-		// TODO Auto-generated constructor stub
+	public JDBCTreatmentManager(ConnectionManager conMan) {
+		this.conMan = conMan;
+		this.c = conMan.getConnection();
+		
 	}
 
 	@Override

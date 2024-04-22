@@ -1,14 +1,21 @@
 package idsw.db.jdbc;
 
+import java.sql.Connection;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.SymptomManager;
 import idsw.db.pojos.Symptom;
 
 public class JDBCSymptomManager implements SymptomManager {
+	
+	private Connection c;
+	private ConnectionManager conMan;
 
-	public JDBCSymptomManager(ConnectionManager connectionManager) {
-		// TODO Auto-generated constructor stub
+
+	public JDBCSymptomManager(ConnectionManager conMan) {
+		this.conMan = conMan;
+		this.c = conMan.getConnection();
+		
 	}
 
 	@Override

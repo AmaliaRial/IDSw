@@ -1,12 +1,18 @@
 package idsw.db.jdbc;
 
+import java.sql.Connection;
+
 import idsw.db.jdbcInterfaces.MedicalRecordManager;
 import idsw.db.pojos.Medical_Record;
 
 public class JDBCM_RecordManager implements MedicalRecordManager {
-
-	public JDBCM_RecordManager(ConnectionManager connectionManager) {
-		// TODO Auto-generated constructor stub
+	
+	private Connection c;
+	private ConnectionManager conMan;
+	
+	public JDBCM_RecordManager(ConnectionManager conMan) {
+		this.conMan = conMan;
+		this.c = conMan.getConnection();
 	}
 
 	@Override

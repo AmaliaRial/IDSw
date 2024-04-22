@@ -1,5 +1,6 @@
 package idsw.db.jdbc;
 
+import java.sql.Connection;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.DiseaseManager;
@@ -7,9 +8,13 @@ import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
 
 public class JDBCDiseaseManager implements DiseaseManager {
+	
+	private Connection c;
+	private ConnectionManager conMan;
 
-	public JDBCDiseaseManager(ConnectionManager connectionManager) {
-		// TODO Auto-generated constructor stub
+	public JDBCDiseaseManager(ConnectionManager conMan) {
+			this.conMan = conMan;
+			this.c = conMan.getConnection();
 	}
 
 	@Override

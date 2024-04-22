@@ -1,8 +1,9 @@
 package idsw.db.jdbc;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.util.List;
 
+import idsw.db.enums.state;
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
@@ -49,8 +50,25 @@ public class JDBCDiseaseManager implements DiseaseManager {
 
 	@Override
 	public void addDisease(Disease disease) {
-		// TODO Auto-generated method stub
-
+			try {
+				String template = "INSERT INTO disease (nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescense_period, cause, comment_section) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+				PreparedStatement pstmt;
+				pstmt = c.prepareStatement(template);
+				pstmt = setString(1, disease.getNameDisease());
+				pstmt = setString(2, disease.getInfectious_rate());
+				pstmt = setString(3, disease.getMortality_rate());
+				pstmt = setString(4, disease.getIncubation_period());
+				pstmt = setString(5, disease.getDevelopment_period());
+				pstmt = setString(6, disease.getConvalescense_period());
+				pstmt = setString(7, disease.getCause());
+				pstmt = setString(8, disease.getComment_section());
+				pstmt.executeUpdate();
+				pstmt.close();
+			} catch (SQLException e) {
+				System.out.println("Error in the database");
+				e.printStackTrace();
+			}
+			
 	}
 
 	@Override

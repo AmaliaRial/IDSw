@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import idsw.db.jdbcInterfaces.*;
 
 
+
 public class ConnectionManager {
 	private Connection c;
 	private DiagnosisManager diagnosisMan;

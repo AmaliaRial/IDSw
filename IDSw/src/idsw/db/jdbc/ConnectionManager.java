@@ -66,7 +66,6 @@ public class ConnectionManager {
 	
 	
 	private void createTables() {
-		//TODO create table method
 		try {
 			//DISEASE TABLE
 			Statement createDiseaseTable = c.createStatement();

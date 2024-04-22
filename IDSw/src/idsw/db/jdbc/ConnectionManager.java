@@ -70,7 +70,7 @@ public class ConnectionManager {
 		try {
 			//DISEASE TABLE
 			Statement createDiseaseTable = c.createStatement();
-			String createTableDisease="CREATE TABLE diseases(" 
+			String createTableDisease=" CREATE TABLE diseases(" 
 					+ " IDdisease INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " nameDisease TEXT NOT NULL,"
 					+ " infectious_rate REAL NOT NULL,"
@@ -86,27 +86,45 @@ public class ConnectionManager {
 			
 			//SYMPTOM TABLE
 			Statement createSymptomTable = c.createStatement();
-			String createTableSymptom= "CREATE TABLE symptoms("
-					+ "IDsymptom INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "nameSymptom TEXT NOT NULL,"
-					+ "pain_management INTEGER NOT NULL);";
+			String createTableSymptom= " CREATE TABLE symptoms("
+					+ " IDsymptom INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " nameSymptom TEXT NOT NULL,"
+					+ " pain_management INTEGER NOT NULL);";
 
 			createSymptomTable.executeUpdate(createTableSymptom);
 			createSymptomTable.close();
 			
-			//DISEASEhASSYMPTOMS TABLE
+			//DISEASEhasSYMPTOMS TABLE
 			Statement createDiseaseHasSymptomsTable = c.createStatement();
-			String createTablediseaseHasSymptoms= "CREATE TABLE disease_has_symptoms("
-					+ "disease_id INTEGER REFERENCES disease(IDdisease) ON DELETE CASCADE,"
-					+ "symptom_id INTEGER REFERENCES symptom(IDsymptom) ON DELETE CASCADE,"
-					+ "PRIMARY KEY(disease_id, symtom_id));\r\n";
+			String createTablediseaseHasSymptoms= " CREATE TABLE disease_has_symptoms("
+					+ " disease_id INTEGER REFERENCES disease(IDdisease) ON DELETE CASCADE,"
+					+ " symptom_id INTEGER REFERENCES symptom(IDsymptom) ON DELETE CASCADE,"
+					+ " PRIMARY KEY(disease_id, symptom_id));";
 
 			createDiseaseHasSymptomsTable.executeUpdate(createTablediseaseHasSymptoms);
 			createDiseaseHasSymptomsTable.close();
 			
+			//PATIENTS TABLE
+			Statement createPatientsTable = c.createStatement();
+			String createTablePatients = " CREATE TABLE patients("
+					+ "	IDpatient INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "	namePatient TEXT NOT NULL,"
+					+ "	surname TEXT NOT NULL,"
+					+ "	DoB DATE NOT NULL);";
+			createPatientsTable.executeUpdate(createTablePatients);
+			createPatientsTable.close();
+			
+			//MEDICAL RECORDS TABLE
+			Statement createMedicalRecordsTable = c.createStatement();
+			String createTableMedicalRecords = " CREATE TABLE medical_records("
+					+ "	IDmedical_record INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "	patient INTEGER REFERENCES(IDpatient));";
+			createMedicalRecordsTable.executeUpdate(createTableMedicalRecords);
+			createMedicalRecordsTable.close();
+			
 			//DIAGNOSIS TABLE
 			Statement createDiagnosisTable = c.createStatement();
-			String createTableDiag="CREATE TABLE diagnoses("
+			String createTableDiag=" CREATE TABLE diagnoses("
 					+ "	IDdiagnosis INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	nameDiagnosis TEXT NOT NULL,"
 					+ "	date CURRENT DATE;"
@@ -115,7 +133,79 @@ public class ConnectionManager {
 					+ "	medicalRecord_id INTEGER REFERENCES medical_record(IDmedical_record));";
 			createDiagnosisTable.executeUpdate(createTableDiag);
 			createDiagnosisTable.close();		
-		}catch (SQLException sqlE) {
+			
+			//TREATMENTS TABLE
+			Statement createTreatmentsTable = c.createStatement();
+			String createTableTreatments = " CREATE TABLE treatments("
+					+ " IDtreatment INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ " nameTreatment TEXT NOT NULL,"
+					+ " comment_section TEXT;"
+					+ " diagnosis_id INTEGER REFERENCES diagnosis(IDdiagnosis));";
+			
+			createTreatmentsTable.executeUpdate(createTableTreatments);
+			createTreatmentsTable.close();
+			
+			//DISEASEhasTREATMENTS TABLE
+			Statement createDiseaseHasTreatmentsTable = c.createStatement();
+			String createTableDiseaseHasTreatments = " CREATE TABLE disease_has_treatments("
+					+ " disease_id INTEGER REFERENCES disease(IDdisease) ON DELETE CASCADE,"
+					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE,"
+					+ "	PRIMARY KEY (disease_id, treatment_id));";
+			
+			createDiseaseHasTreatmentsTable.executeUpdate(createTableDiseaseHasTreatments);
+			createDiseaseHasTreatmentsTable.close();
+			
+			//DIAGNOSIS HAS TREATMENTS TABLE
+			Statement createDiagnosisHasTreatmentsTable = c.createStatement();
+			String createTableDiagnosisHasTreatments = "CREATE TABLE diagnosis_has_treatment("
+					+ "	diagnosis_id INTEGER REFERENCES diagnosis(IDdiagnosis) ON DELETE CASCADE,"
+					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE),"
+					+ "	PRIMARY KEY (diagnosis_id, treatment_id));";
+			
+			createDiagnosisHasTreatmentsTable.executeUpdate(createTableDiagnosisHasTreatments);
+			createDiagnosisHasTreatmentsTable.close();
+			
+			//VIRTUAL POPULATION TABLE
+			Statement createVirtualPopulationsTable = c.createStatement();
+			String createTableVirtualPopulations = " CREATE TABLE virtual_populations("
+					+ "	idVirtual_population INTEGER PRIMARY KEY AUTOINCREMENT;"
+					+ " Initial_population INTEGER  NOT NULL,"
+					+ "	p_infected REAL NOT NULL,"
+					+ "	p_healthy REAL NOT NULL,"
+					+ "	p_immune REAL NOT NULL,"
+					+ "	Immunity_period INTEGER,"
+					+ "	disease_id INTEGER REFERENCES disease(IDdisease));";
+			
+			createVirtualPopulationsTable.executeUpdate(createTableVirtualPopulations);
+			createVirtualPopulationsTable.close();
+			
+			//VIRTUAL PERSONS TABLE
+			Statement createVirtualPersonsTable = c.createStatement();
+			String createTableVirtualPersons = " CREATE TABLE virtual_persons("
+					+ "	IDvirtual_person INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "	state INTEGER NOT NULL, "
+					+ "	disease_countdown REAL NOT NULL,"
+					+ "	immunity_countdown REAL,"
+					+ "	virtual_population INTEGER REFERENCES virtual_population(idVirtual_population));";
+			
+			createVirtualPersonsTable.executeUpdate(createTableVirtualPersons);
+			createVirtualPersonsTable.close();
+			
+			//SIMULATIONS TABLE
+			Statement createSimulationsTable = c.createStatement();
+			String createTableSimulations = "CREATE TABLE simulations("
+					+ "	IDsimulation INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "	totalInfections INTEGER NOT NULL,"
+					+ "	totalDeaths INTEGER NOT NULL,"
+					+ "	totalImmunity INTEGER,"
+					+ "	totalPopulation INTEGER NOT NULL,"
+					+ "	simulationGraph BLOB NOT NULL,"
+					+ "	virtual_population INTEGER REFERENCES virtual_population(idVirtual_population));";
+			
+			createSimulationsTable.executeUpdate(createTableSimulations);
+			createSimulationsTable.close();
+			
+			}catch (SQLException sqlE) {
 			if (sqlE.getMessage().contains("already exist")){
 				System.out.println("No need to create the tables; already there");
 			}

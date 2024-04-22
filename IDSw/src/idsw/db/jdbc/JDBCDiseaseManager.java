@@ -8,6 +8,10 @@ import idsw.db.pojos.Symptom;
 
 public class JDBCDiseaseManager implements DiseaseManager {
 
+	public JDBCDiseaseManager(ConnectionManager connectionManager) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<Disease> listSixRecentDiseases() {
 		// TODO Auto-generated method stub

@@ -7,6 +7,10 @@ import idsw.db.pojos.Diagnosis;
 
 public class JDBCDiagnosisManager implements DiagnosisManager {
 
+	public JDBCDiagnosisManager(ConnectionManager connectionManager) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<Diagnosis> listSixRecentDiagnosis() {
 		// TODO Auto-generated method stub

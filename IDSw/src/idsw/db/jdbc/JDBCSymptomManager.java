@@ -7,6 +7,10 @@ import idsw.db.pojos.Symptom;
 
 public class JDBCSymptomManager implements SymptomManager {
 
+	public JDBCSymptomManager(ConnectionManager connectionManager) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<Symptom> listMatchingSymptomsByName(String search) {
 		// TODO Auto-generated method stub

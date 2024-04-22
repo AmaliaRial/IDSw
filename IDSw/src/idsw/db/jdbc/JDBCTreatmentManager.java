@@ -7,6 +7,10 @@ import idsw.db.pojos.Treatment;
 
 public class JDBCTreatmentManager implements TreatmentManager {
 
+	public JDBCTreatmentManager(ConnectionManager connectionManager) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<Treatment> listSixRecentTreatment() {
 		// TODO Auto-generated method stub

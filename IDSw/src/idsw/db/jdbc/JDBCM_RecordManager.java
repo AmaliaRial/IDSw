@@ -5,6 +5,10 @@ import idsw.db.pojos.Medical_Record;
 
 public class JDBCM_RecordManager implements MedicalRecordManager {
 
+	public JDBCM_RecordManager(ConnectionManager connectionManager) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public Medical_Record getMedical_Record(int idMedical_record) {
 		// TODO Auto-generated method stub

@@ -163,8 +163,7 @@ public class Disease implements Serializable{
 			return "Disease [idDisease=" + idDisease + ", nameDisease=" + nameDisease + ", infectious_rate="
 					+ infectious_rate + ", mortality_rate=" + mortality_rate + ", incubation_period="
 					+ incubation_period + ", development_period=" + development_period + ", convalescense_period="
-					+ convalescense_period + ", cause=" + cause + ", comment_section=" + comment_section + ", symptoms="
-					+ symptoms + ", treatments=" + treatments + "]";
+					+ convalescense_period + ", cause=" + cause + ", comment_section=" + comment_section + "]";
 		}
 		
 

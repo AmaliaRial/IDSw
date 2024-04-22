@@ -82,8 +82,7 @@ public class Treatment implements Serializable{
 
 		@Override
 		public String toString() {
-			return "Treatment [idTreatment=" + idTreatment + ", nameTreatment=" + nameTreatment + ", diseases="
-					+ diseases + ", diagnoses=" + diagnoses + "]";
+			return "Treatment [idTreatment=" + idTreatment + ", nameTreatment=" + nameTreatment + "]";
 		}
 		
 }

@@ -87,7 +87,7 @@ public class Symptom implements Serializable{
 		@Override
 		public String toString() {
 			return "Symptom [idSymptom=" + idSymptom + ", nameSymptom=" + nameSymptom + ", pain_management="
-					+ pain_management + ", diseases=" + diseases + "]";
+					+ pain_management + "]";
 		}
 		
 		

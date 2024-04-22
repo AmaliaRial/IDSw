@@ -94,8 +94,7 @@ public class Virtual_Person implements Serializable{
 		@Override
 		public String toString() {
 			return "Virtual_Person [idVirtual_Person=" + idVirtual_Person + ", state=" + state + ", disease_countdown="
-					+ disease_countdown + ", immunity_countdown=" + immunity_countdown + ", virtual_population="
-					+ virtual_population + "]";
+					+ disease_countdown + ", immunity_countdown=" + immunity_countdown + "]";
 		}
 		
 		

@@ -2,8 +2,10 @@ package idsw.db.jdbc;
 
 import java.awt.event.FocusEvent.Cause;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
+import idsw.db.enums.cause;
 import idsw.db.enums.state;
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
@@ -21,13 +23,41 @@ public class JDBCDiseaseManager implements DiseaseManager {
 
 	@Override
 	public List<Disease> listSixRecentDiseases() {
-		// TODO Auto-generated method stub
+		List<Disease> diseases = new ArrayList<Disease>();
+		try {
+			String sql = "SELECT * FROM diseases GROUP BY IDdisease DESC LIMIT 6; ";
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		return null;
 	}
 
 	@Override
-	public List<Disease> listMatchingDiseaseByName(String search) {
-		// TODO Auto-generated method stub
+	public List<Disease> listMatchingDiseaseByName(String name) {
+		List<Disease> diseases = new ArrayList<Disease>();
+		try {
+			String sql = "SELECT * FROM diseases WHERE nameDisease LIKE ?";
+			PreparedStatement p;
+			p = c.prepareStatement(sql);
+			p.setString(1, "%" + name + "%");
+			ResultSet rs= p.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("IDdisease");
+				String diseaseName = rs.getString("nameDisease");
+				Float infectiousRate = rs.getFloat("infectious_rate");
+				Float mortalityRate = rs.getFloat("mortality_rate");
+				Float incubationPeriod = rs.getFloat("incubation_period");
+				Float developmentPeriod = rs.getFloat("development_period");
+				Float convalescensePeriod = rs.getFloat("convalescense_period");
+				cause cause = rs.getString("cause");
+				String commentSection = rs.getString("comment_section");
+				Disease disease = new Disease(id, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescensePeriod, cause, commentSection);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 		return null;
 	}
 

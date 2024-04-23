@@ -1,5 +1,6 @@
 package idsw.db.jdbc;
 
+import java.awt.event.FocusEvent.Cause;
 import java.sql.*;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				pstmt.setFloat(4, disease.getIncubation_period());
 				pstmt.setFloat(5, disease.getDevelopment_period());
 				pstmt.setFloat(6, disease.getConvalescense_period());
-				pstmt.setString(7, disease.getCause());
+				pstmt.setString(7, disease.getCause().name());
 				pstmt.setString(8, disease.getComment_section());
 				pstmt.executeUpdate();
 				pstmt.close();

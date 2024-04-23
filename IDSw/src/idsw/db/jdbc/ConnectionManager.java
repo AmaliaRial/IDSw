@@ -77,7 +77,7 @@ public class ConnectionManager {
 					+ " incubation_period REAL NOT NULL,"
 					+ " development_period REAL NOT NULL,"
 					+ " convalescence_period REAL NOT NULL,"
-					+ " cause INTEGER NOT NULL,"
+					+ " cause TEXT NOT NULL,"
 					+ " comment_section TEXT);";
 			
 			createDiseaseTable.executeUpdate(createTableDisease);
@@ -88,7 +88,7 @@ public class ConnectionManager {
 			String createTableSymptom= " CREATE TABLE symptoms("
 					+ " IDsymptom INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " nameSymptom TEXT NOT NULL,"
-					+ " pain_management INTEGER NOT NULL);";
+					+ " pain_management TEXT NOT NULL);";
 
 			createSymptomTable.executeUpdate(createTableSymptom);
 			createSymptomTable.close();
@@ -182,7 +182,7 @@ public class ConnectionManager {
 			Statement createVirtualPersonsTable = c.createStatement();
 			String createTableVirtualPersons = " CREATE TABLE virtual_persons("
 					+ "	IDvirtual_person INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "	state INTEGER NOT NULL, "
+					+ "	state TEXT NOT NULL, "
 					+ "	disease_countdown REAL NOT NULL,"
 					+ "	immunity_countdown REAL,"
 					+ "	virtual_population INTEGER REFERENCES virtual_population(idVirtual_population));";

@@ -16,8 +16,8 @@ public class Treatment implements Serializable{
 		private String nameTreatment;
 		private String comment_Section;
 		private List<Disease> diseases;
-		private Diagnosis diagnoses;
-		
+		private Diagnosis diagnosis;
+	
 		public Treatment() {
 			super();
 			this.diseases = new ArrayList<Disease>();
@@ -66,12 +66,12 @@ public class Treatment implements Serializable{
 			this.diseases = diseases;
 		}
 
-		public Diagnosis getDiagnoses() {
-			return diagnoses;
+		public Diagnosis getDiagnosis() {
+			return diagnosis;
 		}
 
-		public void setDiagnoses(Diagnosis diagnoses) {
-			this.diagnoses = diagnoses;
+		public void setDiagnosis(Diagnosis diagnosis) {
+			this.diagnosis = diagnosis;
 		}
 
 		@Override

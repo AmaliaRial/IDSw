@@ -1,6 +1,11 @@
 package idsw.db.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.TreatmentManager;
@@ -19,38 +24,126 @@ public class JDBCTreatmentManager implements TreatmentManager {
 
 	@Override
 	public List<Treatment> listSixRecentTreatment() {
-		// TODO Auto-generated method stub
+		List<Treatment> treatments = new ArrayList<Treatment>();
+		try {
+			String sql = "SELECT * FROM treatments GROUP BY IDtreatment DESC LIMIT 6; ";
+			PreparedStatement ps;
+			ps = c.prepareStatement(sql);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("IDtreatment");
+				String name = rs.getString("nameTreatment");
+				String comments = rs.getString("comment_section");
+				Treatment treatment = new Treatment(id, name, comments);
+				treatments.add(treatment);
+			}
+			rs.close();
+			ps.close();
+			
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}		
+		
 		return null;
 	}
 
 	@Override
 	public List<Treatment> listMatchingTreatmentsByName(String search) {
-		// TODO Auto-generated method stub
+		List<Treatment> treatments = new ArrayList<Treatment>();
+		try {
+			String sql = "SELECT * FROM treatments WHERE nameTreatment LIKE ?";
+			PreparedStatement p;
+			p = c.prepareStatement(sql);
+			p.setString(1, "%" + search + "%");
+			ResultSet rs= p.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("IDtreatment");
+				String name = rs.getString("nameTreatment");
+				String comments = rs.getString("comment_section");
+				Treatment treatment = new Treatment(id, name, comments);
+				treatments.add(treatment);
+			}
+			rs.close();
+			p.close();
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Treatment getTreatment(int idTreatment) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String sql = "SELECT * FROM treatments WHERE id = " + idTreatment;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Treatment treatment = new Treatment(rs.getInt("IDtreatment"), rs.getString("nameTreatment"), rs.getString("comment_section"));
+			return treatment;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}		return null;
 	}
 
 	@Override
 	public void deleteTreatment(Treatment treatment) {
-		// TODO Auto-generated method stub
-
+		try {
+			String template = "DELETE FROM disease_has_treatment WHERE treatment_id = ?";
+			PreparedStatement ps;
+			ps = c.prepareStatement(template);
+			ps.setInt(1, treatment.getIdTreatment());
+			ps.executeUpdate();
+			ps.close();	
+			
+			//String sql = "DELETE FROM diagnosis_has_treatment WHERE treatment_id = ?";
+			//PreparedStatement ps1;
+			//ps1 = c.prepareStatement(sql);
+			//ps1.setInt(1, treatment.getIdTreatment());
+			//ps1.executeUpdate();
+			//ps1.close();	*//
+			
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public void addTreatment(Treatment treatment) {
-		// TODO Auto-generated method stub
-
+		try {
+			String template = "INSERT INTO treatments (nameTreatment, comment_section, diagnosis_id) VALUES (?, ?, ?);";
+			PreparedStatement ps;
+			ps = c.prepareStatement(template);
+			ps.setString(1, treatment.getNameTreatment());
+			ps.setString(2, treatment.getComment_Section());
+			ps.setInt(3, treatment.getDiagnosis().getIdDiagnosis());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void modifyTreatment(Treatment treatment) {
-		// TODO Auto-generated method stub
-
+		try {
+			String template = "UPDATE treatments SET ? = ? WHERE IDtreatment = ?;";
+			PreparedStatement ps;
+			ps = c.prepareStatement(template);
+			// ps.set...
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 	}
 
 }

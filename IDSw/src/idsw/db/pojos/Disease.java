@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import idsw.db.enums.*;
-
+ 
 public class Disease implements Serializable{
 	
 		/**
@@ -34,6 +34,24 @@ public class Disease implements Serializable{
 			this.treatments = new ArrayList<Treatment>();
 			
 		}
+		
+		
+
+		public Disease(Integer idDisease, String nameDisease, Float infectious_rate, Float mortality_rate,
+				Float incubation_period, Float development_period, Float convalescense_period, cause cause, String comment_section) {
+			super();
+			this.idDisease = idDisease;
+			this.nameDisease = nameDisease;
+			this.infectious_rate = infectious_rate;
+			this.mortality_rate = mortality_rate;
+			this.incubation_period = incubation_period;
+			this.development_period = development_period;
+			this.convalescense_period = convalescense_period;
+			this.cause = cause;
+			this.comment_section = comment_section;
+		}
+
+
 
 		public Integer getIdDisease() {
 			return idDisease;

@@ -15,7 +15,7 @@ public class Simulation implements Serializable{
 	private Integer totalDeaths;
 	private Integer totalImmunity;
 	private Integer totalPopulation;
-	private Blob simulationGraph;
+	private byte[] simulationGraph;
 	private Virtual_Population virtualPopulation;
 	
 	public Simulation() {
@@ -62,11 +62,11 @@ public class Simulation implements Serializable{
 		this.totalPopulation = totalPopulation;
 	}
 
-	public Blob getSimulationGraph() {
+	public byte[] getSimulationGraph() {
 		return simulationGraph;
 	}
 
-	public void setSimulationGraph(Blob simulationGraph) {
+	public void setSimulationGraph(byte[] simulationGraph) {
 		this.simulationGraph = simulationGraph;
 	}
 

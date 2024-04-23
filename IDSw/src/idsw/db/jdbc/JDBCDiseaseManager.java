@@ -53,8 +53,10 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				cause cause = rs.getString("cause");
 				String commentSection = rs.getString("comment_section");
 				Disease disease = new Disease(id, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescensePeriod, cause, commentSection);
-			}
-		} catch (SQLException e) {
+				}
+				rs.close();
+				p.close();
+			} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
@@ -82,7 +84,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	@Override
 	public void addDisease(Disease disease) {
 			try {
-				String template = "INSERT INTO disease (nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescense_period, cause, comment_section) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+				String template = "INSERT INTO diseases (nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescense_period, cause, comment_section) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 				PreparedStatement pstmt;
 				pstmt = c.prepareStatement(template);
 				pstmt.setString(1, disease.getNameDisease());

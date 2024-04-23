@@ -23,6 +23,17 @@ public class Treatment implements Serializable{
 			this.diseases = new ArrayList<Disease>();
 		}
 
+		
+		
+		public Treatment(Integer idTreatment, String nameTreatment, String comment_Section) {
+			super();
+			this.idTreatment = idTreatment;
+			this.nameTreatment = nameTreatment;
+			this.comment_Section = comment_Section;
+		}
+
+
+
 		public Integer getIdTreatment() {
 			return idTreatment;
 		}

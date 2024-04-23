@@ -54,14 +54,14 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				String template = "INSERT INTO disease (nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescense_period, cause, comment_section) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 				PreparedStatement pstmt;
 				pstmt = c.prepareStatement(template);
-				pstmt = setString(1, disease.getNameDisease());
-				pstmt = setString(2, disease.getInfectious_rate());
-				pstmt = setString(3, disease.getMortality_rate());
-				pstmt = setString(4, disease.getIncubation_period());
-				pstmt = setString(5, disease.getDevelopment_period());
-				pstmt = setString(6, disease.getConvalescense_period());
-				pstmt = setString(7, disease.getCause());
-				pstmt = setString(8, disease.getComment_section());
+				pstmt.setString(1, disease.getNameDisease());
+				pstmt.setFloat(2, disease.getInfectious_rate());
+				pstmt.setFloat(3, disease.getMortality_rate());
+				pstmt.setFloat(4, disease.getIncubation_period());
+				pstmt.setFloat(5, disease.getDevelopment_period());
+				pstmt.setFloat(6, disease.getConvalescense_period());
+				pstmt.setString(7, disease.getCause());
+				pstmt.setString(8, disease.getComment_section());
 				pstmt.executeUpdate();
 				pstmt.close();
 			} catch (SQLException e) {

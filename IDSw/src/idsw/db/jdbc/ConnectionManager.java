@@ -126,7 +126,7 @@ public class ConnectionManager {
 			String createTableDiag=" CREATE TABLE diagnoses ("
 					+ "	IDdiagnosis INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	nameDiagnosis TEXT NOT NULL,"
-					+ "	date CURRENT DATE;"
+					+ "	date CURRENT DATE,"
 					+ " comment_section TEXT,"
 					+ "	disease_id INTEGER REFERENCES diseases(IDdisease),"
 					+ "	medicalRecord_id INTEGER REFERENCES medical_records(IDmedical_record));";

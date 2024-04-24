@@ -96,8 +96,8 @@ public class ConnectionManager {
 			//DISEASEhasSYMPTOMS TABLE
 			Statement createDiseaseHasSymptomsTable = c.createStatement();
 			String createTablediseaseHasSymptoms= " CREATE TABLE disease_has_symptoms("
-					+ " disease_id INTEGER REFERENCES disease(IDdisease) ON DELETE CASCADE,"
-					+ " symptom_id INTEGER REFERENCES symptom(IDsymptom) ON DELETE CASCADE,"
+					+ " disease_id INTEGER REFERENCES diseases(IDdisease) ON DELETE CASCADE,"
+					+ " symptom_id INTEGER REFERENCES symptoms(IDsymptom) ON DELETE CASCADE,"
 					+ " PRIMARY KEY(disease_id, symptom_id));";
 
 			createDiseaseHasSymptomsTable.executeUpdate(createTablediseaseHasSymptoms);
@@ -117,7 +117,7 @@ public class ConnectionManager {
 			Statement createMedicalRecordsTable = c.createStatement();
 			String createTableMedicalRecords = " CREATE TABLE medical_records ("
 					+ "	IDmedical_record INTEGER PRIMARY KEY AUTOINCREMENT,"
-					+ "	patient INTEGER REFERENCES(IDpatient));";
+					+ "	patient INTEGER REFERENCES patients(IDpatient));";
 			createMedicalRecordsTable.executeUpdate(createTableMedicalRecords);
 			createMedicalRecordsTable.close();
 			
@@ -128,8 +128,8 @@ public class ConnectionManager {
 					+ "	nameDiagnosis TEXT NOT NULL,"
 					+ "	date CURRENT DATE;"
 					+ " comment_section TEXT,"
-					+ "	disease_id INTEGER REFERENCES disease(IDdisease),"
-					+ "	medicalRecord_id INTEGER REFERENCES medical_record(IDmedical_record));";
+					+ "	disease_id INTEGER REFERENCES diseases(IDdisease),"
+					+ "	medicalRecord_id INTEGER REFERENCES medical_records(IDmedical_record));";
 			createDiagnosisTable.executeUpdate(createTableDiag);
 			createDiagnosisTable.close();		
 			
@@ -139,7 +139,7 @@ public class ConnectionManager {
 					+ " IDtreatment INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " nameTreatment TEXT NOT NULL,"
 					+ " comment_section TEXT,"
-					+ " diagnosis_id INTEGER REFERENCES diagnosis(IDdiagnosis));";
+					+ " diagnosis_id INTEGER REFERENCES diagnoses(IDdiagnosis));";
 			
 			createTreatmentsTable.executeUpdate(createTableTreatments);
 			createTreatmentsTable.close();
@@ -147,8 +147,8 @@ public class ConnectionManager {
 			//DISEASEhasTREATMENTS TABLE
 			Statement createDiseaseHasTreatmentsTable = c.createStatement();
 			String createTableDiseaseHasTreatments = " CREATE TABLE disease_has_treatments ("
-					+ " disease_id INTEGER REFERENCES disease(IDdisease) ON DELETE CASCADE,"
-					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE,"
+					+ " disease_id INTEGER REFERENCES diseases(IDdisease) ON DELETE CASCADE,"
+					+ "	treatment_id INTEGER REFERENCES treatments(IDtreatment) ON DELETE CASCADE,"
 					+ "	PRIMARY KEY (disease_id, treatment_id));";
 			
 			createDiseaseHasTreatmentsTable.executeUpdate(createTableDiseaseHasTreatments);
@@ -157,8 +157,8 @@ public class ConnectionManager {
 			//DIAGNOSIS HAS TREATMENTS TABLE
 			Statement createDiagnosisHasTreatmentsTable = c.createStatement();
 			String createTableDiagnosisHasTreatments = "CREATE TABLE diagnosis_has_treatments ("
-					+ "	diagnosis_id INTEGER REFERENCES diagnosis(IDdiagnosis) ON DELETE CASCADE,"
-					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE,"
+					+ "	diagnosis_id INTEGER REFERENCES diagnoses(IDdiagnosis) ON DELETE CASCADE,"
+					+ "	treatment_id INTEGER REFERENCES treatments(IDtreatment) ON DELETE CASCADE,"
 					+ "	PRIMARY KEY (diagnosis_id, treatment_id));";
 			
 			createDiagnosisHasTreatmentsTable.executeUpdate(createTableDiagnosisHasTreatments);
@@ -173,7 +173,7 @@ public class ConnectionManager {
 					+ "	p_healthy REAL NOT NULL,"
 					+ "	p_immune REAL NOT NULL,"
 					+ "	Immunity_period INTEGER,"
-					+ "	disease_id INTEGER REFERENCES disease(IDdisease));";
+					+ "	disease_id INTEGER REFERENCES diseases(IDdisease));";
 			
 			createVirtualPopulationsTable.executeUpdate(createTableVirtualPopulations);
 			createVirtualPopulationsTable.close();
@@ -185,7 +185,7 @@ public class ConnectionManager {
 					+ "	state TEXT NOT NULL, "
 					+ "	disease_countdown REAL NOT NULL,"
 					+ "	immunity_countdown REAL,"
-					+ "	virtual_population INTEGER REFERENCES virtual_population(idVirtual_population));";
+					+ "	virtual_population INTEGER REFERENCES virtual_populations(idVirtual_population));";
 			
 			createVirtualPersonsTable.executeUpdate(createTableVirtualPersons);
 			createVirtualPersonsTable.close();
@@ -199,7 +199,7 @@ public class ConnectionManager {
 					+ "	totalImmunity INTEGER,"
 					+ "	totalPopulation INTEGER NOT NULL,"
 					+ "	simulationGraph BLOB NOT NULL,"
-					+ "	virtual_population INTEGER REFERENCES virtual_population(idVirtual_population));";
+					+ "	virtual_population INTEGER REFERENCES virtual_populations(idVirtual_population));";
 			
 			createSimulationsTable.executeUpdate(createTableSimulations);
 			createSimulationsTable.close();

@@ -15,7 +15,7 @@ public class Symptom implements Serializable{
 		private static final long serialVersionUID = 1286149037602845323L;
 		private Integer idSymptom;
 		private String nameSymptom;
-		private pain_management pain_management;
+		private Pain_Management pain_management;
 		private List<Disease> diseases;
 		
 		
@@ -45,12 +45,12 @@ public class Symptom implements Serializable{
 		}
 
 
-		public pain_management getPain_management() {
+		public Pain_Management getPain_management() {
 			return pain_management;
 		}
 
 
-		public void setPain_management(pain_management pain_management) {
+		public void setPain_management(Pain_Management pain_management) {
 			this.pain_management = pain_management;
 		}
 

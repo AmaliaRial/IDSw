@@ -1,6 +1,6 @@
 package idsw.db.enums;
 
-public enum pain_management {
+public enum Pain_Management {
 
 		MILD,
 		SEVERE

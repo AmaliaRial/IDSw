@@ -1,6 +1,6 @@
 package idsw.db.enums;
 
-public enum state {
+public enum State {
 	
 	ILL,
 	HEALTHY,

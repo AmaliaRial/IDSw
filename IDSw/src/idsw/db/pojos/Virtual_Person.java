@@ -12,7 +12,7 @@ public class Virtual_Person implements Serializable{
 	 	*/
 		private static final long serialVersionUID = 6152860231636655190L;
 		private Integer idVirtual_Person;
-		private state state;
+		private State state;
 		private Integer disease_countdown;
 		private Integer immunity_countdown;
 		private Virtual_Population virtual_population;
@@ -32,12 +32,12 @@ public class Virtual_Person implements Serializable{
 		}
 
 
-		public state getState() {
+		public State getState() {
 			return state;
 		}
 
 
-		public void setState(state state) {
+		public void setState(State state) {
 			this.state = state;
 		}
 

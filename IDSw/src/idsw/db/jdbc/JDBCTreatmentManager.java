@@ -134,10 +134,12 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	@Override
 	public void modifyTreatment(Treatment treatment) {
 		try {
-			String template = "UPDATE treatments SET ? = ? WHERE IDtreatment = ?;";
+			String template = "UPDATE treatments SET nameTreatment = ? AND comment_section = ? WHERE IDtreatment = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			// ps.set...
+			ps.setString(1, treatment.getNameTreatment());
+			ps.setString(2, treatment.getComment_Section());
+			ps.setInt(3,treatment.getIdTreatment());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

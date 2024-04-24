@@ -1,6 +1,6 @@
 package idsw.db.enums;
 
-public enum cause {
+public enum Cause {
 
 	VIRUS,
 	BACTERIA

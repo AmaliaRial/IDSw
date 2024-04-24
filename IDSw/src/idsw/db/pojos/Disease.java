@@ -20,7 +20,7 @@ public class Disease implements Serializable{
 		private Float incubation_period;
 		private Float development_period;
 		private Float convalescense_period;
-		private cause cause;
+		private Cause cause;
 		private String comment_section;
 		private List<Symptom> symptoms;
 		private List<Treatment> treatments;
@@ -38,7 +38,7 @@ public class Disease implements Serializable{
 		
 
 		public Disease(Integer idDisease, String nameDisease, Float infectious_rate, Float mortality_rate,
-				Float incubation_period, Float development_period, Float convalescense_period, cause cause, String comment_section) {
+				Float incubation_period, Float development_period, Float convalescense_period, String cause1, String comment_section) {
 			super();
 			this.idDisease = idDisease;
 			this.nameDisease = nameDisease;
@@ -47,7 +47,7 @@ public class Disease implements Serializable{
 			this.incubation_period = incubation_period;
 			this.development_period = development_period;
 			this.convalescense_period = convalescense_period;
-			this.cause = cause;
+			this.cause = Cause.valueOf(cause1);
 			this.comment_section = comment_section;
 		}
 
@@ -109,11 +109,11 @@ public class Disease implements Serializable{
 			this.convalescense_period = convalescense_period;
 		}
 
-		public cause getCause() {
+		public Cause getCause() {
 			return cause;
 		}
 
-		public void setCause(cause cause) {
+		public void setCause(Cause cause) {
 			this.cause = cause;
 		}
 

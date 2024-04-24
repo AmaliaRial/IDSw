@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import idsw.db.enums.cause;
 import idsw.db.enums.state;
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
@@ -50,9 +49,9 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				Float incubationPeriod = rs.getFloat("incubation_period");
 				Float developmentPeriod = rs.getFloat("development_period");
 				Float convalescensePeriod = rs.getFloat("convalescense_period");
-				cause cause = rs.getString("cause");
+				String cause1 = rs.getString("cause");
 				String commentSection = rs.getString("comment_section");
-				Disease disease = new Disease(id, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescensePeriod, cause, commentSection);
+				Disease disease = new Disease(id, diseaseName, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescensePeriod, cause1, commentSection);
 				}
 				rs.close();
 				p.close();

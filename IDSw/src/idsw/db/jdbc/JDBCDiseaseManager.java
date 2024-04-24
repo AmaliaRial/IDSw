@@ -5,7 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import idsw.db.enums.state;
+import idsw.db.enums.State;
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;

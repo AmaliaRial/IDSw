@@ -100,12 +100,12 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			ps.executeUpdate();
 			ps.close();	
 			
-			//String sql = "DELETE FROM diagnosis_has_treatment WHERE treatment_id = ?";
-			//PreparedStatement ps1;
-			//ps1 = c.prepareStatement(sql);
-			//ps1.setInt(1, treatment.getIdTreatment());
-			//ps1.executeUpdate();
-			//ps1.close();	*//
+			String sql = "DELETE FROM diagnosis_has_treatment WHERE treatment_id = ?";
+			PreparedStatement ps1;
+			ps1 = c.prepareStatement(sql);
+			ps1.setInt(1, treatment.getIdTreatment());
+			ps1.executeUpdate();
+			ps1.close();
 			
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

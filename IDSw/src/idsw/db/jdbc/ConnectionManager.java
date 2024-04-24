@@ -115,7 +115,7 @@ public class ConnectionManager {
 			
 			//MEDICAL RECORDS TABLE
 			Statement createMedicalRecordsTable = c.createStatement();
-			String createTableMedicalRecords = " CREATE TABLE medical_records("
+			String createTableMedicalRecords = " CREATE TABLE medical_records ("
 					+ "	IDmedical_record INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	patient INTEGER REFERENCES(IDpatient));";
 			createMedicalRecordsTable.executeUpdate(createTableMedicalRecords);
@@ -123,11 +123,11 @@ public class ConnectionManager {
 			
 			//DIAGNOSIS TABLE
 			Statement createDiagnosisTable = c.createStatement();
-			String createTableDiag=" CREATE TABLE diagnoses("
+			String createTableDiag=" CREATE TABLE diagnoses ("
 					+ "	IDdiagnosis INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	nameDiagnosis TEXT NOT NULL,"
 					+ "	date CURRENT DATE;"
-					+ " comment_section TEXT;"
+					+ " comment_section TEXT,"
 					+ "	disease_id INTEGER REFERENCES disease(IDdisease),"
 					+ "	medicalRecord_id INTEGER REFERENCES medical_record(IDmedical_record));";
 			createDiagnosisTable.executeUpdate(createTableDiag);
@@ -135,10 +135,10 @@ public class ConnectionManager {
 			
 			//TREATMENTS TABLE
 			Statement createTreatmentsTable = c.createStatement();
-			String createTableTreatments = " CREATE TABLE treatments("
+			String createTableTreatments = " CREATE TABLE treatments ("
 					+ " IDtreatment INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " nameTreatment TEXT NOT NULL,"
-					+ " comment_section TEXT;"
+					+ " comment_section TEXT,"
 					+ " diagnosis_id INTEGER REFERENCES diagnosis(IDdiagnosis));";
 			
 			createTreatmentsTable.executeUpdate(createTableTreatments);
@@ -146,7 +146,7 @@ public class ConnectionManager {
 			
 			//DISEASEhasTREATMENTS TABLE
 			Statement createDiseaseHasTreatmentsTable = c.createStatement();
-			String createTableDiseaseHasTreatments = " CREATE TABLE disease_has_treatments("
+			String createTableDiseaseHasTreatments = " CREATE TABLE disease_has_treatments ("
 					+ " disease_id INTEGER REFERENCES disease(IDdisease) ON DELETE CASCADE,"
 					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE,"
 					+ "	PRIMARY KEY (disease_id, treatment_id));";
@@ -156,9 +156,9 @@ public class ConnectionManager {
 			
 			//DIAGNOSIS HAS TREATMENTS TABLE
 			Statement createDiagnosisHasTreatmentsTable = c.createStatement();
-			String createTableDiagnosisHasTreatments = "CREATE TABLE diagnosis_has_treatment("
+			String createTableDiagnosisHasTreatments = "CREATE TABLE diagnosis_has_treatments ("
 					+ "	diagnosis_id INTEGER REFERENCES diagnosis(IDdiagnosis) ON DELETE CASCADE,"
-					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE),"
+					+ "	treatment_id INTEGER REFERENCES treatment(IDtreatment) ON DELETE CASCADE,"
 					+ "	PRIMARY KEY (diagnosis_id, treatment_id));";
 			
 			createDiagnosisHasTreatmentsTable.executeUpdate(createTableDiagnosisHasTreatments);
@@ -166,8 +166,8 @@ public class ConnectionManager {
 			
 			//VIRTUAL POPULATION TABLE
 			Statement createVirtualPopulationsTable = c.createStatement();
-			String createTableVirtualPopulations = " CREATE TABLE virtual_populations("
-					+ "	idVirtual_population INTEGER PRIMARY KEY AUTOINCREMENT;"
+			String createTableVirtualPopulations = " CREATE TABLE virtual_populations ("
+					+ "	idVirtual_population INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " Initial_population INTEGER  NOT NULL,"
 					+ "	p_infected REAL NOT NULL,"
 					+ "	p_healthy REAL NOT NULL,"
@@ -180,7 +180,7 @@ public class ConnectionManager {
 			
 			//VIRTUAL PERSONS TABLE
 			Statement createVirtualPersonsTable = c.createStatement();
-			String createTableVirtualPersons = " CREATE TABLE virtual_persons("
+			String createTableVirtualPersons = " CREATE TABLE virtual_persons ("
 					+ "	IDvirtual_person INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	state TEXT NOT NULL, "
 					+ "	disease_countdown REAL NOT NULL,"
@@ -192,7 +192,7 @@ public class ConnectionManager {
 			
 			//SIMULATIONS TABLE
 			Statement createSimulationsTable = c.createStatement();
-			String createTableSimulations = "CREATE TABLE simulations("
+			String createTableSimulations = "CREATE TABLE simulations ("
 					+ "	IDsimulation INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	totalInfections INTEGER NOT NULL,"
 					+ "	totalDeaths INTEGER NOT NULL,"

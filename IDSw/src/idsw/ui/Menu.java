@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.jdbcInterfaces.DiseaseManager;
@@ -14,7 +15,6 @@ import idsw.db.pojos.Treatment;
 public class Menu {
 
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 	private static DiseaseManager diseaseMan;
 	private static TreatmentManager treatmentMan;
@@ -112,29 +112,63 @@ public class Menu {
 	
 	
 	private static void searchDiseaseByName() throws IOException{
-		
+		System.out.println("Please, enter the name of the Disease:");
+		String name = r.readLine();
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName(name);
+		for (Disease disease : diseases) {
+			System.out.println(disease);
+		}
 	}
 	
 	
 	private static void addTreatment() throws NumberFormatException, IOException{
-		
+		System.out.println("Please, enter the treatments info");
+		System.out.println("Name:");
+		String name = r.readLine();
+		System.out.println("Comment Section:");
+		String comments = r.readLine();
+		Treatment treatment = new Treatment(name, comments);
+		treatmentMan.addTreatment(treatment);
 	}
 	
 	
 	private static void list6treatments() throws IOException{
-		
+		List<Treatment> treatments = treatmentMan.listSixRecentTreatment();
+		System.out.println(treatments);
 	}
 	
 	private static void modifyTreatment() throws NumberFormatException, IOException{
+		Treatment treatment = null;
+		System.out.println("Here are the actual author's values");
+		System.out.println("Press enter to keep them or type a new value.");
+		System.out.println("Name (" + treatment.getNameTreatment() + "): ");
+		String newName = r.readLine();
+		System.out.println("Comments (" + treatment.getComment_Section() + "): ");
+		String newComments = r.readLine();
+		if (!newName.equals("")) {
+			// If I don't keep
+			treatment.setNameTreatment(newName);
+		}
+		if (newComments.equals("")) { // If I keep
+		}
+		else { // If I don't keep
+			treatment.setComment_Section(newComments);
+		}
 		
+		treatmentMan.modifyTreatment(treatment);
 	}
 	
 	private static void deleteTreatment() throws NumberFormatException, IOException{
-		
+		//TODO delete treatment
 	}
 	
 	private static void searchTreatmentByName() throws NumberFormatException, IOException{
-		
+		System.out.println("Please enter the name of the treatment:");
+		String name = r.readLine();
+		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName(name);
+		for(Treatment treatment : treatments) {
+			System.out.println(treatment);
+		}
 	}
 	
 

@@ -32,7 +32,11 @@ public class Treatment implements Serializable{
 			this.comment_Section = comment_Section;
 		}
 
-
+		public Treatment(String nameTreatment, String comment_Section) {
+			super();
+			this.nameTreatment = nameTreatment;
+			this.comment_Section = comment_Section;
+		}
 
 		public Integer getIdTreatment() {
 			return idTreatment;

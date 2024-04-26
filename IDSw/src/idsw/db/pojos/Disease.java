@@ -60,7 +60,7 @@ public class Disease implements Serializable{
 			this.incubation_period = incubation_period;
 			this.development_period = development_period;
 			this.convalescense_period = convalescense_period;
-			this.cause = Cause.valueOf(cause1);
+			this.cause = Cause.valueOf(cause1.toUpperCase());
 			this.comment_section = comment_section;
 		}
 

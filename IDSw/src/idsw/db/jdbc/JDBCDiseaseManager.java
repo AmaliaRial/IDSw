@@ -48,10 +48,10 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				Float mortalityRate = rs.getFloat("mortality_rate");
 				Float incubationPeriod = rs.getFloat("incubation_period");
 				Float developmentPeriod = rs.getFloat("development_period");
-				Float convalescensePeriod = rs.getFloat("convalescense_period");
+				Float convalescencePeriod = rs.getFloat("convalescence_period");
 				String cause1 = rs.getString("cause");
 				String commentSection = rs.getString("comment_section");
-				Disease disease = new Disease(id, diseaseName, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescensePeriod, cause1, commentSection);
+				Disease disease = new Disease(id, diseaseName, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescencePeriod, cause1, commentSection);
 				}
 				rs.close();
 				p.close();
@@ -83,7 +83,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	@Override
 	public void addDisease(Disease disease) {
 			try {
-				String template = "INSERT INTO diseases (nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescense_period, cause, comment_section) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+				String template = "INSERT INTO diseases (nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescence_period, cause, comment_section) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 				PreparedStatement pstmt;
 				pstmt = c.prepareStatement(template);
 				pstmt.setString(1, disease.getNameDisease());
@@ -91,7 +91,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				pstmt.setFloat(3, disease.getMortality_rate());
 				pstmt.setFloat(4, disease.getIncubation_period());
 				pstmt.setFloat(5, disease.getDevelopment_period());
-				pstmt.setFloat(6, disease.getConvalescense_period());
+				pstmt.setFloat(6, disease.getConvalescence_period());
 				pstmt.setString(7, disease.getCause().name());
 				pstmt.setString(8, disease.getComment_section());
 				pstmt.executeUpdate();

@@ -87,6 +87,7 @@ public class JDBCSymptomManager implements SymptomManager {
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
+		}
 	}
 		
 

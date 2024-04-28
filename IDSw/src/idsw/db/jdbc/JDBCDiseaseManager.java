@@ -1,11 +1,12 @@
 package idsw.db.jdbc;
 
-import java.awt.event.FocusEvent.Cause;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import idsw.db.enums.State;
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
@@ -63,7 +64,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	}
 
 	@Override
-	public List<Symptom> listMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
+	public List<Disease> listMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -107,6 +108,10 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	public void modifyDisease(Disease disease) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public ConnectionManager getConMan() {
+		return conMan;
 	}
 
 }

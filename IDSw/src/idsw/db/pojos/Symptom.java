@@ -29,7 +29,7 @@ public class Symptom implements Serializable{
 			this.idSymptom = idSymptom;
 			this.nameSymptom = nameSymptom;
 			this.pain_management = Pain_Management.valueOf(pain_management.toUpperCase());
-		})
+		}
 		
 		public Integer getIdSymptom() {
 			return idSymptom;

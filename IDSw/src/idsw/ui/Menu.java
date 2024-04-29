@@ -146,7 +146,7 @@ public class Menu {
 	
 	private static void modifyTreatment() throws NumberFormatException, IOException{
 		Treatment treatment = null;
-		System.out.println("Here are the actual author's values");
+		System.out.println("Here are the actual Treatment's values");
 		System.out.println("Press enter to keep them or type a new value.");
 		System.out.println("Name (" + treatment.getNameTreatment() + "): ");
 		String newName = r.readLine();
@@ -166,7 +166,11 @@ public class Menu {
 	}
 	
 	private static void deleteTreatment() throws NumberFormatException, IOException{
-		//TODO delete treatment
+		System.out.println("These are the treatements in the database:");
+		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+		System.out.println("Please enter the id of the Treatment you want to delete:");
+		Integer id = Integer.parseInt(r.readLine());
+		treatmentMan.deleteTreatment(id);
 	}
 	
 	private static void searchTreatmentByName() throws NumberFormatException, IOException{

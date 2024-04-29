@@ -91,15 +91,14 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	}
 
 	@Override
-	public void deleteTreatment(Treatment treatment) {
+	public void deleteTreatment(int id_treatment) {
 		try {
 			String template = "DELETE FROM treatments WHERE IDtreatment = ?";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			ps.setInt(1, treatment.getIdTreatment());
+			ps.setInt(1, id_treatment);
 			ps.executeUpdate();
 			ps.close();	
-			
 					
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

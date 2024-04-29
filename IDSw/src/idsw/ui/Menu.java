@@ -20,16 +20,8 @@ public class Menu {
 	private static TreatmentManager treatmentMan;
 	//TODO add interfaces
 
-	public static void main(String[] args) {
-		try {
-		System.out.println("Welcome to IDSW!");
-		ConnectionManager conMan = new ConnectionManager();
-		//Manager setup
-		diseaseMan = conMan.getDiseaseMan();
-		treatmentMan = conMan.getTreatmentMan();
-		//TODO add conMans
-		
-		System.out.println("Choose your desired option");
+	public static int menuPrincipal() throws IOException {
+		System.out.println("\n Choose your desired option");
 		System.out.println("1. Add a new disease");
 		System.out.println("2. Search a disease by its name");
 		System.out.println("3. Add a new treatment");
@@ -39,50 +31,65 @@ public class Menu {
 		System.out.println("7. Search treatment by name");
 		System.out.println("0. Exit");
 		int choice = Integer.parseInt(r.readLine());
+		return choice;
+	}
+ 	
+	public static void main(String[] args) {
 		
+		int choice = 0;
+		try {
+			System.out.println("Welcome to IDSW!");
+			ConnectionManager conMan = new ConnectionManager();
+			//Manager setup
+			diseaseMan = conMan.getDiseaseMan();
+			treatmentMan = conMan.getTreatmentMan();
+			//TODO add conMans
+						
+			do {
+				choice = menuPrincipal();
 			switch (choice) {
-			case 1: {
-				addDisease();
-				break;
-			}
-			case 2: {
-				searchDiseaseByName();
-				break;
-			}
-			case 3: {
-				addTreatment();
-				break;
-			}
-			case 4: {
-				list6treatments();
-				break;
-			}
-			case 5: {
-				modifyTreatment();
-				break;
-			}
-			case 6: {
-				deleteTreatment();
-				break;
-			}
-			case 7: {
-				searchTreatmentByName();
-				break;
-			}
-			case 0: {
-				conMan.close();
-				return;
-			}
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + choice);
-			}
+				case 1: {
+					addDisease();
+					break;
+				}
+				case 2: {
+					searchDiseaseByName();
+					break;
+				}
+				case 3: {
+					addTreatment();
+					break;
+				}
+				case 4: {
+					list6treatments();
+					break;
+				}
+				case 5: {
+					modifyTreatment();
+					break;
+				}
+				case 6: {
+					deleteTreatment();
+					break;
+				}
+				case 7: {
+					searchTreatmentByName();
+					break;
+				}
+				case 0: {
+					conMan.close();
+					return;
+				}
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + choice);
+				}
+			
+			} while (choice != 20);
 		
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		
 	}

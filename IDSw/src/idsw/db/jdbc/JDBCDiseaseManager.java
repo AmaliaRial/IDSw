@@ -53,7 +53,8 @@ public class JDBCDiseaseManager implements DiseaseManager {
 				String cause1 = rs.getString("cause");
 				String commentSection = rs.getString("comment_section");
 				Disease disease = new Disease(id, diseaseName, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescencePeriod, cause1, commentSection);
-				}
+				diseases.add(disease);
+			}
 				rs.close();
 				p.close();
 			} catch (SQLException e) {

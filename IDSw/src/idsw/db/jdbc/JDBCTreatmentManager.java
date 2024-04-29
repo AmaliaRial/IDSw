@@ -117,7 +117,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	@Override
 	public void addTreatment(Treatment treatment) {
 		try {
-			String template = "INSERT INTO treatments (nameTreatment, comment_section, diagnosis_id) VALUES (?, ?, ?);";
+			String template = "INSERT INTO treatments (nameTreatment, comment_section) VALUES (?, ?);";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, treatment.getNameTreatment());

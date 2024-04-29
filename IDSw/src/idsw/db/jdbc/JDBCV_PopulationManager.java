@@ -123,7 +123,7 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 				Integer immunityPeriod=rs.getInt("Immunity_period");
 				Disease disease= this.conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
 				
-				matchingPopulation.add(new Virtual_Population(IDpopulation, initialPopulation, pInfected, pHealthy, pImmune,immunityPeriod,disease);
+				matchingPopulation.add(new Virtual_Population(IDpopulation, initialPopulation, pInfected, pHealthy, pImmune,immunityPeriod,disease));
 			}
 			rs.close();
 			pstmt.close();

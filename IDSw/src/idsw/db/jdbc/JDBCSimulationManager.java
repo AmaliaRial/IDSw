@@ -1,6 +1,5 @@
 package idsw.db.jdbc;
 
-import idsw.db.utilitiesManager.JFreeChart;
 import idsw.db.utilitiesManager.StatisticsManager;
 
 import java.sql.Connection;
@@ -17,7 +16,6 @@ import idsw.db.pojos.Virtual_Population;
 import idsw.db.utilities.GraphUtilities;
 import idsw.db.pojos.Virtual_Person;
 import idsw.db.enums.State;
-import idsw.db.enums.state;
 import idsw.db.jdbcInterfaces.SimulationManager;
 
 public class JDBCSimulationManager implements SimulationManager {
@@ -198,7 +196,7 @@ public class JDBCSimulationManager implements SimulationManager {
 				byte[] graph=rs.getBytes("simulationGraph");
 				Virtual_Population vPopulation= conMan.getVirtualPopulationMan().getVirtualPopulation(rs.getInt("virtual_population"));
 				
-				matchingSimulations.add(new Simulation(IDsimulation,totalInfections, totalDeaths,totalImmunity, totalPopulation, graph, vPopulation);
+				matchingSimulations.add(new Simulation(IDsimulation,totalInfections, totalDeaths,totalImmunity, totalPopulation, graph, vPopulation));
 			}
 			rs.close();
 			pstmt.close();

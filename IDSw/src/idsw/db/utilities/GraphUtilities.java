@@ -11,12 +11,6 @@ public class GraphUtilities implements StatisticsManager{
 		
 	}
 
-	@Override
-	public JFreeChart graphicSimulation(List<Integer> illCounterData, List<Integer> deathCounterData,
-			List<Integer> peopleCounterData) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public BufferedImage graphIntoImage(JFreeChart graph) {
@@ -32,6 +26,13 @@ public class GraphUtilities implements StatisticsManager{
 
 	@Override
 	public byte[] graphIntoBinary(JFreeChart graph) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JFreeChart sraphicSimulation(List<Integer> illCounterData, List<Integer> deathCounterData,
+			List<Integer> peopleCounterData) {
 		// TODO Auto-generated method stub
 		return null;
 	}

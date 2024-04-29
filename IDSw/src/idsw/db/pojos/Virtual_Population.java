@@ -20,9 +20,31 @@ public class Virtual_Population implements Serializable{
 		private Disease disease;
 		private List<Virtual_Person> virtual_people;
 		
-		public Virtual_Population() {
-			super();
+		public Virtual_Population(Integer idVirtual_population2, Integer initial_population2, Float p_infected2, Float p_healthy2, Float p_immune2, Integer immunity_period2, Disease disease2) {
+			this.idVirtual_population=idVirtual_population2;
+			this.initial_population=initial_population2;
+			this.p_infected= p_infected2;
+			this.p_healthy=  p_healthy2;
+			this.p_immune= p_immune2;
+			this.immunity_period= immunity_period2;
+			this.disease =disease2;
+			
 			this.virtual_people = new ArrayList<Virtual_Person>();
+		}
+		
+		public Virtual_Population(Integer initial_population2, Float p_infected2, Float p_healthy2, Float p_immune2, Integer immunity_period2, Disease disease2) {
+			this.initial_population=initial_population2;
+			this.p_infected= p_infected2;
+			this.p_healthy=  p_healthy2;
+			this.p_immune= p_immune2;
+			this.immunity_period= immunity_period2;
+			this.disease =disease2;
+			
+			this.virtual_people = new ArrayList<Virtual_Person>();
+		}
+		
+		public Virtual_Population() {
+			//TODO HACE FALTA PONER TOdO COMO NULL?
 		}
 
 		public Integer getIdVirtual_population() {
@@ -112,7 +134,7 @@ public class Virtual_Population implements Serializable{
 		public String toString() {
 			return "Virtual_Population [initial_population=" + initial_population + ", % of infected=" + p_infected
 					+ ", % of healthy=" + p_healthy + ", % of immune=" + p_immune + ", immunity_period=" + immunity_period
-					+ "]";
+					+ ", virtual_people=" + virtual_people+"]";
 		}
 		
 		

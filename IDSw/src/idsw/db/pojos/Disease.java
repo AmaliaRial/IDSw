@@ -191,7 +191,7 @@ public class Disease implements Serializable{
 
 		@Override
 		public String toString() {
-			return "Disease [idDisease=" + idDisease + ", nameDisease=" + nameDisease + ", infectious_rate="
+			return "\n Disease [idDisease=" + idDisease + ", nameDisease=" + nameDisease + ", infectious_rate="
 					+ infectious_rate + ", mortality_rate=" + mortality_rate + ", incubation_period="
 					+ incubation_period + ", development_period=" + development_period + ", convalescense_period="
 					+ convalescence_period + ", cause=" + cause + ", comment_section=" + comment_section + "]";

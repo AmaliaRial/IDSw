@@ -95,9 +95,15 @@ public class Treatment implements Serializable{
 			return Objects.equals(idTreatment, other.idTreatment);
 		}
 
+
+
 		@Override
 		public String toString() {
-			return "Treatment [idTreatment=" + idTreatment + ", nameTreatment=" + nameTreatment + "]";
+			return "\n Treatment [idTreatment=" + idTreatment + ", nameTreatment=" + nameTreatment + ", comment_Section="
+					+ comment_Section + "]";
 		}
+
+
+		
 		
 }

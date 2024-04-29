@@ -26,7 +26,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	public List<Treatment> listSixRecentTreatment() {
 		List<Treatment> treatments = new ArrayList<Treatment>();
 		try {
-			String sql = "SELECT * FROM treatments GROUP BY IDtreatment DESC LIMIT 6; ";
+			String sql = "SELECT * FROM treatments ORDER BY IDtreatment DESC LIMIT 6; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
 			ResultSet rs= ps.executeQuery();
@@ -45,7 +45,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			e.printStackTrace();
 		}		
 		
-		return null;
+		return treatments;
 	}
 
 	@Override
@@ -93,20 +93,14 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	@Override
 	public void deleteTreatment(Treatment treatment) {
 		try {
-			String template = "DELETE FROM disease_has_treatment WHERE treatment_id = ?";
+			String template = "DELETE FROM treatments WHERE IDtreatment = ?";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setInt(1, treatment.getIdTreatment());
 			ps.executeUpdate();
 			ps.close();	
 			
-			String sql = "DELETE FROM diagnosis_has_treatment WHERE treatment_id = ?";
-			PreparedStatement ps1;
-			ps1 = c.prepareStatement(sql);
-			ps1.setInt(1, treatment.getIdTreatment());
-			ps1.executeUpdate();
-			ps1.close();
-			
+					
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
@@ -122,7 +116,6 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			ps = c.prepareStatement(template);
 			ps.setString(1, treatment.getNameTreatment());
 			ps.setString(2, treatment.getComment_Section());
-			ps.setInt(3, treatment.getDiagnosis().getIdDiagnosis());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

@@ -138,8 +138,7 @@ public class ConnectionManager {
 			String createTableTreatments = " CREATE TABLE treatments ("
 					+ " IDtreatment INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " nameTreatment TEXT NOT NULL,"
-					+ " comment_section TEXT,"
-					+ " diagnosis_id INTEGER REFERENCES diagnoses(IDdiagnosis));";
+					+ " comment_section TEXT;";
 			
 			createTreatmentsTable.executeUpdate(createTableTreatments);
 			createTreatmentsTable.close();
@@ -251,10 +250,4 @@ public class ConnectionManager {
 	public VirtualPopulationManager getVirtualPopulationMan() {
 		return virtualPopulationMan;
 	}
-	
-	
-	
-	
-	
-
 }

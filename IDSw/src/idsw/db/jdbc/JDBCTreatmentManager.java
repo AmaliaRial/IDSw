@@ -141,4 +141,16 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		}
 	}
 
+	@Override
+	public List<Treatment> listTreatmentsByDisease() {
+		// TODO list Treatments By Disease
+		return null;
+	}
+
+	@Override
+	public List<Treatment> listTreatmentByDiagnosis() {
+		// TODO list Treatments By Diagnosis
+		return null;
+	}
+
 }

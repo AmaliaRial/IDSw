@@ -16,11 +16,12 @@ public class Treatment implements Serializable{
 		private String nameTreatment;
 		private String comment_Section;
 		private List<Disease> diseases;
-		private Diagnosis diagnosis;
+		private List<Diagnosis> diagnosis;
 	
 		public Treatment() {
 			super();
 			this.diseases = new ArrayList<Disease>();
+			this.diagnosis = new ArrayList<Diagnosis>();
 		}
 
 		
@@ -70,13 +71,17 @@ public class Treatment implements Serializable{
 			this.diseases = diseases;
 		}
 
-		public Diagnosis getDiagnosis() {
+
+		public List<Diagnosis> getDiagnosis() {
 			return diagnosis;
 		}
 
-		public void setDiagnosis(Diagnosis diagnosis) {
+
+
+		public void setDiagnosis(List<Diagnosis> diagnosis) {
 			this.diagnosis = diagnosis;
 		}
+
 
 		@Override
 		public int hashCode() {

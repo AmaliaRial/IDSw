@@ -20,6 +20,12 @@ public class Medical_Record implements Serializable{
 			this.diagnoses = new ArrayList<Diagnosis>();
 		}
 
+		public Medical_Record(Integer idMedical_Record) {
+			super();
+			this.idMedical_Record = idMedical_Record;
+		}
+		
+		
 		public Integer getIdMedical_Record() {
 			return idMedical_Record;
 		}

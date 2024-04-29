@@ -11,7 +11,7 @@ public class Virtual_Person implements Serializable{
 		* 
 	 	*/
 		private static final long serialVersionUID = 6152860231636655190L;
-		private Integer idVirtual_Person;
+		//private Integer idVirtual_Person;
 		private State state;
 		private Integer disease_countdown;
 		private Integer immunity_countdown;
@@ -19,6 +19,13 @@ public class Virtual_Person implements Serializable{
 		
 		public Virtual_Person() {
 			super();
+		}
+
+
+		public Virtual_Person(State state1,Integer diseaseCountdown,Integer immunityCountdown) {
+			this.state=state1;
+			this.disease_countdown= diseaseCountdown;
+			this.immunity_countdown=immunityCountdown;
 		}
 
 
@@ -93,7 +100,7 @@ public class Virtual_Person implements Serializable{
 
 		@Override
 		public String toString() {
-			return "Virtual_Person [idVirtual_Person=" + idVirtual_Person + ", state=" + state + ", disease_countdown="
+			return "Virtual_Person [state=" + state + ", disease_countdown="
 					+ disease_countdown + ", immunity_countdown=" + immunity_countdown + "]";
 		}
 		

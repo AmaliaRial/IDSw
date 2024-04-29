@@ -2,6 +2,7 @@ package idsw.db.pojos;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.List;
 import java.util.Objects;
 
 public class Simulation implements Serializable{
@@ -15,11 +16,30 @@ public class Simulation implements Serializable{
 	private Integer totalDeaths;
 	private Integer totalImmunity;
 	private Integer totalPopulation;
-	private byte[] simulationGraph;
-	private Virtual_Population virtualPopulation;
+	private byte[]  simulationGraph;
+	private Virtual_Population Vpopulation;
 	
 	public Simulation() {
 		super();
+	}
+
+	public Simulation(int total_Infections, int total_deaths, int total_FinalInmunitations, int peopleCounter,byte[] simulationGrap1, Virtual_Population Vpopulation1) {
+		this.totalInfections=total_Infections;
+		this.totalDeaths=total_deaths;
+		this.totalImmunity= total_FinalInmunitations;
+		this.totalPopulation=peopleCounter;
+		this.simulationGraph= simulationGrap1;
+		this.Vpopulation=Vpopulation1;
+	}
+	
+	public Simulation(int id_simulation, int total_Infections, int total_deaths, int total_FinalInmunitations, int peopleCounter,byte[] simulationGrap1, Virtual_Population Vpopulation1) {
+		this.idSimulation=id_simulation;
+		this.totalInfections=total_Infections;
+		this.totalDeaths=total_deaths;
+		this.totalImmunity= total_FinalInmunitations;
+		this.totalPopulation=peopleCounter;
+		this.simulationGraph= simulationGrap1;
+		this.Vpopulation=Vpopulation1;
 	}
 
 	public Integer getIdSimulation() {
@@ -62,21 +82,21 @@ public class Simulation implements Serializable{
 		this.totalPopulation = totalPopulation;
 	}
 
-	public byte[] getSimulationGraph() {
-		return simulationGraph;
-	}
+	//public byte[] getSimulationGraph() {
+	//	return simulationGraph;
+	//}
 
-	public void setSimulationGraph(byte[] simulationGraph) {
-		this.simulationGraph = simulationGraph;
-	}
+	//public void setSimulationGraph(byte[] simulationGraph) {
+	//	this.simulationGraph = simulationGraph;
+	//}
 
-	public Virtual_Population getVirtualPopulation() {
-		return virtualPopulation;
-	}
+	//public Virtual_Population getVirtualPopulation() {
+	//	return virtualPopulation;
+	//}
 
-	public void setVirtualPopulation(Virtual_Population virtualPopulation) {
-		this.virtualPopulation = virtualPopulation;
-	}
+	//public void setVirtualPopulation(Virtual_Population virtualPopulation) {
+	//	this.virtualPopulation = virtualPopulation;
+	//}
 
 	@Override
 	public int hashCode() {
@@ -101,4 +121,15 @@ public class Simulation implements Serializable{
 				+ totalDeaths + ", totalImmunity=" + totalImmunity + ", totalPopulation=" + totalPopulation
 				+ ", simulationGraph=" + simulationGraph + "]";
 	}
+
+	
+
+	public Virtual_Population getVpopulation() {
+		return this.Vpopulation;
+	}
+
+	public void setVpopulation(Virtual_Population vpopulation) {
+		this.Vpopulation = vpopulation;
+	}
+
 }

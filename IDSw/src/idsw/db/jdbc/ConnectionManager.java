@@ -138,7 +138,7 @@ public class ConnectionManager {
 			String createTableTreatments = " CREATE TABLE treatments ("
 					+ " IDtreatment INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ " nameTreatment TEXT NOT NULL,"
-					+ " comment_section TEXT;";
+					+ " comment_section TEXT);";
 			
 			createTreatmentsTable.executeUpdate(createTableTreatments);
 			createTreatmentsTable.close();

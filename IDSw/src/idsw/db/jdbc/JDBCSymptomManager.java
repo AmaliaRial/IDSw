@@ -36,8 +36,8 @@ public class JDBCSymptomManager implements SymptomManager {
 			while(rs.next()) {
 				Integer id = rs.getInt("IDsymptom");
 				String name = rs.getString("nameSymptom");
-				String comments = rs.getString("pain_management");
-				Symptom symptom = new Symptom(id, name, comments);
+				String pain_management = rs.getString("pain_management");
+				Symptom symptom = new Symptom(id, name, pain_management);
 				symptoms.add(symptom);
 			}
 			rs.close();

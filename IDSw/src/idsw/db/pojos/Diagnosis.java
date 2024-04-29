@@ -24,6 +24,17 @@ public class Diagnosis implements Serializable{
 			super();
 			this.setTreatments(new ArrayList<Treatment>());
 		}
+		
+		
+		
+		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, Date date, String comment_section) {
+			super();
+			this.idDiagnosis = idDiagnosis;
+			this.nameDiagnosis = nameDiagnosis;
+			this.date = date;
+			this.comment_section = comment_section;
+			
+		}
 
 		public Integer getIdDiagnosis() {
 			return idDiagnosis;

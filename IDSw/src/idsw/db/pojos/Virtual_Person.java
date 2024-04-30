@@ -29,16 +29,6 @@ public class Virtual_Person implements Serializable{
 		}
 
 
-		public Integer getIdVirtual_Person() {
-			return idVirtual_Person;
-		}
-
-
-		public void setIdVirtual_Person(Integer idVirtual_Person) {
-			this.idVirtual_Person = idVirtual_Person;
-		}
-
-
 		public State getState() {
 			return state;
 		}
@@ -76,25 +66,6 @@ public class Virtual_Person implements Serializable{
 
 		public void setVirtual_population(Virtual_Population virtual_population) {
 			this.virtual_population = virtual_population;
-		}
-
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(idVirtual_Person);
-		}
-
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Virtual_Person other = (Virtual_Person) obj;
-			return Objects.equals(idVirtual_Person, other.idVirtual_Person);
 		}
 
 

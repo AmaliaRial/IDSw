@@ -31,7 +31,7 @@ public class GraphUtilities implements StatisticsManager{
 	}
 
 	@Override
-	public JFreeChart sraphicSimulation(List<Integer> illCounterData, List<Integer> deathCounterData,
+	public JFreeChart graphicSimulation(List<Integer> illCounterData, List<Integer> deathCounterData,
 			List<Integer> peopleCounterData) {
 		// TODO Auto-generated method stub
 		return null;

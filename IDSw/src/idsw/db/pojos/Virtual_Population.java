@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import idsw.db.jdbc.*;
 
 public class Virtual_Population implements Serializable{
 	
@@ -135,6 +136,18 @@ public class Virtual_Population implements Serializable{
 			return "Virtual_Population [initial_population=" + initial_population + ", % of infected=" + p_infected
 					+ ", % of healthy=" + p_healthy + ", % of immune=" + p_immune + ", immunity_period=" + immunity_period
 					+ ", virtual_people=" + virtual_people+"]";
+		}
+		
+		public static void main(String args[]) {
+			Disease disease= new Disease();
+			disease.setIncubation_period((float) 1);
+			disease.setDevelopment_period((float) 2);
+			disease.setConvalescence_period((float) 1);
+			disease.setMortality_rate((float) 0.3);
+			ConnectionManager conMan= new ConnectionManager();
+			Virtual_Population populationTest= new Virtual_Population(20,(float) 30,(float) 60,(float) 10, 5, disease);
+			conMan.getVirtualPopulationMan().fillPopulation(populationTest);
+			System.out.println(populationTest);
 		}
 		
 		

@@ -79,20 +79,18 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 		int intervalPercentageHealthy=(int) (virtualPopulation.getP_healthy()*100);
 		int intervalPercentageImmune= (int) (virtualPopulation.getP_immune()*100);
 		for(int i=0; i<virtualPopulation.getInitial_population(); i++ ){
-			 Random random = new Random();
-			 int randNum= random.nextInt(10000);
 			 //TODO en utilities asegurarse que la suma de los porcentajes no sea mayor que 100
-			 if(randNum<intervalPercentageHealthy) {
+			 if(i<intervalPercentageHealthy) {
 				 State healthy= State.HEALTHY;
 				 Virtual_Person vPerson=new Virtual_Person(healthy,0,0);
 				 people.add(vPerson);
 				 
-			 }else if(intervalPercentageHealthy<randNum && randNum<(intervalPercentageHealthy+intervalPercentageImmune)){
+			 }else if(intervalPercentageHealthy<i && i<(intervalPercentageHealthy+intervalPercentageImmune)){
 				 
 				 State immune= State.IMMUNE;
 				 Virtual_Person vPerson=new Virtual_Person(immune,0,virtualPopulation.getImmunity_period());
 				 people.add(vPerson);
-			 }else if((intervalPercentageHealthy+intervalPercentageImmune)<randNum) {
+			 }else if((intervalPercentageHealthy+intervalPercentageImmune)<i){
 				 
 				 State ill= State.ILL;
 				 int disease_countdown= (int)(virtualPopulation.getDisease().getIncubation_period()+
@@ -121,7 +119,7 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 				Float pHealthy= rs.getFloat("p_healthy");
 				Float pImmune= rs.getFloat("p_immune");
 				Integer immunityPeriod=rs.getInt("Immunity_period");
-				Disease disease= this.conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
+				Disease disease= conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
 				
 				matchingPopulation.add(new Virtual_Population(IDpopulation, initialPopulation, pInfected, pHealthy, pImmune,immunityPeriod,disease));
 			}
@@ -135,17 +133,5 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 		
 	}
 	
-	public static void main(String args[]) {
-		Disease disease= new Disease();
-		disease.setDevelopment_period((float) 1);
-		disease.setDevelopment_period((float) 2);;
-		disease.setConvalescence_period((float) 1);
-		disease.setMortality_rate((float) 0.3);
-		
-		Virtual_Population populationTest= new Virtual_Population(20,(float) 30,(float) 60,(float) 10, 5, disease);
-		fillPopulation(populationTest);
-		System.out.println(populationTest);
-		
-	}
 
 }

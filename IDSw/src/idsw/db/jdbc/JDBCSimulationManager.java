@@ -32,9 +32,9 @@ public class JDBCSimulationManager implements SimulationManager {
 	public void addSimulation(Virtual_Population virtualPopulation) {
 		// TODO añadir los data del resultato
 		Simulation simulation=createSimulation(virtualPopulation);
-		String template = "INSERT INTO simulations(totalInfections, totalDeaths, totalImmunity, totalPopulation, virtual_population) VALUES ('?','?','?','?','?')";
-		PreparedStatement pstmt;
 		try {
+			String template = "INSERT INTO simulations(totalInfections, totalDeaths, totalImmunity, totalPopulation, virtual_population) VALUES ('?','?','?','?','?')";
+			PreparedStatement pstmt;
 			pstmt = c.prepareStatement(template);
 			pstmt.setInt(1, simulation.getTotalInfections());
 			pstmt.setInt(2, simulation.getTotalDeaths());

@@ -22,6 +22,15 @@ public class Patient implements Serializable{
 		}
 
 
+		public Patient(int idPatient, String namePatient, String surname, Date dob) {
+			super();
+			this.idPatient = idPatient;
+			this.namePatient = namePatient;
+			this.surname = surname;
+			this.dob = dob;
+		}
+
+
 		public Integer getIdPatient() {
 			return idPatient;
 		}

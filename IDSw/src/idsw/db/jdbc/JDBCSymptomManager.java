@@ -1,3 +1,4 @@
+ 
 package idsw.db.jdbc;
 
 import java.sql.Connection;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.SymptomManager;
+import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
 
@@ -47,6 +49,31 @@ public class JDBCSymptomManager implements SymptomManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public List<Symptom> listSymptomsByDisease(int disease_id) {
+		List<Symptom> symptoms = new ArrayList<Symptom>();
+		try {
+			String sql = "SELECT * FROM symptoms JOIN disease_has_symptoms ON  WHERE disease_id LIKE ?";
+			PreparedStatement p;
+			p = c.prepareStatement(sql);
+			p.setInt(1, disease_id);
+			ResultSet rs= p.executeQuery();
+			Disease disease = conMan.getDiseaseMan().getDisease(disease_id);
+			while(rs.next()) {
+				Integer idDisease = rs.getInt("disease_id");
+				Symptom symptom = new Symptom(idDisease);
+				symptoms.add(symptom);
+			}
+			rs.close();
+			p.close();
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return symptoms;
+
 	}
 	
 	
@@ -125,5 +152,6 @@ public class JDBCSymptomManager implements SymptomManager {
 		}
 
 	}
+
 
 }

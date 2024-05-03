@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.TreatmentManager;
+import idsw.db.pojos.Diagnosis;
+import idsw.db.pojos.Disease;
 import idsw.db.pojos.Treatment;
 
 public class JDBCTreatmentManager implements TreatmentManager {
@@ -87,7 +89,8 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
-		}		return null;
+		}		
+		return null;
 	}
 
 	@Override
@@ -150,6 +153,38 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	public List<Treatment> listTreatmentByDiagnosis() {
 		// TODO list Treatments By Diagnosis
 		return null;
+	}
+
+	@Override
+	public void addTreatmentByDiagnosis(Diagnosis diagnosis, Treatment treatment) {
+		try {
+			String template = "INSERT INTO diagnosis_has_treatments ( diagnosis_id, treatment_id) VALUES (?, ?);";
+			PreparedStatement pstmt;
+			pstmt = c.prepareStatement(template);
+			pstmt.setInt(1, diagnosis.getIdDiagnosis());
+			pstmt.setInt(2, treatment.getIdTreatment());
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void addTreatmentByDisease(Disease disease, Treatment treatment) {
+		try {
+			String template = "INSERT INTO disease_has_treatments ( disease_id, treatment_id) VALUES (?, ?);";
+			PreparedStatement pstmt;
+			pstmt = c.prepareStatement(template);
+			pstmt.setInt(1, disease.getIdDisease());
+			pstmt.setInt(2, treatment.getIdTreatment());
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}				
 	}
 
 }

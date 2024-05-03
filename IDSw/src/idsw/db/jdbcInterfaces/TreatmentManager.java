@@ -2,6 +2,8 @@ package idsw.db.jdbcInterfaces;
 
 import java.util.List;
 
+import idsw.db.pojos.Diagnosis;
+import idsw.db.pojos.Disease;
 import idsw.db.pojos.Treatment;
 
 public interface TreatmentManager {
@@ -14,4 +16,6 @@ public interface TreatmentManager {
 	public void modifyTreatment(Treatment treatment);
 	public List <Treatment> listTreatmentsByDisease();
 	public List<Treatment> listTreatmentByDiagnosis();
+	public void addTreatmentByDiagnosis(Diagnosis diagnosis, Treatment treatment);
+	public void addTreatmentByDisease (Disease disease, Treatment treatment);
 }

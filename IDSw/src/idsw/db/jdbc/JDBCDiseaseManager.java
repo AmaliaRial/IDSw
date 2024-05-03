@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
+import idsw.db.pojos.Treatment;
 
 public class JDBCDiseaseManager implements DiseaseManager {
 	
@@ -25,11 +27,28 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	public List<Disease> listSixRecentDiseases() {
 		List<Disease> diseases = new ArrayList<Disease>();
 		try {
-			String sql = "SELECT * FROM diseases GROUP BY IDdisease DESC LIMIT 6; ";
-			
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
+			String sql = "SELECT * FROM diseases ORDER BY IDdisease DESC LIMIT 6; ";
+			PreparedStatement ps;
+			ps = c.prepareStatement(sql);
+			ResultSet rs= ps.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("IDdisease");
+				String name = rs.getString("nameDisease");
+				Float infectiousRate = rs.getFloat("infectious_rate");
+				Float mortalityRate = rs.getFloat("mortality_rate");
+				Float incubationPeriod = rs.getFloat("incubation_period");
+				Float developmentPeriod = rs.getFloat("development_period");
+				Float convalescencePeriod = rs.getFloat("convalescence_period");
+				String cause1 = rs.getString("cause");
+				String comments = rs.getString("comment_section");
+				Disease disease = new Disease(id, name, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescencePeriod, cause1, comments);
+				diseases.add(disease);
+			}
+			rs.close();
+			ps.close();
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();		}
 		return null;
 	}
 
@@ -61,25 +80,84 @@ public class JDBCDiseaseManager implements DiseaseManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
-		return null;
+		return diseases;
 	}
 
 	@Override
 	public List<Disease> listMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Disease> diseases = new ArrayList<Disease>();
+		try {
+			String template = "SELECT nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescence_period, cause, comment_section FROM diseases LEFT JOIN disease_has_symptoms ON IDdisease = disease_id JOIN symptoms ON symptom_id = IDsymptom WHERE ?);";
+			
+			String condition="";
+			for(Symptom symptom:symptoms) {
+			    condition="AND"+condition+"IDsymptom="+symptom.getIdSymptom();
+			}
+			condition.replaceFirst("AND","");
+			condition=condition+";";
+			
+			PreparedStatement p;
+			p = c.prepareStatement(template);
+			p.setString(1, condition);
+			
+			ResultSet rs = p.executeQuery();
+			while(rs.next()) {
+				String diseaseName = rs.getString("nameDisease");
+				Float infectiousRate = rs.getFloat("infectious_rate");
+				Float mortalityRate = rs.getFloat("mortality_rate");
+				Float incubationPeriod = rs.getFloat("incubation_period");
+				Float developmentPeriod = rs.getFloat("development_period");
+				Float convalescencePeriod = rs.getFloat("convalescence_period");
+				String cause1 = rs.getString("cause");
+				String commentSection = rs.getString("comment_section");
+				Disease disease = new Disease(diseaseName, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescencePeriod, cause1, commentSection);
+				diseases.add(disease);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}catch (NullPointerException e) {
+			System.out.println("The list provided is Null, please insert some data.");
+			e.printStackTrace();
+		}
+		
+		//falta especificar que tiene que ser tb como los otros
+		
+		return diseases;
 	}
 
 	@Override
 	public Disease getDisease(int idDisease) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "SELECT * FROM diseases WHERE id = " + idDisease;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			Disease disease = new Disease(rs.getInt("IDdisease"), rs.getString("nameDisease"), rs.getFloat("infectious_rate"), rs.getFloat("mortality_rate"), rs.getFloat("incubation_period"),rs.getFloat("development_period"), rs.getFloat("convalescence_period"), rs. getString("cause"), rs.getString("comment_section"));
+			return disease;
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}	
 		return null;
 	}
 
 	@Override
-	public void deleteDisease(Disease disease) {
-		// TODO Auto-generated method stub
-
+	public void deleteDisease(int IDdisease) {
+		try {
+			String template = "DELETE FROM diseases WHERE IDdisease = ?";
+			PreparedStatement ps;
+			ps = c.prepareStatement(template);
+			ps.setInt(1, IDdisease);
+			ps.executeUpdate();
+			ps.close();	
+					
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -107,8 +185,42 @@ public class JDBCDiseaseManager implements DiseaseManager {
 
 	@Override
 	public void modifyDisease(Disease disease) {
-		// TODO Auto-generated method stub
+		try {
+			String template = "UPDATE diseases SET nameDisease = ? AND infectious_rate = ? AND mortality_rate = ? AND incubation_period = ? AND develpment_period = ? AND convalescense_period = ? AND cause = ? AND comment_section = ? WHERE IDtreatment = ?;";
+			PreparedStatement ps;
+			ps = c.prepareStatement(template);
+			ps.setString(1, disease.getNameDisease());
+			ps.setFloat(2, disease.getInfectious_rate());
+			ps.setFloat(3, disease.getMortality_rate());
+			ps.setFloat(4, disease.getIncubation_period());
+			ps.setFloat(5, disease.getDevelopment_period());
+			ps.setFloat(6, disease.getConvalescence_period());
+			ps.setString(7, disease.getCause().name());
+			ps.setString(8, disease.getComment_section());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
 
+	}
+
+	@Override
+	public void addSymptomByDisease(Disease disease, Symptom symptom) {
+		try {
+			String template = "INSERT INTO disease_has_symptoms ( disease_id, symptom_id) VALUES (?, ?);";
+			PreparedStatement pstmt;
+			pstmt = c.prepareStatement(template);
+			pstmt.setInt(1, disease.getIdDisease());
+			pstmt.setInt(2, symptom.getIdSymptom());
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		
 	}
 
 	public ConnectionManager getConMan() {

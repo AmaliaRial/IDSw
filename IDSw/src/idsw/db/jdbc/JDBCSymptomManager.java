@@ -55,7 +55,7 @@ public class JDBCSymptomManager implements SymptomManager {
 	public List<Symptom> listSymptomsByDisease(int disease_id) {
 		List<Symptom> symptoms = new ArrayList<Symptom>();
 		try {
-			String sql = "SELECT * FROM symptoms JOIN disease_has_symptoms ON  WHERE disease_id LIKE ?";
+			String sql = "SELECT nameSymptom, pain_management FROM symptoms JOIN disease_has_symptoms ON symptom_id WHERE disease_id LIKE ?";
 			PreparedStatement p;
 			p = c.prepareStatement(sql);
 			p.setInt(1, disease_id);

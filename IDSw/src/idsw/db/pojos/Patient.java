@@ -1,8 +1,11 @@
 package idsw.db.pojos;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 import java.util.Objects;
+
+import idsw.db.jdbc.*;
 
 public class Patient implements Serializable{
 	
@@ -25,6 +28,14 @@ public class Patient implements Serializable{
 		public Patient(int idPatient, String namePatient, String surname, Date dob) {
 			super();
 			this.idPatient = idPatient;
+			this.namePatient = namePatient;
+			this.surname = surname;
+			this.dob = dob;
+		}
+
+
+		public Patient(String namePatient, String surname, Date dob) {
+			super();
 			this.namePatient = namePatient;
 			this.surname = surname;
 			this.dob = dob;
@@ -105,6 +116,7 @@ public class Patient implements Serializable{
 			return "Patient [idPatient=" + idPatient + ", namePatient=" + namePatient + ", surname=" + surname
 					+ ", dob=" + dob + "]";
 		}
+		
 		
 
 }

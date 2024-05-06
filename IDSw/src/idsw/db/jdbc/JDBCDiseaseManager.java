@@ -49,7 +49,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 		}catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();		}
-		return null;
+		return diseases;
 	}
 
 	@Override
@@ -129,19 +129,20 @@ public class JDBCDiseaseManager implements DiseaseManager {
 
 	@Override
 	public Disease getDisease(int idDisease) {
+		Disease disease = null;
 		try {
 			String sql = "SELECT * FROM diseases WHERE id = " + idDisease;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Disease disease = new Disease(rs.getInt("IDdisease"), rs.getString("nameDisease"), rs.getFloat("infectious_rate"), rs.getFloat("mortality_rate"), rs.getFloat("incubation_period"),rs.getFloat("development_period"), rs.getFloat("convalescence_period"), rs. getString("cause"), rs.getString("comment_section"));
+			disease = new Disease(rs.getInt("IDdisease"), rs.getString("nameDisease"), rs.getFloat("infectious_rate"), rs.getFloat("mortality_rate"), rs.getFloat("incubation_period"),rs.getFloat("development_period"), rs.getFloat("convalescence_period"), rs. getString("cause"), rs.getString("comment_section"));
 			return disease;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}	
-		return null;
+		return disease;
 	}
 
 	@Override

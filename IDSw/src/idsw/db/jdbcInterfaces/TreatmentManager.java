@@ -14,8 +14,8 @@ public interface TreatmentManager {
 	public void deleteTreatment(int id_treatment);
 	public void addTreatment(Treatment treatment);
 	public void modifyTreatment(Treatment treatment);
-	public List <Treatment> listTreatmentsByDisease();
-	public List<Treatment> listTreatmentByDiagnosis();
+	public List <Treatment> listTreatmentsByDisease(List<Disease> diseases);
+	public List<Treatment> listTreatmentByDiagnosis(List <Diagnosis> diagnoses);
 	public void addTreatmentByDiagnosis(Diagnosis diagnosis, Treatment treatment);
 	public void addTreatmentByDisease (Disease disease, Treatment treatment);
 }

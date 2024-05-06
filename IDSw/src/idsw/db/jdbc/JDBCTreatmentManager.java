@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.TreatmentManager;
@@ -143,17 +144,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		}
 	}
 
-	@Override
-	public List<Treatment> listTreatmentsByDisease() {
-		// TODO list Treatments By Disease
-		return null;
-	}
 
-	@Override
-	public List<Treatment> listTreatmentByDiagnosis() {
-		// TODO list Treatments By Diagnosis
-		return null;
-	}
 
 	@Override
 	public void addTreatmentByDiagnosis(Diagnosis diagnosis, Treatment treatment) {
@@ -185,6 +176,72 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}				
+	}
+
+	@Override
+	public List<Treatment> listTreatmentsByDisease(List<Disease> diseases) {
+		List<Treatment> treatments = new ArrayList<Treatment>();
+		try {
+			String template = " SELECT nameTreatment, t.comment_section FROM treatments AS t JOIN disease_has_treatments ON IDtreatment = treatment_id JOIN diseases ON IDdisease = disease_id WHERE ?;";
+			String condition = "";
+			for (Disease disease : diseases) {
+				condition = "AND" +condition+ "IDdisease = "+ disease.getIdDisease();
+			}
+			condition.replaceFirst("AND", "");
+			condition = condition + ";";
+			
+			PreparedStatement p;
+			p = c.prepareStatement(template);
+			p.setString(1, condition);
+			
+			ResultSet rs = p.executeQuery();
+			while(rs.next()) {
+				String treatmentName = rs.getString("nameTreatment");
+				String comment_section = rs.getString("comment_section");
+				Treatment treatment = new Treatment(treatmentName, comment_section);
+				treatments.add(treatment);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}catch (NullPointerException e) {
+			System.out.println("The list provided is Null, please insert some data.");
+			e.printStackTrace();
+		}
+		return treatments;
+	}
+
+	@Override
+	public List<Treatment> listTreatmentByDiagnosis(List<Diagnosis> diagnoses) {
+		List<Treatment> treatments = new ArrayList<Treatment>();
+		try {
+			String template = "SELECT nameTreatment, t.comment_section FROM treatments AS t JOIN diagnosis_has_treatments ON IDtreatment = treatment_id JOIN diagnoses ON IDdiagnosis = diagnosis_id WHERE ?";
+			String condition = "";
+			for (Diagnosis diagnosis : diagnoses) {
+				condition = "AND" +condition+ "IDdiagnosis = "+ diagnosis.getIdDiagnosis();
+			}
+			condition.replaceFirst("AND", "");
+			condition = condition + ";";
+			
+			PreparedStatement p;
+			p = c.prepareStatement(template);
+			p.setString(1, condition);
+			
+			ResultSet rs = p.executeQuery();
+			while(rs.next()) {
+				String treatmentName = rs.getString("nameTreatment");
+				String comment_section = rs.getString("comment_section");
+				Treatment treatment = new Treatment(treatmentName, comment_section);
+				treatments.add(treatment);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}catch (NullPointerException e) {
+			System.out.println("The list provided is Null, please insert some data.");
+			e.printStackTrace();
+		}
+		return treatments;
 	}
 
 }

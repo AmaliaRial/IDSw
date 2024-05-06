@@ -179,6 +179,8 @@ public class Menu {
 		System.out.println("Comment Section:");
 		String commentSec = r.readLine();
 		
+		
+		
 		Disease disease = new Disease(name, infectRate, mortRate, incubPeriod, devPeriod, convPeriod, cause, commentSec);
 		diseaseMan.addDisease(disease);
 	}
@@ -305,11 +307,7 @@ public class Menu {
 			System.out.println(treatment);
 		}
 	}
-	
-	private static void newSymptomByDisease() throws NumberFormatException, IOException{
-		//TODO newSymptomByDisease
-		//Symptom symptom = symptomMan.getSymptom(idSymptom)
-	}
+
 	
 	private static void updateDisease() throws NumberFormatException, IOException{
 		Disease disease = null;
@@ -378,6 +376,11 @@ public class Menu {
 		System.out.println("Please enter the id of the Disease you want to delete:");
 		Integer id = Integer.parseInt(r.readLine());
 		diseaseMan.deleteDisease(id);
+	}
+		
+	private static void newSymptomByDisease() throws NumberFormatException, IOException{
+		//TODO newSymptomByDisease
+		//Symptom symptom = symptomMan.getSymptom(idSymptom)
 	}
 	
 	private static void newTreatmentByDisease() throws NumberFormatException, IOException{

@@ -11,8 +11,9 @@ public interface DiseaseManager {
 	public List<Disease> listMatchingDiseaseByName(String name);
 	public List<Disease> listMatchingDiseaseBySymptoms(List<Symptom> symptoms);
 	public Disease getDisease( int idDisease);
-	public void deleteDisease(Disease disease);
+	public void deleteDisease(int IDdisease);
 	public void addDisease(Disease disease);
 	public void modifyDisease(Disease disease);
+	public void addSymptomByDisease(Disease disease, Symptom symptom);
 
 }

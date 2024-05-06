@@ -55,7 +55,7 @@ public class JDBCSymptomManager implements SymptomManager {
 	public List<Symptom> listSymptomsByDisease(int disease_id) {
 		List<Symptom> symptoms = new ArrayList<Symptom>();
 		try {
-			String sql = "SELECT * FROM symptoms JOIN disease_has_symptoms ON  WHERE disease_id LIKE ?";
+			String sql = "SELECT nameSymptom, pain_management FROM symptoms JOIN disease_has_symptoms ON symptom_id WHERE disease_id LIKE ?";
 			PreparedStatement p;
 			p = c.prepareStatement(sql);
 			p.setInt(1, disease_id);
@@ -104,12 +104,6 @@ public class JDBCSymptomManager implements SymptomManager {
 			ps.executeUpdate();
 			ps.close();	
 			
-			String sql = "DELETE FROM disease_has_symptom WHERE symptom_id = ?";
-			PreparedStatement ps1;
-			ps1 = c.prepareStatement(sql);
-			ps1.setInt(1, symptom.getIdSymptom());
-			ps1.executeUpdate();
-			ps1.close();
 			
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

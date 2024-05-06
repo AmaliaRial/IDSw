@@ -24,6 +24,11 @@ public class Symptom implements Serializable{
 			this.diseases = new ArrayList<Disease>();
 		}
 		
+		public Symptom(Integer idSymptom) {
+			super();
+			this.idSymptom = idSymptom;
+		}
+		
 		
 		
 		public Symptom(List<Disease> diseases) {

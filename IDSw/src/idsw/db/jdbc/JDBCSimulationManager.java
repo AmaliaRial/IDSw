@@ -50,7 +50,7 @@ public class JDBCSimulationManager implements SimulationManager {
 	
 	}
 	
-	private Simulation createSimulation(Virtual_Population virtualPopulation) {
+	public Simulation createSimulation(Virtual_Population virtualPopulation) {
 		conMan.getVirtualPopulationMan().fillPopulation(virtualPopulation);
 		List<Virtual_Person> people= virtualPopulation.getVirtual_people();
 		//TODO cambiar de atributo en simulation estas tres listas en vez de graph
@@ -130,7 +130,7 @@ public class JDBCSimulationManager implements SimulationManager {
 		
 		GraphUtilities graphUtility=new GraphUtilities();
 		
-		byte[] blob= graphUtility.graphIntoBinary(graphUtility.graphicSimulation(illCounterData,deathCounterData, peopleCounterData));
+		byte[] blob= graphUtility.graphIntoBinary(graphUtility.graphSimulation(illCounterData,deathCounterData, peopleCounterData));
 	
 		Simulation simulation=new Simulation(total_Infections,total_deaths, total_FinalInmunitations, peopleCounter, blob, virtualPopulation);
 		return simulation;

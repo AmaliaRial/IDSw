@@ -74,10 +74,15 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 		return VirtualPopulation_Selected;
 	}
 	
+	
+	/**
+	 * makes a set of the virtual people by the percentage of each tipe
+	 */
 	public void fillPopulation(Virtual_Population virtualPopulation){
 		List<Virtual_Person> people= new ArrayList<Virtual_Person>();
-		int intervalPercentageHealthy=(int) (virtualPopulation.getP_healthy()*100);
-		int intervalPercentageImmune= (int) (virtualPopulation.getP_immune()*100);
+		int peopleNum=virtualPopulation.getInitial_population();
+		int intervalPercentageHealthy=(int) ((virtualPopulation.getP_healthy()/100)*peopleNum);
+		int intervalPercentageImmune= (int) ((virtualPopulation.getP_immune()/100)*peopleNum);
 		for(int i=0; i<virtualPopulation.getInitial_population(); i++ ){
 			 //TODO en utilities asegurarse que la suma de los porcentajes no sea mayor que 100
 			 if(i<intervalPercentageHealthy) {
@@ -85,12 +90,12 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 				 Virtual_Person vPerson=new Virtual_Person(healthy,0,0);
 				 people.add(vPerson);
 				 
-			 }else if(intervalPercentageHealthy<i && i<(intervalPercentageHealthy+intervalPercentageImmune)){
+			 }else if(intervalPercentageHealthy<=i && i<(intervalPercentageHealthy+intervalPercentageImmune)){
 				 
 				 State immune= State.IMMUNE;
 				 Virtual_Person vPerson=new Virtual_Person(immune,0,virtualPopulation.getImmunity_period());
 				 people.add(vPerson);
-			 }else if((intervalPercentageHealthy+intervalPercentageImmune)<i){
+			 }else if((intervalPercentageHealthy+intervalPercentageImmune)<=i){
 				 
 				 State ill= State.ILL;
 				 int disease_countdown= (int)(virtualPopulation.getDisease().getIncubation_period()+
@@ -132,6 +137,7 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 		return matchingPopulation;
 		
 	}
+	
 	
 
 }

@@ -140,13 +140,16 @@ public class Virtual_Population implements Serializable{
 		
 		public static void main(String args[]) {
 			Disease disease= new Disease();
-			disease.setIncubation_period((float) 1);
-			disease.setDevelopment_period((float) 2);
-			disease.setConvalescence_period((float) 1);
-			disease.setMortality_rate((float) 0.3);
+			disease.setIncubation_period((float) 35);
+			disease.setDevelopment_period((float) 12);
+			disease.setConvalescence_period((float) 21);
+			disease.setNameDisease("Mononucleosis");
+			disease.setMortality_rate((float) 8);
+			disease.setInfectious_rate((float)3.5);
 			ConnectionManager conMan= new ConnectionManager();
 			Virtual_Population populationTest= new Virtual_Population(20,(float) 30,(float) 60,(float) 10, 5, disease);
 			conMan.getVirtualPopulationMan().fillPopulation(populationTest);
+			Simulation simulationTest=conMan.getSimulationMan().createSimulation(populationTest);
 			System.out.println(populationTest);
 		}
 		

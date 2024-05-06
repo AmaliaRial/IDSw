@@ -5,6 +5,14 @@ import java.sql.Blob;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
+import idsw.db.jdbc.ConnectionManager;
+import idsw.db.utilities.GraphUtilities;
+
 public class Simulation implements Serializable{
 	
 	/**
@@ -131,5 +139,30 @@ public class Simulation implements Serializable{
 	public void setVpopulation(Virtual_Population vpopulation) {
 		this.Vpopulation = vpopulation;
 	}
+	
+	
+	public static void main(String[] args) {
+        // Example usage
+        //List<Integer> deathCounterData = List.of(5, 20, 16, 10, 2);
+        //List<Integer> peopleCounterData = List.of(300, 280, 264, 254, 252);
+        GraphUtilities utilGraph= new GraphUtilities();
+
+        //JFreeChart simulationChart = utilGraph.graphSimulation(illCounterData, deathCounterData, peopleCounterData);
+        
+        Disease disease= new Disease();
+		disease.setIncubation_period((float) 35);
+		disease.setDevelopment_period((float) 12);
+		disease.setConvalescence_period((float) 21);
+		disease.setNameDisease("Mononucleosis");
+		
+		JFreeChart developmentChart=utilGraph.graphDiseaseDevelopment(disease);
+      
+        JFrame frame = new JFrame("Combined Line Chart");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ChartPanel chartPanel = new ChartPanel(developmentChart);
+        frame.getContentPane().add(chartPanel);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
 }

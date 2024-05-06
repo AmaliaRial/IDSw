@@ -104,12 +104,6 @@ public class JDBCSymptomManager implements SymptomManager {
 			ps.executeUpdate();
 			ps.close();	
 			
-			String sql = "DELETE FROM disease_has_symptom WHERE symptom_id = ?";
-			PreparedStatement ps1;
-			ps1 = c.prepareStatement(sql);
-			ps1.setInt(1, symptom.getIdSymptom());
-			ps1.executeUpdate();
-			ps1.close();
 			
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

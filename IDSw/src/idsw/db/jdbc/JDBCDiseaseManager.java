@@ -131,7 +131,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	public Disease getDisease(int idDisease) {
 		Disease disease = null;
 		try {
-			String sql = "SELECT * FROM diseases WHERE id = " + idDisease;
+			String sql = "SELECT * FROM diseases WHERE IDdisease = " + idDisease;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
@@ -187,7 +187,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	@Override
 	public void modifyDisease(Disease disease) {
 		try {
-			String template = "UPDATE diseases SET nameDisease = ? AND infectious_rate = ? AND mortality_rate = ? AND incubation_period = ? AND develpment_period = ? AND convalescense_period = ? AND cause = ? AND comment_section = ? WHERE IDtreatment = ?;";
+			String template = "UPDATE diseases SET nameDisease = ?, infectious_rate = ?, mortality_rate = ?, incubation_period = ?, development_period = ?, convalescence_period = ?, cause = ?, comment_section = ? WHERE IDdisease = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, disease.getNameDisease());
@@ -198,6 +198,7 @@ public class JDBCDiseaseManager implements DiseaseManager {
 			ps.setFloat(6, disease.getConvalescence_period());
 			ps.setString(7, disease.getCause().name());
 			ps.setString(8, disease.getComment_section());
+			ps.setInt(9, disease.getIdDisease());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

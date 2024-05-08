@@ -74,24 +74,24 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return treatments;
 	}
 
 	@Override
 	public Treatment getTreatment(int idTreatment) {
+		Treatment treatment = new Treatment();
 		try {
-			String sql = "SELECT * FROM treatments WHERE id = " + idTreatment;
+			String sql = "SELECT * FROM treatments WHERE IDtreatment = " + idTreatment;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Treatment treatment = new Treatment(rs.getInt("IDtreatment"), rs.getString("nameTreatment"), rs.getString("comment_section"));
-			return treatment;
+			treatment = new Treatment(rs.getInt("IDtreatment"), rs.getString("nameTreatment"), rs.getString("comment_section"));
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}		
-		return null;
+		return treatment;
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	@Override
 	public void modifyTreatment(Treatment treatment) {
 		try {
-			String template = "UPDATE treatments SET nameTreatment = ? AND comment_section = ? WHERE IDtreatment = ?;";
+			String template = "UPDATE treatments SET nameTreatment = ?, comment_section = ? WHERE IDtreatment = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, treatment.getNameTreatment());

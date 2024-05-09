@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.persistence.exceptions.IntegrityChecker;
+
 import idsw.db.enums.Cause;
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.jdbcInterfaces.DiagnosisManager;
@@ -131,7 +133,7 @@ public class Menu {
 					break;
 				}
 				case 16:{
-					newTreatmentByDisease();
+					//nothing 
 					break;
 				}
 				case 17:{
@@ -179,10 +181,17 @@ public class Menu {
 		System.out.println("Comment Section:");
 		String commentSec = r.readLine();
 		
-		
-		
 		Disease disease = new Disease(name, infectRate, mortRate, incubPeriod, devPeriod, convPeriod, cause, commentSec);
 		diseaseMan.addDisease(disease);
+		
+		System.out.println("\n Would you like to add treatments to this disease? Please answer with a Yes or a NO :");
+		String answer = r.readLine();
+		if (answer.equals("Yes")) {
+			newTreatmentByDisease(disease);
+		} else {
+
+		}
+		
 	}
 	
 	
@@ -268,7 +277,15 @@ public class Menu {
 	}
 	
 	private static void modifyTreatment() throws NumberFormatException, IOException{
-		Treatment treatment = null;
+		System.out.println("\nThese are the the treatments in the database:");
+		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+		for (Treatment treatment : treatments) {
+			System.out.println(treatment);
+		}
+		System.out.println("\nPlease enter the ID of the treatment you wish to modify:");
+		Integer id = Integer.parseInt(r.readLine());
+		Treatment treatment = treatmentMan.getTreatment(id);
+		
 		System.out.println("Here are the actual Treatment's values");
 		System.out.println("Press enter to keep them or type a new value.");
 		System.out.println("Name (" + treatment.getNameTreatment() + "): ");
@@ -294,12 +311,13 @@ public class Menu {
 		for(Treatment treatment : treatments) {
 			System.out.println(treatment);
 		}
-		System.out.println("Please enter the id of the Treatment you want to delete:");
+		System.out.println("\n Please enter the id of the Treatment you want to delete:");
 		Integer id = Integer.parseInt(r.readLine());
 		treatmentMan.deleteTreatment(id);
 	}
 	
 	private static void searchTreatmentByName() throws NumberFormatException, IOException{
+
 		System.out.println("Please enter the name of the treatment:");
 		String name = r.readLine();
 		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName(name);
@@ -309,25 +327,32 @@ public class Menu {
 	}
 
 	
-	private static void updateDisease() throws NumberFormatException, IOException{
-		Disease disease = null;
-		System.out.println("Here are the actual Disease's values");
+	private static void updateDisease() throws NumberFormatException, IOException{	
+		System.out.println("\nThese are the the diseases in the database:");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for (Disease disease : diseases) {
+			System.out.println(disease);
+		}
+		System.out.println("\n Please enter the ID of the disease you wish to modify:");
+		Integer id = Integer.parseInt(r.readLine());
+		Disease disease = diseaseMan.getDisease(id);
+		
 		System.out.println("Press enter to keep them or type a new value.");
 		System.out.println("Name (" + disease.getNameDisease() + "): ");
 		String newName = r.readLine();
 		System.out.println("Infectious Rate ("+ disease.getInfectious_rate() +"): ");
-		Float newInfectiousRate = Float.parseFloat(r.readLine());
+		String newInfectiousRate = r.readLine();
 		System.out.println("Mortality Rate ("+ disease.getMortality_rate() +"): ");
-		Float newMortalityRate = Float.parseFloat(r.readLine());
+		String newMortalityRate = r.readLine();
 		System.out.println("Incubation Period ("+ disease.getIncubation_period() +"): ");
-		Float newIncubationPeriod = Float.parseFloat(r.readLine());
+		String newIncubationPeriod = r.readLine();
 		System.out.println("Development Period ("+ disease.getDevelopment_period() +"): ");
-		Float newDevelopmentPeriod = Float.parseFloat(r.readLine());
+		String newDevelopmentPeriod = r.readLine();
 		System.out.println("Convalescence Period ("+ disease.getConvalescence_period() +"): ");
-		Float newConvalescencePeriod = Float.parseFloat(r.readLine());
+		String newConvalescencePeriod = r.readLine();
 		System.out.println("Cause ("+ disease.getCause().name() +"): ");
 		String cause = r.readLine();
-		Cause newCause = Cause.valueOf(cause);
+		
 		System.out.println("Comments (" + disease.getComment_section() + "): ");
 		String newComments = r.readLine();
 		if (!newName.equals("")) {
@@ -336,26 +361,27 @@ public class Menu {
 		}
 		if (!newInfectiousRate.equals("")) {
 			// If I don't keep
-			disease.setInfectious_rate(newInfectiousRate);
+			disease.setInfectious_rate(Float.parseFloat(newInfectiousRate));
 		}
 		if (!newMortalityRate.equals("")) {
 			// If I don't keep
-			disease.setMortality_rate(newMortalityRate);
+			disease.setMortality_rate(Float.parseFloat(newMortalityRate));
 		}
 		if (!newIncubationPeriod.equals("")) {
 			// If I don't keep
-			disease.setIncubation_period(newIncubationPeriod);
+			disease.setIncubation_period(Float.parseFloat(newIncubationPeriod));
 		}
 		if (!newDevelopmentPeriod.equals("")) {
 			// If I don't keep
-			disease.setDevelopment_period(newDevelopmentPeriod);
+			disease.setDevelopment_period(Float.parseFloat(newDevelopmentPeriod));
 		}
 		if (!newConvalescencePeriod.equals("")) {
 			// If I don't keep
-			disease.setConvalescence_period(newConvalescencePeriod);
+			disease.setConvalescence_period(Float.parseFloat(newConvalescencePeriod));
 		}
-		if (!newCause.equals("")) {
+		if (!cause.equals("")) {
 			// If I don't keep
+			Cause newCause = Cause.valueOf(cause);
 			disease.setCause(newCause);
 		}
 		if (newComments.equals("")) { // If I keep
@@ -383,8 +409,19 @@ public class Menu {
 		//Symptom symptom = symptomMan.getSymptom(idSymptom)
 	}
 	
-	private static void newTreatmentByDisease() throws NumberFormatException, IOException{
-		//TODO newTreatment By Disease
+	private static void newTreatmentByDisease(Disease disease) throws NumberFormatException, IOException{
+		System.out.println("These are the treatments in the database, please insert the Id of the ones belonging to the " + disease.getNameDisease() + " disease: ");
+		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+		for(Treatment treatment : treatments) {
+			System.out.println(treatment);
+		}
+		Integer id = null;
+		do {
+			System.out.println("Please enter the ID of the treatment you want to add (enter 0 to finish): ");
+			id = Integer.parseInt(r.readLine());
+			Treatment treatment = treatmentMan.getTreatment(id);
+			treatmentMan.addTreatmentByDisease(disease, treatment);
+		} while (id != 0);
 	}
 	
 	private static void newTreatmentByDiagnosis() throws NumberFormatException, IOException{

@@ -80,7 +80,7 @@ public class JDBCSymptomManager implements SymptomManager {
 	@Override
 	public Symptom getSymptom(int idSymptom) {
 		try {
-			String sql = "SELECT * FROM symptoms WHERE id = " + idSymptom;
+			String sql = "SELECT * FROM symptoms WHERE IDsymptom = " + idSymptom;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
@@ -95,12 +95,12 @@ public class JDBCSymptomManager implements SymptomManager {
 	
 
 	@Override
-	public void deleteSymptom(Symptom symptom) {
+	public void deleteSymptom(int  idSymptom) {
 		try {
 			String template = "DELETE FROM disease_has_symptom WHERE symptom_id = ?";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			ps.setInt(1, symptom.getIdSymptom());
+			ps.setInt(1, idSymptom);
 			ps.executeUpdate();
 			ps.close();	
 			

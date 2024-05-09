@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -29,9 +30,8 @@ public class JDBCSimulationManager implements SimulationManager {
 	}
 	
 	@Override
-	public void addSimulation(Virtual_Population virtualPopulation) {
+	public void addSimulation(Simulation simulation) {
 		// TODO añadir los data del resultato
-		Simulation simulation=createSimulation(virtualPopulation);
 		try {
 			String template = "INSERT INTO simulations(totalInfections, totalDeaths, totalImmunity, totalPopulation, virtual_population) VALUES ('?','?','?','?','?')";
 			PreparedStatement pstmt;
@@ -74,9 +74,10 @@ public class JDBCSimulationManager implements SimulationManager {
 				 virtualPopulation.getDisease().getConvalescence_period());
 		int immunity_FullPeriod= virtualPopulation.getImmunity_period();
 		double likelihood_death= (virtualPopulation.getDisease().getMortality_rate())*100;
+		double infectiousRate=(double)virtualPopulation.getDisease().getInfectious_rate();
 		
-		while(peopleCounter!=0 || illCounter!=0) {
-			double exponent= -(virtualPopulation.getDisease().getInfectious_rate()*(illCounter/peopleCounter));
+		while(peopleCounter!=0 && illCounter!=0) {
+			double exponent= -(infectiousRate*((double)illCounter/(double)peopleCounter));
 			double likelihood_infection=((1-Math.exp(exponent))*10000);
 			peopleCounter=0;
 			illCounter=0;
@@ -103,8 +104,8 @@ public class JDBCSimulationManager implements SimulationManager {
 					peopleCounter++;
 				}else if(vPerson.getState().equals(State.ILL)) {
 					randNum= random.nextInt(10000);
-					if(randNum<likelihood_death) {
-						people.remove(vPerson);
+					if(randNum<likelihood_death && vPerson.getDisease_countdown()==disease_FullCountdown) {
+						vPerson.setState(State.DECEASED);
 						deathCounter++;
 					}else{
 						int diseasePersonalCountdown= vPerson.getDisease_countdown();
@@ -119,6 +120,7 @@ public class JDBCSimulationManager implements SimulationManager {
 					}
 				}
 			}
+
 			illCounterData.add(illCounter);
 			deathCounterData.add(deathCounter);
 			peopleCounterData.add(peopleCounter);

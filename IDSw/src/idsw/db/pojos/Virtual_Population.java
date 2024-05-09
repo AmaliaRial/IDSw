@@ -1,10 +1,25 @@
 package idsw.db.pojos;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import javax.swing.ImageIcon;
 import idsw.db.jdbc.*;
+import idsw.db.utilities.GraphUtilities;
 
 public class Virtual_Population implements Serializable{
 	
@@ -140,18 +155,54 @@ public class Virtual_Population implements Serializable{
 		
 		public static void main(String args[]) {
 			Disease disease= new Disease();
-			disease.setIncubation_period((float) 35);
-			disease.setDevelopment_period((float) 12);
-			disease.setConvalescence_period((float) 21);
-			disease.setNameDisease("Mononucleosis");
-			disease.setMortality_rate((float) 8);
-			disease.setInfectious_rate((float)3.5);
+			disease.setIncubation_period((float) 5);
+			disease.setDevelopment_period((float) 10);
+			disease.setConvalescence_period((float) 14);
+			disease.setNameDisease("COVID_19");
+			disease.setMortality_rate((float) 1.5);
+			disease.setInfectious_rate((float)2.5);
 			ConnectionManager conMan= new ConnectionManager();
-			Virtual_Population populationTest= new Virtual_Population(20,(float) 30,(float) 60,(float) 10, 5, disease);
+			Virtual_Population populationTest= new Virtual_Population(10000,(float) 5,(float) 90,(float) 5, 24, disease);
 			conMan.getVirtualPopulationMan().fillPopulation(populationTest);
-			Simulation simulationTest=conMan.getSimulationMan().createSimulation(populationTest);
 			System.out.println(populationTest);
+			Simulation simulationTest=conMan.getSimulationMan().createSimulation(populationTest);
+			System.out.println(simulationTest);
+			
+			GraphUtilities utilGraph= new GraphUtilities();
+			BufferedImage chartSimulationImage= utilGraph.binaryIntoImage(simulationTest.getSimulationGraph());
+			
+			showImage(chartSimulationImage);
 		}
 		
+		public static void showImage(BufferedImage image) {
+	        // Crear una ventana Swing
+	        JFrame frame = new JFrame("Imagen");
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	        // Crear un panel para mostrar la imagen
+	        JPanel panel = new JPanel() {
+	            @Override
+	            protected void paintComponent(Graphics g) {
+	                super.paintComponent(g);
+	                // Dibujar la imagen en el panel
+	                g.drawImage(image, 0, 0, null);
+	            }
+
+	            @Override
+	            public Dimension getPreferredSize() {
+	                // Establecer el tamaño del panel según el tamaño de la imagen
+	                return new Dimension(image.getWidth(), image.getHeight());
+	            }
+	        };
+
+	        // Añadir el panel a la ventana
+	        frame.getContentPane().add(panel);
+
+	        // Ajustar el tamaño de la ventana automáticamente
+	        frame.pack();
+
+	        // Mostrar la ventana
+	        frame.setVisible(true);
+	    }
 		
 }

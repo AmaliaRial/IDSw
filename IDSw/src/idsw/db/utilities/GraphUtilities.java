@@ -1,6 +1,8 @@
 package idsw.db.utilities;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,21 +46,25 @@ public class GraphUtilities implements StatisticsManager{
 
 	@Override
 	public byte[] graphIntoBinary(JFreeChart chart) {
-		BufferedImage image = chart.createBufferedImage(800, 600);
+		 // Crear un BufferedImage para almacenar la imagen del gráfico
+        BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
         
+        // Renderizar el gráfico en el BufferedImage
+        Graphics2D g2 = image.createGraphics();
+        chart.draw(g2, new Rectangle(800, 600));
+        g2.dispose();
+
         // Convertir la imagen a bytes en formato PNG
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        
+
         try {
-			ImageIO.write(image, "png", baos);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Error in image conversion");
-		}
-        
-        byte[] imageBytes = baos.toByteArray();
-        
-        return imageBytes;
+            ImageIO.write(image, "png", baos);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error in image conversion");
+        }
+
+        return baos.toByteArray();
 	}
 
 	@Override
@@ -109,16 +115,17 @@ public class GraphUtilities implements StatisticsManager{
 
 	@Override
 	public BufferedImage binaryIntoImage(byte[] blob) {
-		 ByteArrayInputStream bais = new ByteArrayInputStream(blob);
-	     try {
-			BufferedImage image = ImageIO.read(bais);
-			 return image; 
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Error loading the image");
-		}
-	     //the function return null iff errors
-	    return null; 
+		BufferedImage image = null;
+        try {
+            // Leer la imagen desde el arreglo de bytes
+            ByteArrayInputStream bis = new ByteArrayInputStream(blob);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al leer la imagen desde el arreglo de bytes");
+        }
+        return image;
 	}
 
 	@Override

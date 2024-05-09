@@ -9,7 +9,7 @@ public interface DiagnosisManager {
 	public List<Diagnosis> listSixRecentDiagnosis();
 	public List<Diagnosis> listAllDiagnosis();
 	public Diagnosis getDiagnosis( int idDiagnosis);
-	public void deleteDiagnosis(Diagnosis diagnosis);
+	public void deleteDiagnosis(int idDiagnosis);
 	public void addDiagnosis(Diagnosis diagnosis);
 	public void modifyDiagnosis(Diagnosis diagnosis);
 

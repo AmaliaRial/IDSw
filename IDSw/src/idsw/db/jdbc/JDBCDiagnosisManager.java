@@ -29,7 +29,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	public List<Diagnosis> listSixRecentDiagnosis() {
 		List<Diagnosis> diagnosises = new ArrayList<Diagnosis>();
 		try {
-			String sql = "SELECT * FROM diagnosis GROUP BY IDdiagnosis DESC LIMIT 6; ";
+			String sql = "SELECT * FROM diagnosis ORDER BY IDdiagnosis DESC LIMIT 6; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
 			ResultSet rs= ps.executeQuery();
@@ -38,8 +38,9 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				String name = rs.getString("nameDiagnosis");
 				Date date = rs.getDate("date");
 				String comments = rs.getString("comment_section");
-		
-				Diagnosis diagnosis = new Diagnosis(id, name, date, comments);
+				Disease disease = conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
+				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
+				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
 				diagnosises.add(diagnosis);
 			
 			}
@@ -59,7 +60,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	public List<Diagnosis> listAllDiagnosis() {
 		List<Diagnosis> diagnosises = new ArrayList<Diagnosis>();
 		try {
-			String sql = "SELECT * FROM diagnosis GROUP BY IDdiagnosis DESC; ";
+			String sql = "SELECT * FROM diagnosis ORDER BY IDdiagnosis DESC; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
 			ResultSet rs= ps.executeQuery();
@@ -68,8 +69,9 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				String name = rs.getString("nameDiagnosis");
 				Date date = rs.getDate("date");
 				String comments = rs.getString("comment_section");
-		
-				Diagnosis diagnosis = new Diagnosis(id, name, date, comments);
+				Disease disease = conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
+				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
+				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
 				diagnosises.add(diagnosis);
 			
 			}
@@ -86,37 +88,32 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 
 	@Override
 	public Diagnosis getDiagnosis(int idDiagnosis) {
+		Diagnosis diagnosis = null;
 		try {
 			String sql = "SELECT * FROM diagnosis WHERE id = " + idDiagnosis;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Diagnosis diagnosis = new Diagnosis(rs.getInt("IDdiagnosis"), rs.getString("nameDiagnosis"),rs.getDate("date") , rs.getString("comment_section"));
+			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , rs.getDate("date") , rs.getString("comment_section"), conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id")) , conMan.getDiseaseMan().getDisease(rs.getInt("disease_id")));
 			return diagnosis;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}		
-		return null;
+		return diagnosis;
 	}
 
+	// con int o con diagnosis???
 	@Override
-	public void deleteDiagnosis(Diagnosis diagnosis) {
+	public void deleteDiagnosis(int IDiagnosis) {
 		try {
 			String template = "DELETE FROM diagnosis WHERE IDdiagnosis = ?";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			ps.setInt(1,diagnosis.getIdDiagnosis());
+			ps.setInt(1,IDiagnosis);
 			ps.executeUpdate();
 			ps.close();	
-			
-			String sql = "DELETE FROM diagnosis WHERE IDdiagnosis = ?";
-			PreparedStatement ps1;
-			ps1 = c.prepareStatement(sql);
-			ps1.setInt(1, diagnosis.getIdDiagnosis());
-			ps1.executeUpdate();
-			ps1.close();
 			
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -125,6 +122,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 
 	}
 
+	//Y el treatment falta
 	@Override
 	public void addDiagnosis(Diagnosis diagnosis) {
 		try {
@@ -142,13 +140,14 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
+		
 	}
 
-	//la fecha se puede cambiar???
+	//Treatment falta
 	@Override
 	public void modifyDiagnosis(Diagnosis diagnosis) {
 		try {
-			String template = "UPDATE diagnosis SET nameDiagnosis = ? AND date = ? AND comment_section = ? AND WHERE IDdiagnosis = ?;";
+			String template = "UPDATE diagnosis SET nameDiagnosis = ?, AND date = ?, AND comment_section = ?, AND WHERE IDdiagnosis = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, diagnosis.getNameDiagnosis());

@@ -20,7 +20,7 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 		this.c = conMan.getConnection();
 	}
 
-	
+	//En el get tendria q enseñar los medical records
 	@Override
 	public Medical_Record getMedical_Record(int idMedical_record) {
 		try {
@@ -29,7 +29,7 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Medical_Record medical_record = new Medical_Record(rs.getInt("IDmedical_record"));
+			Medical_Record medical_record = new Medical_Record(rs.getInt("IDmedical_record"), rs.getInt("IDpatient"));
 			return medical_record;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -42,10 +42,10 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 	@Override
 	public void addMedicalReport(Medical_Record medicalRecord) {
 		try {
-			String template = "INSERT INTO medical_records (patient) VALUES (?);";
+			String template = "INSERT INTO medical_records (IDpatient) VALUES (?);";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			ps.setInt(1, medicalRecord.getPatient().getIdPatient());
+			ps.setInt(1, medicalRecord.getIdPatient());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

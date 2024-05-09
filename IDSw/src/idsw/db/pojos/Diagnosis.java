@@ -2,6 +2,8 @@ package idsw.db.pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,19 +24,25 @@ public class Diagnosis implements Serializable{
 		
 		public Diagnosis() {
 			super();
-			this.setTreatments(new ArrayList<Treatment>());
+			this.treatments = new ArrayList<Treatment>();
 		}
 		
 		
 		
-		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, Date date, String comment_section) {
+		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, Date date, String comment_section, Medical_Record medicalRecord,Disease disease) {
 			super();
 			this.idDiagnosis = idDiagnosis;
 			this.nameDiagnosis = nameDiagnosis;
 			this.date = date;
 			this.comment_section = comment_section;
+			this.medicalRecord = medicalRecord;
+			this.disease = disease;
+			this.treatments = new ArrayList<Treatment>();
+			
 			
 		}
+
+
 
 		public Integer getIdDiagnosis() {
 			return idDiagnosis;
@@ -56,8 +64,12 @@ public class Diagnosis implements Serializable{
 			return date;
 		}
 
-		public void setDate(Date date) {
-			this.date = date;
+		// Esto se hara fuera supongo
+		public void setDate() {
+			ZoneId defaultZoneId = ZoneId.systemDefault();
+			LocalDate todaysDate = LocalDate.now();
+		    Date date = (Date) Date.from(todaysDate.atStartOfDay(defaultZoneId).toInstant());
+		    this.date = date;
 		}
 
 		public Disease getDisease() {

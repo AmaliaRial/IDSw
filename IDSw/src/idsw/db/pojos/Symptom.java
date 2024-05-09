@@ -36,7 +36,13 @@ public class Symptom implements Serializable{
 			this.diseases = diseases;
 		}
 
+		
 
+		public Symptom(String nameSymptom, String pain_management) {
+			super();
+			this.nameSymptom = nameSymptom;
+			this.pain_management = Pain_Management.valueOf(pain_management);
+		}
 
 		public Symptom (Integer idSymptom, String nameSymptom, String pain_management) {
 			super();

@@ -90,21 +90,21 @@ public class Simulation implements Serializable{
 		this.totalPopulation = totalPopulation;
 	}
 
-	//public byte[] getSimulationGraph() {
-	//	return simulationGraph;
-	//}
+	public byte[] getSimulationGraph() {
+		return simulationGraph;
+	}
 
-	//public void setSimulationGraph(byte[] simulationGraph) {
-	//	this.simulationGraph = simulationGraph;
-	//}
+	public void setSimulationGraph(byte[] simulationGraph) {
+		this.simulationGraph = simulationGraph;
+	}
 
-	//public Virtual_Population getVirtualPopulation() {
-	//	return virtualPopulation;
-	//}
+	public Virtual_Population getVirtualPopulation() {
+		return Vpopulation;
+	}
 
-	//public void setVirtualPopulation(Virtual_Population virtualPopulation) {
-	//	this.virtualPopulation = virtualPopulation;
-	//}
+	public void setVirtualPopulation(Virtual_Population virtualPopulation) {
+		this.Vpopulation = virtualPopulation;
+	}
 
 	@Override
 	public int hashCode() {

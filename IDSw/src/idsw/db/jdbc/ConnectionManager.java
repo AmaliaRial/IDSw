@@ -1,6 +1,8 @@
 package idsw.db.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import idsw.db.jdbcInterfaces.*;
@@ -214,6 +216,19 @@ public class ConnectionManager {
 		}
 	}
 	
+	public Integer getLastInsertedID() {
+		Integer lastId = null;
+		try {
+		String query = "SELECT last_insert_rowid() AS lastId";
+		PreparedStatement p = c.prepareStatement(query);
+		ResultSet rs = p.executeQuery();
+		lastId = rs.getInt("lastId");
+		} catch (SQLException e) {
+			System.out.println("Error with database");
+			e.printStackTrace();
+		}
+		return lastId;
+	}
 
 	public DiagnosisManager getDiagnosisMan() {
 		return diagnosisMan;

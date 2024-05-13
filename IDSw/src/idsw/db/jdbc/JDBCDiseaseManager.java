@@ -107,45 +107,34 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	 */
 	@Override
 	public List<Disease> listMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
-		List<Disease> diseases = new ArrayList<Disease>();
-		try {
-			String template = "SELECT nameDisease, infectious_rate, mortality_rate, incubation_period, development_period, convalescence_period, cause, comment_section FROM diseases LEFT JOIN disease_has_symptoms ON IDdisease = disease_id JOIN symptoms ON symptom_id = IDsymptom WHERE ?);";
-			
-			String condition="";
-			for(Symptom symptom:symptoms) {
-			    condition="AND"+condition+"IDsymptom="+symptom.getIdSymptom();
-			}
-			condition.replaceFirst("AND","");
-			condition=condition+";";
-			
-			PreparedStatement p;
-			p = c.prepareStatement(template);
-			p.setString(1, condition);
-			
-			ResultSet rs = p.executeQuery();
-			while(rs.next()) {
-				String diseaseName = rs.getString("nameDisease");
-				Float infectiousRate = rs.getFloat("infectious_rate");
-				Float mortalityRate = rs.getFloat("mortality_rate");
-				Float incubationPeriod = rs.getFloat("incubation_period");
-				Float developmentPeriod = rs.getFloat("development_period");
-				Float convalescencePeriod = rs.getFloat("convalescence_period");
-				String cause1 = rs.getString("cause");
-				String commentSection = rs.getString("comment_section");
-				Disease disease = new Disease(diseaseName, infectiousRate, mortalityRate, incubationPeriod, developmentPeriod, convalescencePeriod, cause1, commentSection);
-				diseases.add(disease);
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}catch (NullPointerException e) {
-			System.out.println("The list provided is Null, please insert some data.");
-			e.printStackTrace();
-		}
-		
-		//falta especificar que tiene que ser tb como los otros
-		
+		List<Disease> diseases = new ArrayList<>();
+	    try {
+	        StringBuilder conditionBuilder = new StringBuilder();
+	        for (Symptom symptom : symptoms) {
+	            conditionBuilder.append("AND IDsymptom = ").append(symptom.getIdSymptom()).append(" ");
+	        }
+	        // Remove the first "AND "
+	        if (conditionBuilder.length() > 0) {
+	            conditionBuilder.delete(0, 4); //AND + " "
+	        }
+
+	        String template = "SELECT IDdisease, nameDisease, comment_section FROM diseases JOIN disease_has_symptoms ON IDdisease = disease_id JOIN symptoms ON IDsymptom = symptom_id WHERE "
+	                + conditionBuilder.toString();
+
+	        PreparedStatement p = c.prepareStatement(template);
+	        ResultSet rs = p.executeQuery();
+	        while (rs.next()) {
+	        	int idDisease = rs.getInt("IDdisease");
+	            String diseaseName = rs.getString("nameDisease");
+	            String commentSection = rs.getString("comment_section");
+	            Disease disease = new Disease(idDisease, diseaseName, commentSection);
+	            diseases.add(disease);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error in the database");
+	        e.printStackTrace();
+	    }
+	
 		return diseases;
 	}
 

@@ -242,7 +242,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			for (Disease disease : diseases) {
 				condition = "AND" +condition+ "IDdisease = "+ disease.getIdDisease();
 			}
-			condition.replaceFirst("AND", "");
+			condition.replaceFirst("AND ", "");
 			condition = condition + ";";
 			
 			PreparedStatement p;
@@ -273,7 +273,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	        }
 	        // Remove the first "AND "
 	        if (conditionBuilder.length() > 0) {
-	            conditionBuilder.delete(0, 4);
+	            conditionBuilder.delete(0, 4); //AND + " "
 	        }
 
 	        String template = "SELECT IDtreatment, nameTreatment, t.comment_section FROM treatments AS t JOIN disease_has_treatments ON IDtreatment = treatment_id JOIN diseases ON IDdisease = disease_id WHERE "

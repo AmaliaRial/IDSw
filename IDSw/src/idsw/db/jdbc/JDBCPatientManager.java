@@ -9,6 +9,7 @@ import java.sql.Statement;
 import idsw.db.jdbcInterfaces.PatientManager;
 import idsw.db.pojos.Patient;
 import idsw.db.pojos.Symptom;
+import idsw.db.pojos.Treatment;
 
 public class JDBCPatientManager implements PatientManager {
 	
@@ -53,11 +54,11 @@ public class JDBCPatientManager implements PatientManager {
 		}
 		
 	}
-
+	
 	@Override
 	public void modifyPatient(Patient patient) {
 		try {
-			String template = "UPDATE patients SET namePatient = ? AND surname = ? AND doB = ? WHERE IDpatient = ?;";
+			String template = "UPDATE patients SET namePatient = ?, surname = ?, doB = ? WHERE IDpatient = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, patient.getNamePatient());

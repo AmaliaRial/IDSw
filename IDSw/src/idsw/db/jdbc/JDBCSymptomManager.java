@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import idsw.db.enums.Pain_Management;
 import idsw.db.jdbcInterfaces.SymptomManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
@@ -48,32 +49,45 @@ public class JDBCSymptomManager implements SymptomManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
-		return null;
+		return symptoms;
 	}
 	
-	@Override
-	public List<Symptom> listSymptomsByDisease(int disease_id) {
+	
+	
+	@Override	
+	public List<Symptom> listSymptomsByDisease(List<Disease> diseases) {
 		List<Symptom> symptoms = new ArrayList<Symptom>();
 		try {
-			String sql = "SELECT nameSymptom, pain_management FROM symptoms JOIN disease_has_symptoms ON symptom_id WHERE disease_id LIKE ?";
+			String template ="SELECT nameSymptom, pain_management FROM symptoms JOIN disease_has_symptoms ON symptom_id WHERE disease_id LIKE ?";
+			
+			String condition="";
+			for(Disease disease:diseases) {
+			    condition="AND"+condition+"IDdisease="+disease.getIdDisease();
+			}
+			condition.replaceFirst("AND","");
+			condition=condition+";";
+			
 			PreparedStatement p;
-			p = c.prepareStatement(sql);
-			p.setInt(1, disease_id);
-			ResultSet rs= p.executeQuery();
-			Disease disease = conMan.getDiseaseMan().getDisease(disease_id);
+			p = c.prepareStatement(template);
+			p.setString(1, condition);
+			
+			ResultSet rs = p.executeQuery();
 			while(rs.next()) {
-				Integer idDisease = rs.getInt("disease_id");
-				Symptom symptom = new Symptom(idDisease);
+				String nameSymptom = rs.getString("nameSymptom"); 
+				String pain_management = rs.getString("pain_management");
+				Symptom symptom = new Symptom(nameSymptom,pain_management);
 				symptoms.add(symptom);
 			}
-			rs.close();
-			p.close();
-		}catch (SQLException e) {
+			
+		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
+		}catch (NullPointerException e) {
+			System.out.println("The list provided is Null, please insert some data.");
+			e.printStackTrace();
 		}
+		
 		return symptoms;
-
 	}
 	
 	
@@ -97,7 +111,7 @@ public class JDBCSymptomManager implements SymptomManager {
 	@Override
 	public void deleteSymptom(int  idSymptom) {
 		try {
-			String template = "DELETE FROM disease_has_symptom WHERE symptom_id = ?";
+			String template = "DELETE FROM symptoms WHERE IDsymptom = ?";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setInt(1, idSymptom);

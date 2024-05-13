@@ -19,12 +19,22 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	private Connection c;
 	private ConnectionManager conMan;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param conMan
+	 */
 	public JDBCTreatmentManager(ConnectionManager conMan) {
 		this.conMan = conMan;
 		this.c = conMan.getConnection();
 		
 	}
 
+	/**
+	 * JDBC method that lists the 6 most recent added treatments in the database
+	 * 
+	 * @return List of treatments
+	 */
 	@Override
 	public List<Treatment> listSixRecentTreatment() {
 		List<Treatment> treatments = new ArrayList<Treatment>();
@@ -51,6 +61,12 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		return treatments;
 	}
 
+	/**
+	 * DBC method that lists the treatments in the database that match the name provided
+	 * 
+	 * @param Name of the treatment
+	 * @return List of treatments
+	 */
 	@Override
 	public List<Treatment> listMatchingTreatmentsByName(String search) {
 		List<Treatment> treatments = new ArrayList<Treatment>();
@@ -77,6 +93,12 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		return treatments;
 	}
 
+	/**
+	 * JDBC method that provides you with the treatment that matches the id provided
+	 * 
+	 * @param Id of the treatment
+	 * @return List of treatments
+	 */
 	@Override
 	public Treatment getTreatment(int idTreatment) {
 		Treatment treatment = new Treatment();
@@ -94,6 +116,11 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		return treatment;
 	}
 
+	/**
+	 * JDBC method that deletes a Treatment from the database
+	 * 
+	 * @param Id of the treatment
+	 */
 	@Override
 	public void deleteTreatment(int id_treatment) {
 		try {
@@ -111,6 +138,11 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		
 	}
 
+	/**
+	 * JDBC method that adds a treatment into the database
+	 * 
+	 * @param Treatment
+	 */
 	@Override
 	public void addTreatment(Treatment treatment) {
 		try {
@@ -127,6 +159,11 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		}
 	}
 
+	/**
+	 * JDBC method that modifies a treatment in the database
+	 * 
+	 * @param Treatment
+	 */
 	@Override
 	public void modifyTreatment(Treatment treatment) {
 		try {
@@ -145,7 +182,12 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	}
 
 
-
+	/**
+	 * JDBC method that adds a Treatment and a Diagnosis to a many to many relationship table
+	 * 
+	 * @param Diagnosis
+	 * @param Treatment
+	 */
 	@Override
 	public void addTreatmentByDiagnosis(Diagnosis diagnosis, Treatment treatment) {
 		try {
@@ -162,6 +204,13 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		}		
 	}
 
+	
+	/**
+	 * JDBC method that adds a Treatment and a Disease to a many to many relationship table
+	 * 
+	 * @param Disease
+	 * @param Treatment
+	 */
 	@Override
 	public void addTreatmentByDisease(Disease disease, Treatment treatment) {
 		try {
@@ -178,9 +227,15 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		}				
 	}
 
+	/**
+	 * JDBC method that lists all the treatments in the database that match the diseases provided
+	 * 
+	 * @param List of diseases
+	 * @return  List of treatments
+	 */
 	@Override
 	public List<Treatment> listTreatmentsByDisease(List<Disease> diseases) {
-		List<Treatment> treatments = new ArrayList<Treatment>();
+		/*List<Treatment> treatments = new ArrayList<Treatment>();
 		try {
 			String template = " SELECT nameTreatment, t.comment_section FROM treatments AS t JOIN disease_has_treatments ON IDtreatment = treatment_id JOIN diseases ON IDdisease = disease_id WHERE ?;";
 			String condition = "";
@@ -208,9 +263,44 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			System.out.println("The list provided is Null, please insert some data.");
 			e.printStackTrace();
 		}
-		return treatments;
+		return treatments;*/
+		
+		List<Treatment> treatments = new ArrayList<>();
+	    try {
+	        StringBuilder conditionBuilder = new StringBuilder();
+	        for (Disease disease : diseases) {
+	            conditionBuilder.append("AND IDdisease = ").append(disease.getIdDisease()).append(" ");
+	        }
+	        // Remove the first "AND "
+	        if (conditionBuilder.length() > 0) {
+	            conditionBuilder.delete(0, 4);
+	        }
+
+	        String template = "SELECT IDtreatment, nameTreatment, t.comment_section FROM treatments AS t JOIN disease_has_treatments ON IDtreatment = treatment_id JOIN diseases ON IDdisease = disease_id WHERE "
+	                + conditionBuilder.toString();
+
+	        PreparedStatement p = c.prepareStatement(template);
+	        ResultSet rs = p.executeQuery();
+	        while (rs.next()) {
+	        	int idTreatment = rs.getInt("IDTreatment");
+	            String treatmentName = rs.getString("nameTreatment");
+	            String commentSection = rs.getString("comment_section");
+	            Treatment treatment = new Treatment(idTreatment, treatmentName, commentSection);
+	            treatments.add(treatment);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error in the database");
+	        e.printStackTrace();
+	    }
+	    return treatments;
 	}
 
+	/**
+	 * JDBC method that lists all the treatments in the database that match the diagnoses provided
+	 * 
+	 * @param List of diagnoses
+	 * @return  List of treatments
+	 */
 	@Override
 	public List<Treatment> listTreatmentByDiagnosis(List<Diagnosis> diagnoses) {
 		List<Treatment> treatments = new ArrayList<Treatment>();

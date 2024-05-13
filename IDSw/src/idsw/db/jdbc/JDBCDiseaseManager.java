@@ -18,11 +18,21 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	private Connection c;
 	private ConnectionManager conMan;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param conMan
+	 */
 	public JDBCDiseaseManager(ConnectionManager conMan) {
 			this.conMan = conMan;
 			this.c = conMan.getConnection();
 	}
 
+	/**
+	 * JDBC method that lists the 6 most recent added diseases in the database
+	 * 
+	 * @return List of diseases
+	 */
 	@Override
 	public List<Disease> listSixRecentDiseases() {
 		List<Disease> diseases = new ArrayList<Disease>();
@@ -52,6 +62,12 @@ public class JDBCDiseaseManager implements DiseaseManager {
 		return diseases;
 	}
 
+	/**
+	 * JDBC method that lists the diseases in the database that match the name provided
+	 * 
+	 * @param Name of the disease
+	 * @return List of diseases
+	 */
 	@Override
 	public List<Disease> listMatchingDiseaseByName(String name) {
 		List<Disease> diseases = new ArrayList<Disease>();
@@ -83,6 +99,12 @@ public class JDBCDiseaseManager implements DiseaseManager {
 		return diseases;
 	}
 
+	/**
+	 * JDBC method that lists all the diseases in the database that match the symptoms provided
+	 * 
+	 * @param List of symptoms
+	 * @return List of diseases
+	 */
 	@Override
 	public List<Disease> listMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
 		List<Disease> diseases = new ArrayList<Disease>();
@@ -127,6 +149,12 @@ public class JDBCDiseaseManager implements DiseaseManager {
 		return diseases;
 	}
 
+	/**
+	 * JDBC method that provides you with the disease that matches the id provided
+	 * 
+	 * @param Id of the disease
+	 * @return List of diseases
+	 */
 	@Override
 	public Disease getDisease(int idDisease) {
 		Disease disease = null;
@@ -145,6 +173,12 @@ public class JDBCDiseaseManager implements DiseaseManager {
 		return disease;
 	}
 
+	/**
+	 * JDBC method that deletes a disease from the database
+	 * 
+	 * @param Id of the disease
+	 * @return List of diseases
+	 */
 	@Override
 	public void deleteDisease(int IDdisease) {
 		try {
@@ -161,6 +195,11 @@ public class JDBCDiseaseManager implements DiseaseManager {
 		}
 	}
 
+	/**
+	 * JDBC method that adds a disease into the database
+	 * 
+	 * @param Disease
+	 */
 	@Override
 	public void addDisease(Disease disease) {
 			try {
@@ -184,6 +223,11 @@ public class JDBCDiseaseManager implements DiseaseManager {
 			
 	}
 
+	/**
+	 * JDBC method that modifies a disease in the database
+	 * 
+	 * @param Disease
+     */
 	@Override
 	public void modifyDisease(Disease disease) {
 		try {
@@ -208,6 +252,12 @@ public class JDBCDiseaseManager implements DiseaseManager {
 
 	}
 
+	/**
+	 * JDBC method that adds a Symptom and a Disease to a many to many relationship table
+	 * 
+	 * @param Disease
+	 * @param Symptom
+	 */
 	@Override
 	public void addSymptomByDisease(Disease disease, Symptom symptom) {
 		try {

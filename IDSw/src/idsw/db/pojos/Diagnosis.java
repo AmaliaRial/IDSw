@@ -40,6 +40,18 @@ public class Diagnosis implements Serializable{
 			this.treatments = new ArrayList<Treatment>();
 			
 			
+		}		
+		
+		public Diagnosis( String nameDiagnosis, Date date, String comment_section, Medical_Record medicalRecord,Disease disease) {
+			super();
+			this.nameDiagnosis = nameDiagnosis;
+			this.date = date;
+			this.comment_section = comment_section;
+			this.medicalRecord = medicalRecord;
+			this.disease = disease;
+			this.treatments = new ArrayList<Treatment>();
+			
+			
 		}
 
 

@@ -32,7 +32,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			String sql = "SELECT * FROM diagnosis ORDER BY IDdiagnosis DESC LIMIT 6; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
-			ResultSet rs= ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("idDiagnosis");
 				String name = rs.getString("nameDiagnosis");

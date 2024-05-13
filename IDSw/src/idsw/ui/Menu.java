@@ -3,6 +3,7 @@ package idsw.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Menu {
 
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 
+	private static ConnectionManager conMan;
 	private static DiseaseManager diseaseMan;
 	private static TreatmentManager treatmentMan;
 	private static SymptomManager symptomMan;
@@ -133,7 +135,7 @@ public class Menu {
 					break;
 				}
 				case 16:{
-					//nothing 
+					newTreatmentByDisease(); 
 					break;
 				}
 				case 17:{
@@ -183,6 +185,8 @@ public class Menu {
 		
 		Disease disease = new Disease(name, infectRate, mortRate, incubPeriod, devPeriod, convPeriod, cause, commentSec);
 		diseaseMan.addDisease(disease);
+		/*Integer lastId = conMan.getLastInsertedID();
+		disease.setIdDisease(lastId);
 		
 		System.out.println("\n Would you like to add treatments to this disease? Please answer with a Yes or a NO :");
 		String answer = r.readLine();
@@ -190,7 +194,7 @@ public class Menu {
 			newTreatmentByDisease(disease);
 		} else {
 
-		}
+		}*/
 		
 	}
 	
@@ -409,19 +413,35 @@ public class Menu {
 		//Symptom symptom = symptomMan.getSymptom(idSymptom)
 	}
 	
-	private static void newTreatmentByDisease(Disease disease) throws NumberFormatException, IOException{
-		System.out.println("These are the treatments in the database, please insert the Id of the ones belonging to the " + disease.getNameDisease() + " disease: ");
+	private static void newTreatmentByDisease() throws NumberFormatException, IOException{
+		System.out.println("These are the diseases in the database, please insert the id of the one you wish to add treatments to: ");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for(Disease disease : diseases) {
+			System.out.println(disease);
+		}
+		Integer diseaseID = Integer.parseInt(r.readLine());
+		Disease disease = diseaseMan.getDisease(diseaseID);
+		System.out.println("\nThese are the treatments in the database, please insert the Id of the ones belonging to the disease: ");
 		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
 		for(Treatment treatment : treatments) {
 			System.out.println(treatment);
 		}
-		Integer id = null;
-		do {
-			System.out.println("Please enter the ID of the treatment you want to add (enter 0 to finish): ");
-			id = Integer.parseInt(r.readLine());
-			Treatment treatment = treatmentMan.getTreatment(id);
-			treatmentMan.addTreatmentByDisease(disease, treatment);
-		} while (id != 0);
+		Integer id;
+		String input;
+	    do {
+	        System.out.println("\nPlease enter the ID of the treatment you want to add (enter END to finish): ");
+	        input = r.readLine();
+	        if (input.equalsIgnoreCase("END")) {
+	            break;
+	        }
+	        id = Integer.parseInt(input);
+	        Treatment treatment = treatmentMan.getTreatment(id);
+	        if (treatment != null) {
+	            treatmentMan.addTreatmentByDisease(disease, treatment);
+	        } else {
+	            System.out.println("Invalid treatment ID. Please try again.");
+	        }
+	    } while (true);
 	}
 	
 	private static void newTreatmentByDiagnosis() throws NumberFormatException, IOException{
@@ -429,11 +449,14 @@ public class Menu {
 	}
 	
 	private static void searchTreatmentByDisease() throws NumberFormatException, IOException{
-		System.out.println("Please, enter the name of the Disease:");
+		/*System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, press enter to finish: ");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for(Disease disease : diseases) {
+			System.out.println(disease);
+		}
 		List<Integer> ids = new ArrayList<Integer>();
-		List<Disease> diseases = null;
 		Disease disease = new Disease();
-		String lineread=r.readLine();
+		String lineread= r.readLine();
 		while(!lineread.equals("")) {
 			ids.add(Integer.parseInt(lineread));
 			lineread=r.readLine();
@@ -445,7 +468,32 @@ public class Menu {
 		List <Treatment> treatments = treatmentMan.listTreatmentsByDisease(diseases);
 		for (Treatment treatment : treatments) {
 			System.out.println(treatment);
-		}
+		}*/
+	    System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, press enter to finish: ");
+	    List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+	    for (Disease disease : diseases) {
+	        System.out.println(disease);
+	    }
+	    List<Integer> diseaseIds = new ArrayList<>();
+	    String lineread;
+	    while (!(lineread = r.readLine()).equals("")) {
+	        diseaseIds.add(Integer.parseInt(lineread));
+	    }
+
+	    List<Disease> selectedDiseases = new ArrayList<>();
+	    for (Integer id : diseaseIds) {
+	        Disease disease = diseaseMan.getDisease(id);
+	        if (disease != null) {
+	            selectedDiseases.add(disease);
+	        } else {
+	            System.out.println("Disease with ID " + id + " not found.");
+	        }
+	    }
+
+	    List<Treatment> treatments = treatmentMan.listTreatmentsByDisease(selectedDiseases);
+	    for (Treatment treatment : treatments) {
+	        System.out.println(treatment);
+	    }
 	}
 	
 	private static void searchTreatmentByDiagnosis() throws NumberFormatException, IOException{

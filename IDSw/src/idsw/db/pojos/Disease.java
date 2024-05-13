@@ -64,6 +64,15 @@ public class Disease implements Serializable{
 			this.comment_section = comment_section;
 		}
 
+		
+
+		public Disease(Integer idDisease, String nameDisease, String comment_section) {
+			super();
+			this.idDisease = idDisease;
+			this.nameDisease = nameDisease;
+			this.comment_section = comment_section;
+		}
+
 
 
 		public Integer getIdDisease() {

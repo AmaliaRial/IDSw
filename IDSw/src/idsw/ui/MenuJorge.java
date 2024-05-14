@@ -115,7 +115,7 @@ public class MenuJorge {
 		Diagnosis diagnosis = diagnosisMan.getDiagnosis(id);
 		if(idMedicalRecord == diagnosis.getIdMedicalRecord()) {
 		diagnosisMan.deleteDiagnosis(id);
-		}else {System.out.println("try other id");}
+		}else {System.out.println("try othe id");}
 	}
 		
 	

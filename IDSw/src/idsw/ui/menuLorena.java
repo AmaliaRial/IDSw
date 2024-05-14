@@ -69,7 +69,7 @@ public class menuLorena {
 					break;
 				}
 				case 4: {
-					ListMatchingSymptomsByDisease();
+					searchSymptomsByDisease();
 					break;
 				}
 				case 5: {
@@ -85,7 +85,7 @@ public class menuLorena {
 					break;
 				}
 				case 8: {
-					addDisease();
+					
 					break;
 				}
 				case 0: {
@@ -203,8 +203,8 @@ private static void ListMatchingSymptomsByName() throws NumberFormatException, I
 }
 
 
-private static void ListMatchingSymptomsByDisease() throws IOException{
-	System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, press enter to finish: ");
+private static void searchSymptomsByDisease() throws IOException{
+	System.out.println("These are the diseases in the database, please enter the IDs of the disease you wish to search, press enter to finish: ");
     List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
     for (Disease disease : diseases) {
         System.out.println(disease);
@@ -214,6 +214,7 @@ private static void ListMatchingSymptomsByDisease() throws IOException{
     while (!(lineread = r.readLine()).equals("")) {
         diseaseIds.add(Integer.parseInt(lineread));
     }
+
     List<Disease> selectedDiseases = new ArrayList<>();
     for (Integer id : diseaseIds) {
         Disease disease = diseaseMan.getDisease(id);

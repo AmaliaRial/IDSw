@@ -56,38 +56,34 @@ public class JDBCSymptomManager implements SymptomManager {
 	
 	@Override	
 	public List<Symptom> listSymptomsByDisease(List<Disease> diseases) {
-		List<Symptom> symptoms = new ArrayList<Symptom>();
-		try {
-			String template ="SELECT nameSymptom, pain_management FROM symptoms JOIN disease_has_symptoms ON symptom_id WHERE disease_id LIKE ?";
-			
-			String condition="";
-			for(Disease disease:diseases) {
-			    condition="AND"+condition+"IDdisease="+disease.getIdDisease();
-			}
-			condition.replaceFirst("AND","");
-			condition=condition+";";
-			
-			PreparedStatement p;
-			p = c.prepareStatement(template);
-			p.setString(1, condition);
-			
-			ResultSet rs = p.executeQuery();
-			while(rs.next()) {
-				String nameSymptom = rs.getString("nameSymptom"); 
-				String pain_management = rs.getString("pain_management");
-				Symptom symptom = new Symptom(nameSymptom,pain_management);
-				symptoms.add(symptom);
-			}
-			
-		} catch (SQLException e) {
-			System.out.println("Error in the database");
-			e.printStackTrace();
-		}catch (NullPointerException e) {
-			System.out.println("The list provided is Null, please insert some data.");
-			e.printStackTrace();
-		}
-		
-		return symptoms;
+		List<Symptom> symptoms = new ArrayList<>();
+	    try {
+	        StringBuilder conditionBuilder = new StringBuilder();
+	        for (Disease disease : diseases) {
+	            conditionBuilder.append("AND IDdisease = ").append(disease.getIdDisease()).append(" ");
+	        }
+	        // Remove the first "AND "
+	        if (conditionBuilder.length() > 0) {
+	            conditionBuilder.delete(0, 4); //AND + " "
+	        }
+
+	        String template = "SELECT IDsymptom, nameSymptom, pain_management FROM symptoms JOIN disease_has_symptoms ON IDsymptom = symptom_id JOIN diseases ON IDdisease = disease_id WHERE "
+	                + conditionBuilder.toString();
+
+	        PreparedStatement p = c.prepareStatement(template);
+	        ResultSet rs = p.executeQuery();
+	        while (rs.next()) {
+	        	int idSymptom = rs.getInt("IDsymptom");
+	            String symptomName = rs.getString("nameSymptom");
+	            String pain_management = rs.getString("pain_management");
+	            Symptom symptom = new Symptom(idSymptom, symptomName, pain_management);
+	            symptoms.add(symptom);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error in the database");
+	        e.printStackTrace();
+	    }
+	    return symptoms;
 	}
 	
 	
@@ -146,7 +142,7 @@ public class JDBCSymptomManager implements SymptomManager {
 	@Override
 	public void modifySymptom(Symptom symptom) {
 		try {
-			String template = "UPDATE symptoms SET nameSymptom = ? AND pain_management = ? WHERE IDsymptom = ?;";
+			String template = "UPDATE symptoms SET nameSymptom = ?, pain_management = ? WHERE IDsymptom = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, symptom.getNameSymptom());

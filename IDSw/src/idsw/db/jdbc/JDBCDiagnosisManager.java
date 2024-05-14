@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
+import idsw.db.pojos.Patient;
 import idsw.db.pojos.Treatment;
 
 public class JDBCDiagnosisManager implements DiagnosisManager {
@@ -27,9 +29,9 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 
 	@Override
 	public List<Diagnosis> listSixRecentDiagnosis() {
-		List<Diagnosis> diagnosises = new ArrayList<Diagnosis>();
+		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		try {
-			String sql = "SELECT * FROM diagnosis ORDER BY IDdiagnosis DESC LIMIT 6; ";
+			String sql = "SELECT * FROM diagnoses ORDER BY IDdiagnosis DESC LIMIT 6; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -37,11 +39,12 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				Integer id = rs.getInt("idDiagnosis");
 				String name = rs.getString("nameDiagnosis");
 				Date date = rs.getDate("date");
+				LocalDate localDate = date.toLocalDate();
 				String comments = rs.getString("comment_section");
-				Disease disease = conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
-				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
-				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
-				diagnosises.add(diagnosis);
+				Integer disease = rs.getInt("disease_id"); //conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
+				Integer medicalRecord =rs.getInt("medicalrecord_id"); //conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
+				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,medicalRecord,disease);
+				diagnoses.add(diagnosis);
 			
 			}
 			rs.close();
@@ -52,15 +55,14 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			e.printStackTrace();
 		}		
 		
-		return null;
+		return diagnoses;
 	}
 
 	@Override
-	//creo q solo habia que quitar el limit nose
 	public List<Diagnosis> listAllDiagnosis() {
-		List<Diagnosis> diagnosises = new ArrayList<Diagnosis>();
+		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		try {
-			String sql = "SELECT * FROM diagnosis ORDER BY IDdiagnosis DESC; ";
+			String sql = "SELECT * FROM diagnoses ORDER BY IDdiagnosis DESC; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
 			ResultSet rs= ps.executeQuery();
@@ -68,11 +70,12 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				Integer id = rs.getInt("idDiagnosis");
 				String name = rs.getString("nameDiagnosis");
 				Date date = rs.getDate("date");
+				LocalDate localDate = date.toLocalDate();
 				String comments = rs.getString("comment_section");
-				Disease disease = conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
-				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
-				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
-				diagnosises.add(diagnosis);
+				Integer idDisease = rs.getInt("disease_id"); //conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
+				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); //conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
+				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,idMedicalRecord,idDisease);
+				diagnoses.add(diagnosis);
 			
 			}
 			rs.close();
@@ -83,19 +86,19 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			e.printStackTrace();
 		}		
 		
-		return null;
+		return diagnoses;
 	}
 
 	@Override
 	public Diagnosis getDiagnosis(int idDiagnosis) {
 		Diagnosis diagnosis = null;
 		try {
-			String sql = "SELECT * FROM diagnosis WHERE id = " + idDiagnosis;
+			String sql = "SELECT * FROM diagnoses WHERE id = " + idDiagnosis;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , rs.getDate("date") , rs.getString("comment_section"), conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id")) , conMan.getDiseaseMan().getDisease(rs.getInt("disease_id")));
+			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , (rs.getDate("date").toLocalDate()), rs.getString("comment_section"), rs.getInt("medicalRecord_id") , rs.getInt("disease_id"));
 			return diagnosis;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -108,7 +111,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	@Override
 	public void deleteDiagnosis(int IDiagnosis) {
 		try {
-			String template = "DELETE FROM diagnosis WHERE IDdiagnosis = ?";
+			String template = "DELETE FROM diagnoses WHERE IDdiagnosis = ?";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setInt(1,IDiagnosis);
@@ -126,14 +129,15 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	@Override
 	public void addDiagnosis(Diagnosis diagnosis) {
 		try {
-			String template = "INSERT INTO diagnosis (nameDiagnosis, date,comment_section, disease_id ,medicalrecord_id) VALUES (?, ?, ?, ?, ?);";
+			String template = "INSERT INTO diagnoses (nameDiagnosis, date ,comment_section, disease_id ,medicalrecord_id) VALUES (?, ?, ?, ?, ?);";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, diagnosis.getNameDiagnosis());
-			ps.setDate(2, diagnosis.getDate());
+			LocalDate localdate = diagnosis.getLocalDate();	
+			ps.setDate(2,java.sql.Date.valueOf(localdate));
 			ps.setString(3, diagnosis.getComment_section());
-			ps.setInt(4, diagnosis.getMedicalRecord().getIdMedical_Record());
-			ps.setInt(5, diagnosis.getDisease().getIdDisease());
+			ps.setInt(4, diagnosis.getIdDisease());
+			ps.setInt(5, diagnosis.getIdMedicalRecord());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -147,11 +151,12 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	@Override
 	public void modifyDiagnosis(Diagnosis diagnosis) {
 		try {
-			String template = "UPDATE diagnosis SET nameDiagnosis = ?, AND date = ?, AND comment_section = ?, AND WHERE IDdiagnosis = ?;";
+			String template = "UPDATE diagnoses SET nameDiagnosis = ?, date = ?, comment_section = ? WHERE IDdiagnosis = ?;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, diagnosis.getNameDiagnosis());
-			ps.setDate(2, diagnosis.getDate());
+			LocalDate localdate = diagnosis.getLocalDate();	
+			ps.setDate(2,java.sql.Date.valueOf(localdate));
 			ps.setString(3, diagnosis.getComment_section());
 			ps.setInt(4,diagnosis.getIdDiagnosis());
 			ps.executeUpdate();

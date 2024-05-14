@@ -3,16 +3,12 @@ package idsw.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.jdbcInterfaces.DiseaseManager;
-import idsw.db.jdbcInterfaces.SymptomManager;
-import idsw.db.jdbcInterfaces.TreatmentManager;
 import idsw.db.jdbcInterfaces.MedicalRecordManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
@@ -50,10 +46,12 @@ public class MenuJorge {
 			switch (choice) {
 				case 1: {
 					addDiagnosis();
+					System.out.println("Diagnosis in the data base");
 					break;
 				}
 				case 2: {
 					deleteDiagnosis();
+					System.out.println("Diagnosis delete from the data base");
 					break;
 				}
 				case 3: {
@@ -88,30 +86,38 @@ public class MenuJorge {
 		System.out.println("Its name:");
 		String name = r.readLine();
 		System.out.println("date");
-		ZoneId defaultZoneId = ZoneId.systemDefault();
 		LocalDate todaysDate = LocalDate.now();
-	    Date date = (Date) Date.from(todaysDate.atStartOfDay(defaultZoneId).toInstant());;
 		System.out.println("comment_section");
 		String comment_section = r.readLine();
 		System.out.println("idDisease:");
-		Disease disease = diseaseMan.getDisease(Integer.parseInt(r.readLine()));
+		Integer idDisease = Integer.parseInt(r.readLine());//diseaseMan.getDisease(Integer.parseInt(r.readLine())); MedicalRecordMan.getMedical_Record(Integer.parseInt(r.readLine()));
 		System.out.println("idMedical_Record");
-		Medical_Record medicalrecord = MedicalRecordMan.getMedical_Record(Integer.parseInt(r.readLine()));
+		Integer idMedicalRecord = Integer.parseInt(r.readLine());
 		
-		Diagnosis diagnosis = new Diagnosis(name, date, comment_section, medicalrecord, disease);
+		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, idMedicalRecord, idDisease);
 		diagnosisMan.addDiagnosis(diagnosis);
+		
 	}
 	
 	private static void deleteDiagnosis() throws NumberFormatException, IOException{
-		System.out.println("These are the diagnosis in the database:");
-		List<Diagnosis> diagnosis = diagnosisMan.listAllDiagnosis();
-		for(Diagnosis diagnosises : diagnosis) {
-			System.out.println(diagnosises);
+		System.out.println("Cual es el id del paciente:");		
+		Integer idMedicalRecord = Integer.parseInt(r.readLine());
+		System.out.println("These are the diagnosis in the database:");		
+		List<Diagnosis> diagnoses = diagnosisMan.listAllDiagnosis();
+		for(Diagnosis diagnosis : diagnoses) {
+			if (diagnosis.getIdMedicalRecord() == idMedicalRecord) {
+			System.out.println(diagnosis);
+			
+			} else {}
 		}
 		System.out.println("Please enter the id of the diagnosis you want to delete:");
 		Integer id = Integer.parseInt(r.readLine());
+		Diagnosis diagnosis = diagnosisMan.getDiagnosis(id);
+		if(idMedicalRecord == diagnosis.getIdMedicalRecord()) {
 		diagnosisMan.deleteDiagnosis(id);
+		}else {System.out.println("try other id");}
 	}
+		
 	
 	
 	

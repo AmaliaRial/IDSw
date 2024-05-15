@@ -34,7 +34,7 @@ public class JDBCPatientManager implements PatientManager {
 			p.setString(1, "%" + search + "%");
 			ResultSet rs= p.executeQuery();
 			while(rs.next()) {
-				Patient patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"), rs.getDate("DoB"));
+				Patient patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("DoB"));
 				patients.add(patient);
 			}
 			rs.close();
@@ -54,7 +54,7 @@ public class JDBCPatientManager implements PatientManager {
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Patient patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"), rs.getDate("DoB"));
+			Patient patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("DoB"));
 			return patient;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");

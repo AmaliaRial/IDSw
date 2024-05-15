@@ -112,11 +112,13 @@ private static void addPatient() throws NumberFormatException, IOException{
 	String name = r.readLine();
 	System.out.println("Its surname:");
 	String surname = r.readLine();
+	System.out.println("Its username:");
+	String username = r.readLine();
 	System.out.println("Day of birth (DD-MM-YYYY format):");
 	LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
 	Date dob = Date.valueOf(localDate);
 	
-	Patient patient = new Patient(name, surname, dob);
+	Patient patient = new Patient(name, surname,username, dob);
 	patientMan.addPatient(patient);
 }
 

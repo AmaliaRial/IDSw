@@ -25,20 +25,22 @@ public class Patient implements Serializable{
 		}
 
 
-		public Patient(Integer idPatient, String namePatient, String surname, Date dob) {
+		public Patient(Integer idPatient, String namePatient, String surname, String userName, Date dob) {
 			super();
 			this.idPatient = idPatient;
 			this.namePatient = namePatient;
 			this.surname = surname;
+			this.username = userName;
 			this.dob = dob;
 		}
 
 	
 
-		public Patient(String namePatient, String surname, Date dob) {
+		public Patient(String namePatient, String surname, String username,  Date dob) {
 			super();
 			this.namePatient = namePatient;
 			this.surname = surname;
+			this.username = username;
 			this.dob = dob;
 		}
 
@@ -127,7 +129,7 @@ public class Patient implements Serializable{
 		@Override
 		public String toString() {
 			return "Patient [idPatient=" + idPatient + ", namePatient=" + namePatient + ", surname=" + surname
-					+ ", dob=" + dob + ", username=" + username + "]";
+					+ ", username=" + username + ", dob=" + dob + "]";
 		}
 
 

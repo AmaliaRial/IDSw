@@ -11,4 +11,5 @@ public interface SimulationManager {
 	public Simulation selectSimulation(Integer simulation_id);
 	public List<Simulation> listMatchingSimulationByV_Population(Integer disease_id);
 	public Simulation createSimulation(Virtual_Population virtualPopulation);
+	public List<Simulation> listSixRecentSimulation();
 }

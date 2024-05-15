@@ -13,7 +13,7 @@ public class Medical_Record implements Serializable{
 		private static final long serialVersionUID = 5652570545720874192L;
 		private Integer idMedical_Record;
 		private List<Diagnosis> diagnoses;
-		private Integer idPatient;
+		private Patient patient;
 		
 		//tengo duda nose si poner patient o el id
 		
@@ -22,10 +22,10 @@ public class Medical_Record implements Serializable{
 			this.diagnoses = new ArrayList<Diagnosis>();
 		}
 
-		public Medical_Record(Integer idMedical_Record, Integer idPatient) {
+		public Medical_Record(Integer idMedical_Record, Patient patient) {
 			super();
 			this.idMedical_Record = idMedical_Record;
-			this.idPatient = idPatient;
+			this.patient = patient;
 		}
 		
 		
@@ -37,12 +37,12 @@ public class Medical_Record implements Serializable{
 			this.idMedical_Record = idMedical_Record;
 		}
 		
-		public Integer getIdPatient() {
-			return idPatient;
+		public Patient getPatient() {
+			return patient;
 		}
 
-		public void setIdPatient(Integer idPatient) {
-			this.idPatient = idPatient;
+		public void setPatient(Patient patient) {
+			this.patient = patient;
 		}
 
 		public List<Diagnosis> getDiagnoses() {
@@ -74,8 +74,8 @@ public class Medical_Record implements Serializable{
 
 		@Override
 		public String toString() {
-			return "Medical_Record [idMedical_Record=" + idMedical_Record + ", idPatient="
-					+ idPatient + "]";
+			return "Medical_Record [idMedical_Record=" + idMedical_Record + ", Patient="
+					+ patient + "]";
 		}
 		
 		

@@ -23,19 +23,20 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 	//En el get tendria q enseñar los medical records
 	@Override
 	public Medical_Record getMedical_Record(int idMedical_record) {
+		Medical_Record medical_record = null;
 		try {
-			String sql = "SELECT * FROM medical_records WHERE id = " + idMedical_record;
+			String sql = "SELECT * FROM medical_records WHERE IDmedical_record = " + idMedical_record;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Medical_Record medical_record = new Medical_Record(rs.getInt("IDmedical_record"), rs.getInt("IDpatient"));
+			medical_record = new Medical_Record(idMedical_record, conMan.getPatientMan().getPatient(rs.getInt("IDpatient")));
 			return medical_record;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}		
-		return null;
+		return medical_record;
 	}
 	
 
@@ -45,7 +46,7 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 			String template = "INSERT INTO medical_records (IDpatient) VALUES (?);";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			ps.setInt(1, medicalRecord.getIdPatient());
+			ps.setInt(1, medicalRecord.getPatient().getIdPatient());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

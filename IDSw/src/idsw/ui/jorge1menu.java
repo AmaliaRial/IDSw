@@ -41,6 +41,7 @@ public class jorge1menu {
 			//TODO add conMans
 						
 			do {
+				System.out.println("Elige que hacer");
 				choice = menuPrincipal();
 			switch (choice) {
 				case 1: {
@@ -49,18 +50,21 @@ public class jorge1menu {
 					break;
 				}
 				case 2: {
-					deleteDiagnosis();
+					
+					System.out.println("Select the diagnosis you what to modify");
+					Diagnosis diagnosis = getDiagnosis();
+					deleteDiagnosis(diagnosis);
 					System.out.println("Diagnosis delete from the data base");
 					break;
 				}
 				case 3: {
-					//addDiagnosis(Diagnosis diagnosis);
+					System.out.println("Select the diagnosis you what to modify");
+					Diagnosis diagnosis = getDiagnosis();	
+					modifyDiagnosis(diagnosis);
+					System.out.println("Diagnostico modificado");
 					break;
 				}
-				case 4: {
-				//	modifyDiagnosis(Diagnosis diagnosis);
-					break;
-				}
+
 				case 0: {
 					conMan.close();
 					return;
@@ -97,8 +101,8 @@ public class jorge1menu {
 		diagnosisMan.addDiagnosis(diagnosis);
 		
 	}
-	
-	private static void deleteDiagnosis() throws NumberFormatException, IOException{
+private static Diagnosis getDiagnosis() throws NumberFormatException, IOException{
+		
 		System.out.println("Cual es el id del paciente:");		
 		Integer idMedicalRecord = Integer.parseInt(r.readLine());
 		System.out.println("These are the diagnosis in the database:");		
@@ -106,15 +110,60 @@ public class jorge1menu {
 		for(Diagnosis diagnosis : diagnoses) {
 			if (diagnosis.getIdMedicalRecord() == idMedicalRecord) {
 			System.out.println(diagnosis);
-			
 			} else {}
 		}
-		System.out.println("Please enter the id of the diagnosis you want to delete:");
+		System.out.println("Please enter the id of the diagnosis");
 		Integer id = Integer.parseInt(r.readLine());
-		Diagnosis diagnosis = diagnosisMan.getDiagnosis(id);
-		if(idMedicalRecord == diagnosis.getIdMedicalRecord()) {
-		diagnosisMan.deleteDiagnosis(id);
-		}else {System.out.println("try othe id");}
+		Diagnosis diagnosis1 = diagnosisMan.getDiagnosis(id);
+		return diagnosis1;
+
+		
+	}
+	
+	
+	private static void deleteDiagnosis(Diagnosis diagnosis) throws NumberFormatException, IOException{
+	
+		diagnosisMan.deleteDiagnosis(diagnosis.getIdDiagnosis());
+	}
+	
+	
+
+	private static void modifyDiagnosis(Diagnosis diagnosis)throws NumberFormatException, IOException{
+		System.out.println("What do you want to modify:");
+		System.out.println("1 - nameDiagnosis");
+		System.out.println("2 - date");
+		System.out.println("3 - comment_section");
+		Boolean a = true;
+		while(a) {	
+			
+			Integer eleccion = Integer.parseInt(r.readLine());
+			if(eleccion == 1 ) {
+					System.out.println("Nombre actual:" + diagnosis.getNameDiagnosis());
+					System.out.println("Escribe el nuevo nombre:");
+					String nameNew = r.readLine();
+					diagnosis.setNameDiagnosis(nameNew);
+					a = false;
+			}
+			if(eleccion == 2 ) {		
+					LocalDate date = diagnosis.getLocalDate();
+					System.out.println("Date actual:" + date );
+					System.out.println("Escribe la nueva fecha YYYY-MM-DD:");
+					LocalDate dateNew = LocalDate.parse(r.readLine());
+					diagnosis.setLocalDate(dateNew);
+					a = false;
+			}
+			if(eleccion == 3 ) {
+					System.out.println("Comment section actual:" + diagnosis.getComment_section() );
+					System.out.println("Escribe una nueva comment section");
+					String comment_sectionNew = r.readLine();
+					diagnosis.setComment_section(comment_sectionNew);
+					a = false;
+			}
+			
+		}
+		
+		diagnosisMan.modifyDiagnosis(diagnosis);
+		
 	}
 		
 	

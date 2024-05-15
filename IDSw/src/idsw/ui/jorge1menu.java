@@ -20,7 +20,7 @@ public class jorge1menu {
 
 	private static DiseaseManager diseaseMan;
 	private static DiagnosisManager diagnosisMan;
-	private static MedicalRecordManager MedicalRecordMan;
+	private static MedicalRecordManager medicalRecordMan;
 	//TODO add interfaces
 
 	public static int menuPrincipal() throws IOException {
@@ -93,11 +93,13 @@ public class jorge1menu {
 		System.out.println("comment_section");
 		String comment_section = r.readLine();
 		System.out.println("idDisease:");
-		Integer idDisease = Integer.parseInt(r.readLine());//diseaseMan.getDisease(Integer.parseInt(r.readLine())); MedicalRecordMan.getMedical_Record(Integer.parseInt(r.readLine()));
+		Integer idDisease = Integer.parseInt(r.readLine());
+		Disease disease = diseaseMan.getDisease(idDisease);
 		System.out.println("idMedical_Record");
 		Integer idMedicalRecord = Integer.parseInt(r.readLine());
+		Medical_Record medicalRecord = medicalRecordMan.getMedical_Record(idMedicalRecord);
 		
-		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, idMedicalRecord, idDisease);
+		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, medicalRecord, disease);
 		diagnosisMan.addDiagnosis(diagnosis);
 		
 	}
@@ -108,7 +110,7 @@ private static Diagnosis getDiagnosis() throws NumberFormatException, IOExceptio
 		System.out.println("These are the diagnosis in the database:");		
 		List<Diagnosis> diagnoses = diagnosisMan.listAllDiagnosis();
 		for(Diagnosis diagnosis : diagnoses) {
-			if (diagnosis.getIdMedicalRecord() == idMedicalRecord) {
+			if (diagnosis.getMedicalRecord().getIdMedical_Record() == idMedicalRecord) {
 			System.out.println(diagnosis);
 			} else {}
 		}

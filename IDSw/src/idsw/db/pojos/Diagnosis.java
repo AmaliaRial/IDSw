@@ -16,8 +16,8 @@ public class Diagnosis implements Serializable{
 		private String nameDiagnosis;
 		private LocalDate localDate;
 		private String comment_section;
-		private Integer idDisease;
-		private Integer idMedicalRecord;
+		private Disease disease;
+		private Medical_Record medicalRecord;
 		private List<Treatment> treatments; 
 		
 		public Diagnosis() {
@@ -27,26 +27,26 @@ public class Diagnosis implements Serializable{
 		
 		
 		
-		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, LocalDate localDate, String comment_section, Integer idMedicalRecord,Integer idDisease) {
+		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, LocalDate localDate, String comment_section, Medical_Record medicalRecord,Disease disease) {
 			super();
 			this.idDiagnosis = idDiagnosis;
 			this.nameDiagnosis = nameDiagnosis;
 			this.localDate = localDate;
 			this.comment_section = comment_section;
-			this.idMedicalRecord = idMedicalRecord;
-			this.idDisease = idDisease;
+			this.medicalRecord = medicalRecord;
+			this.disease = disease;
 			this.treatments = new ArrayList<Treatment>();
 			
 			
 		}		
 		
-		public Diagnosis( String nameDiagnosis, LocalDate LocalDate, String comment_section, Integer idMedicalRecord, Integer idDisease) {
+		public Diagnosis( String nameDiagnosis, LocalDate LocalDate, String comment_section, Medical_Record medicalRecord, Disease disease) {
 			super();
 			this.nameDiagnosis = nameDiagnosis;
 			this.localDate = LocalDate;
 			this.comment_section = comment_section;
-			this.idMedicalRecord = idMedicalRecord;
-			this.idDisease = idDisease;
+			this.medicalRecord = medicalRecord;
+			this.disease = disease;
 			this.treatments = new ArrayList<Treatment>();
 			
 			
@@ -78,16 +78,16 @@ public class Diagnosis implements Serializable{
 			this.localDate = localDate;
 		}
 
-		public Integer getIdDisease() {
-			return idDisease;
+		public Disease getDisease() {
+			return disease;
 		}
 
-		public void setIdDisease(Integer idDisease) {
-			this.idDisease = idDisease;
+		public void setDisease(Disease disease) {
+			this.disease = disease;
 		}
 
-		public Integer getIdMedicalRecord() {
-			return idMedicalRecord;
+		public Medical_Record getMedicalRecord() {
+			return medicalRecord;
 		}
 
 		public String getComment_section() {
@@ -98,8 +98,8 @@ public class Diagnosis implements Serializable{
 			this.comment_section = comment_section;
 		}
 
-		public void setIdMedicalRecord(Integer idMedicalRecord) {
-			this.idMedicalRecord = idMedicalRecord;
+		public void seMedicalRecord(Medical_Record medicalRecord) {
+			this.medicalRecord = medicalRecord;
 		}
 
 		public List<Treatment> getTreatments() {
@@ -130,7 +130,7 @@ public class Diagnosis implements Serializable{
 		@Override
 		public String toString() {
 			return "Diagnosis [idDiagnosis=" + idDiagnosis + ", nameDiagnosis=" + nameDiagnosis + ", LocalDate=" + localDate
-					+ ", idDisease=" + idDisease + ", idMedicalRecord=" + idMedicalRecord + "]";
+					+ ", disease=" + disease + ", medicalRecord=" + medicalRecord + "]";
 		}
 		
 		

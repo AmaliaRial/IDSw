@@ -14,8 +14,7 @@ import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
-import idsw.db.pojos.Patient;
-import idsw.db.pojos.Treatment;
+
 
 public class JDBCDiagnosisManager implements DiagnosisManager {
 	
@@ -41,8 +40,10 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				Date date = rs.getDate("date");
 				LocalDate localDate = new java.sql.Date(date.getTime()).toLocalDate();
 				String comments = rs.getString("comment_section");
-				Integer disease = rs.getInt("disease_id"); //conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
-				Integer medicalRecord =rs.getInt("medicalrecord_id"); //conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
+				Integer idDisease = rs.getInt("disease_id");
+				Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
+				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
+				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
 				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,medicalRecord,disease);
 				diagnoses.add(diagnosis);
 			
@@ -72,9 +73,11 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				Date date = rs.getDate("date");
 				LocalDate localDate = new java.sql.Date(date.getTime()).toLocalDate();
 				String comments = rs.getString("comment_section");
-				Integer idDisease = rs.getInt("disease_id"); //conMan.getDiseaseMan().getDisease(rs.getInt("disease_id"));
-				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); //conMan.getMedicalRecordMan().getMedical_Record(rs.getInt("medicalRecord_id"));
-				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,idMedicalRecord,idDisease);
+				Integer idDisease = rs.getInt("disease_id");
+				Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
+				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
+				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
+				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,medicalRecord,disease);
 				diagnoses.add(diagnosis);
 			
 			}
@@ -100,7 +103,11 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			rs.next();
 			Date date = rs.getDate("date");
 			LocalDate localDate = new java.sql.Date(date.getTime()).toLocalDate();
-			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , localDate, rs.getString("comment_section"), rs.getInt("medicalRecord_id") , rs.getInt("disease_id"));
+			Integer idDisease = rs.getInt("disease_id");
+			Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
+			Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
+			Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
+			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , localDate, rs.getString("comment_section"),medicalRecord,disease);
 			return diagnosis;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -139,8 +146,8 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			Date date = java.sql.Date.valueOf(localdate);
 			ps.setDate(2,date);
 			ps.setString(3, diagnosis.getComment_section());
-			ps.setInt(4, diagnosis.getIdDisease());
-			ps.setInt(5, diagnosis.getIdMedicalRecord());
+			ps.setInt(4, diagnosis.getDisease().getIdDisease());
+			ps.setInt(5, diagnosis.getMedicalRecord().getIdMedical_Record());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

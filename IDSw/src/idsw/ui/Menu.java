@@ -3,6 +3,7 @@ package idsw.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,22 +16,29 @@ import idsw.db.enums.Cause;
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.jdbcInterfaces.DiseaseManager;
+import idsw.db.jdbcInterfaces.MedicalRecordManager;
+import idsw.db.jdbcInterfaces.PatientManager;
 import idsw.db.jdbcInterfaces.SymptomManager;
 import idsw.db.jdbcInterfaces.TreatmentManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
+import idsw.db.pojos.Medical_Record;
+import idsw.db.pojos.Patient;
 import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
 
 public class Menu {
 
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 	private static ConnectionManager conMan;
 	private static DiseaseManager diseaseMan;
 	private static TreatmentManager treatmentMan;
 	private static SymptomManager symptomMan;
 	private static DiagnosisManager diagnosisMan;
+	private static PatientManager patientMan;
+	private static MedicalRecordManager medicalRecordMan;
 	//TODO add interfaces
 
 	/**
@@ -53,12 +61,11 @@ public class Menu {
 		System.out.println("10. Modify a disease");
 		System.out.println("11. Delete a disease");
 		System.out.println("12. Add symptom.");
-		System.out.println("13. Add symptom by disease.");
-		System.out.println("14. Search disease by symptom.");
-		System.out.println("15. Add Treatment by Diagnosis.");
-		System.out.println("16. Add Treatment by Disease.");
-		System.out.println("17. Add Diagnosis.");
-		System.out.println("18. List 6 recent diseases.");
+		System.out.println("13. Search disease by symptom.");
+		System.out.println("14. Add Treatment by Diagnosis.");
+		System.out.println("15. Add Diagnosis.");
+		System.out.println("16. List 6 recent diseases.");
+		System.out.println("17. Add a new patient.");
 		System.out.println("0. Exit");
 		int choice = Integer.parseInt(r.readLine());
 		return choice;
@@ -75,6 +82,9 @@ public class Menu {
 			treatmentMan = conMan.getTreatmentMan();
 			symptomMan = conMan.getSymptomMan();
 			diagnosisMan = conMan.getDiagnosisMan();
+			patientMan = conMan.getPatientMan();
+			medicalRecordMan = conMan.getMedicalRecordMan();
+			
 			//TODO add conMans
 						
 			do {
@@ -128,28 +138,24 @@ public class Menu {
 					addSymptom();
 					break;
 				}
-				case 13:{			
-					//newSymptomByDisease();
-					break;
-				}
-				case 14:{
+				case 13:{
 					searchDiseaseBySymptom();					
 					break;
 				}
-				case 15:{
+				case 14:{
 					newTreatmentByDiagnosis();
 					break;
 				}
-				case 16:{
-					//newTreatmentByDisease(); 
-					break;
-				}
-				case 17:{
+				case 15:{
 					addDiagnosis();
 					break;
 				}
-				case 18: {
+				case 16: {
 					list6diseases();
+					break;
+				}
+				case 17: {
+					addPatient();
 					break;
 				}
 				case 0: {
@@ -269,19 +275,22 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static void addDiagnosis() throws NumberFormatException, IOException{
-		System.out.println("Please, enter the diagnosis info");
-		System.out.println("Name:");
+		System.out.println("Please write the Diagnosis info");
+		System.out.println("Its name:");
 		String name = r.readLine();
-		LocalDate date = LocalDate.now();		
-		System.out.println("Comment Section:");
-		String comments = r.readLine();
-		System.out.println("Disease id:");
-		Integer disease_id = Integer.parseInt(r.readLine());
-		System.out.println("Medical record id:");
-		Integer medical_record = Integer.parseInt(r.readLine());
-		//Diagnosis diagnosis = new Diagnosis(name, date, comments, disease_id, medical_record);
-		//diagnosisMan.addDiagnosis(diagnosis);
-		//TODO fix diagnosis problems
+		System.out.println("date");
+		LocalDate todaysDate = LocalDate.now();
+		System.out.println("comment_section");
+		String comment_section = r.readLine();
+		System.out.println("idDisease:");
+		Integer idDisease = Integer.parseInt(r.readLine());
+		Disease disease = diseaseMan.getDisease(idDisease);
+		System.out.println("idMedical_Record");
+		Integer idMedicalRecord = Integer.parseInt(r.readLine());
+		Medical_Record medicalRecord = medicalRecordMan.getMedical_Record(idMedicalRecord);
+		
+		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, medicalRecord, disease);
+		diagnosisMan.addDiagnosis(diagnosis);
 	}
 	
 	/**
@@ -654,5 +663,29 @@ public class Menu {
 		for (Treatment treatment : treatments) {
 			System.out.println(treatment);
 		}
+	}
+	
+	private static void addPatient() throws NumberFormatException, IOException{
+		System.out.println("Please write the Patient info");
+		System.out.println("Its name:");
+		String name = r.readLine();
+		System.out.println("Its surname:");
+		String surname = r.readLine();
+		System.out.println("Its username:");
+		String username = r.readLine();
+		System.out.println("Day of birth (DD-MM-YYYY format):");
+		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		Date dob = Date.valueOf(localDate);
+		
+		Patient patient = new Patient(name, surname,username, dob);
+		patientMan.addPatient(patient);
+		Integer lastId = conMan.getLastInsertedID();
+		patient.setIdPatient(lastId);
+		createMedicalRecord(patient);
+		
+	}
+	
+	private static void createMedicalRecord(Patient patient) {
+		medicalRecordMan.addMedicalRecord(patient);
 	}
 }

@@ -5,18 +5,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
+//xml anotations
+@XmlAccessorType(XmlAccessType.FIELD) //allows it to be turned into an xml
+@XmlRootElement(name = "Medical Record") // allows it to be a root element 
+@XmlType(propOrder = { "Patient", "Diagnoses"}) // specify the order inside the xml
 public class Medical_Record implements Serializable{
 	
 		/**
 		* 
 	 	*/
 		private static final long serialVersionUID = 5652570545720874192L;
+		@XmlTransient
 		private Integer idMedical_Record;
+		@XmlElement(name = "Diagnosis") //each element in the list is a diagnosis
+		@XmlElementWrapper(name = "Diagnoses")
 		private List<Diagnosis> diagnoses;
+		@XmlElement(name = "Patient")// <Medical Record><Patient>...</Patient></Medical Record>  that's why its an element, an attribute goes inside
 		private Patient patient;
-		
-		//tengo duda nose si poner patient o el id
-		
+				
 		public Medical_Record() {
 			super();
 			this.diagnoses = new ArrayList<Diagnosis>();
@@ -78,7 +92,4 @@ public class Medical_Record implements Serializable{
 					+ patient + "]";
 		}
 		
-		
-		
-
 }

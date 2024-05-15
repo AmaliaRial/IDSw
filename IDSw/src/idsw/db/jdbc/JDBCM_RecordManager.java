@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import idsw.db.jdbcInterfaces.MedicalRecordManager;
 import idsw.db.pojos.Medical_Record;
+import idsw.db.pojos.Patient;
 import idsw.db.pojos.Treatment;
 
 public class JDBCM_RecordManager implements MedicalRecordManager {
@@ -41,12 +42,12 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 	
 
 	@Override
-	public void addMedicalReport(Medical_Record medicalRecord) {
+	public void addMedicalRecord(Patient patient) {
 		try {
-			String template = "INSERT INTO medical_records (IDpatient) VALUES (?);";
+			String template = "INSERT INTO medical_records (patient) VALUES (?);";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
-			ps.setInt(1, medicalRecord.getPatient().getIdPatient());
+			ps.setInt(1, patient.getIdPatient());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

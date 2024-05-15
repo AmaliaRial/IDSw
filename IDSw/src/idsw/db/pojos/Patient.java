@@ -25,7 +25,7 @@ public class Patient implements Serializable{
 		}
 
 
-		public Patient(int idPatient, String namePatient, String surname, Date dob) {
+		public Patient(Integer idPatient, String namePatient, String surname, Date dob) {
 			super();
 			this.idPatient = idPatient;
 			this.namePatient = namePatient;
@@ -33,6 +33,7 @@ public class Patient implements Serializable{
 			this.dob = dob;
 		}
 
+	
 
 		public Patient(String namePatient, String surname, Date dob) {
 			super();
@@ -40,6 +41,8 @@ public class Patient implements Serializable{
 			this.surname = surname;
 			this.dob = dob;
 		}
+
+
 
 
 		public Integer getIdPatient() {

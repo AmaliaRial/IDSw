@@ -15,8 +15,7 @@ import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
 
 
-public class MenuJorge {
-	
+public class jorge1menu {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 
 	private static DiseaseManager diseaseMan;
@@ -121,5 +120,4 @@ public class MenuJorge {
 	
 	
 	
-
 }

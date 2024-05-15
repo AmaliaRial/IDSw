@@ -37,6 +37,7 @@ public class menuLorena {
 		System.out.println("5. Add symptom");
 		System.out.println("6. Modify symptom");
 		System.out.println("7. Delete symptom");
+		System.out.println("8. List patients by name");
 		System.out.println("0. Exit");
 		System.out.print("Choose your desired option: ");
 		int choice = Integer.parseInt(r.readLine());
@@ -69,7 +70,7 @@ public class menuLorena {
 					break;
 				}
 				case 4: {
-					ListMatchingSymptomsByDisease();
+					searchSymptomsByDisease();
 					break;
 				}
 				case 5: {
@@ -85,7 +86,7 @@ public class menuLorena {
 					break;
 				}
 				case 8: {
-					addDisease();
+					listPatientsByName();
 					break;
 				}
 				case 0: {
@@ -132,29 +133,41 @@ private static void addSymptom() throws NumberFormatException, IOException{
 
 
 private static void modifyPatient() throws NumberFormatException, IOException{
-		Patient patient = new Patient();
-		System.out.println("");
-		System.out.println("Here are the actual Patient's values");
-		System.out.println("Press enter to keep them or type a new value.");
-		System.out.println("Name (" + patient.getNamePatient() + "): ");
-		String newName = r.readLine();
-		System.out.println("Surname (" + patient.getSurname() + "): ");
-		String newSurname = r.readLine();
-		if (!newName.equals("")) {
-			// If I don't keep
-			patient.setNamePatient(newName);
-		}
-		if (newSurname.equals("")) { // If I keep
-		}
-		else { // If I don't keep
-			patient.setSurname(newSurname);
-		}
-		
-		patientMan.modifyPatient(patient);
+	System.out.println("\nThese are the patients in the database:");
+	List <Patient> patients = patientMan.listMatchingPatientByName("");
+	for (Patient patient : patients) {
+		System.out.println(patient);
+	}
+	System.out.println("\nPlease enter the ID of the patient you wish to modify:");
+	Integer id = Integer.parseInt(r.readLine());
+	Patient patient = patientMan.getPatient(id);
+	
+	System.out.println("Here are the actual patients values");
+	System.out.println("Press enter to keep them or type a new value.");
+	System.out.println("Name (" + patient.getNamePatient() + "): ");
+	String newName = r.readLine();
+	System.out.println("Surname (" + patient.getSurname() + "): ");
+	String newSurname = r.readLine();
+	System.out.println("Date of birth (" + patient.getDob() + "): ");
+	String newDate = r.readLine();
+	if (!newName.equals("")) {
+		// If I don't keep
+		patient.setNamePatient(newName);
+	}
+	if (!newSurname.equals("")) {
+		patient.setSurname(newSurname);
+	}
+	if (!newDate.equals("")) {
+		LocalDate localDate = LocalDate.parse(newDate, formatter);
+		Date dob = Date.valueOf(localDate);
+		patient.setDob(dob);
+	}
+	
+	patientMan.modifyPatient(patient);
 	}
 
 private static void modifySymptom() throws NumberFormatException, IOException{
-	System.out.println("\n These are the symptoms in the database:");
+	System.out.println("\nThese are the symptoms in the database:");
 	List <Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
 	for (Symptom symptom : symptoms) {
 		System.out.println(symptom);
@@ -203,8 +216,8 @@ private static void ListMatchingSymptomsByName() throws NumberFormatException, I
 }
 
 
-private static void ListMatchingSymptomsByDisease() throws IOException{
-	System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, press enter to finish: ");
+private static void searchSymptomsByDisease() throws IOException{
+	System.out.println("These are the diseases in the database, please enter the IDs of the disease you wish to search, press enter to finish: ");
     List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
     for (Disease disease : diseases) {
         System.out.println(disease);
@@ -214,6 +227,7 @@ private static void ListMatchingSymptomsByDisease() throws IOException{
     while (!(lineread = r.readLine()).equals("")) {
         diseaseIds.add(Integer.parseInt(lineread));
     }
+
     List<Disease> selectedDiseases = new ArrayList<>();
     for (Integer id : diseaseIds) {
         Disease disease = diseaseMan.getDisease(id);
@@ -232,26 +246,12 @@ private static void ListMatchingSymptomsByDisease() throws IOException{
 
 }
 
-private static void addDisease() throws NumberFormatException, IOException{
-	System.out.println("Please write the Disease info");
-	System.out.println("Its name:");
+private static void listPatientsByName() throws NumberFormatException, IOException {
+	System.out.println("Please, type the patient´s name:");
 	String name = r.readLine();
-	System.out.println("Infectious Rate:");
-	Float infectRate = Float.parseFloat(r.readLine());
-	System.out.println("Mortality Rate:");
-	Float mortRate = Float.parseFloat(r.readLine());
-	System.out.println("Incubation Period:");
-	Float incubPeriod = Float.parseFloat(r.readLine());
-	System.out.println("Development Period:");
-	Float devPeriod = Float.parseFloat(r.readLine());
-	System.out.println("Convalescense Period:");
-	Float convPeriod = Float.parseFloat(r.readLine());
-	System.out.println("Cause:");
-	String cause = r.readLine();
-	System.out.println("Comment Section:");
-	String commentSec = r.readLine();
-	
-	Disease disease = new Disease(name, infectRate, mortRate, incubPeriod, devPeriod, convPeriod, cause, commentSec);
-	diseaseMan.addDisease(disease);
+	List<Patient> patients = patientMan.listMatchingPatientByName(name);
+	for (Patient patient : patients) {
+		System.out.println(patient);
+	}
 }
 }

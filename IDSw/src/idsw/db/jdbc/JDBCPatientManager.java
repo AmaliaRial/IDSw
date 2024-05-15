@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import idsw.db.jdbcInterfaces.PatientManager;
 import idsw.db.pojos.Patient;
@@ -19,6 +22,28 @@ public class JDBCPatientManager implements PatientManager {
 	public JDBCPatientManager(ConnectionManager conMan) {
 		this.conMan = conMan;
 		this.c = conMan.getConnection();
+	}
+	
+	@Override
+	public List<Patient> listMatchingPatientByName(String search) {
+		List<Patient> patients = new ArrayList<Patient>();
+		try {
+			String sql = "SELECT * FROM patients WHERE namePatient LIKE ?";
+			PreparedStatement p;
+			p = c.prepareStatement(sql);
+			p.setString(1, "%" + search + "%");
+			ResultSet rs= p.executeQuery();
+			while(rs.next()) {
+				Patient patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"), rs.getDate("DoB"));
+				patients.add(patient);
+			}
+			rs.close();
+			p.close();
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return patients;
 	}
 
 	@Override
@@ -65,7 +90,7 @@ public class JDBCPatientManager implements PatientManager {
 			ps.setString(1, patient.getNamePatient());
 			ps.setString(2, patient.getSurname());
 			ps.setDate(3,patient.getDob());
-			ps.setInt(3,patient.getIdPatient());
+			ps.setInt(4,patient.getIdPatient());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

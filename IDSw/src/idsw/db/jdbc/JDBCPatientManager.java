@@ -40,12 +40,13 @@ public class JDBCPatientManager implements PatientManager {
 	@Override
 	public void addPatient(Patient patient) {
 		try {
-			String template = "INSERT INTO patients (namePatient, surname, DoB) VALUES (?, ?, ?);";
+			String template = "INSERT INTO patients (namePatient, surname, username, DoB) VALUES (?, ?, ?, ?);";
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, patient.getNamePatient());
 			ps.setString(2, patient.getSurname());
-			ps.setDate(3, patient.getDob());
+			ps.setString(3, patient.getUsername());
+			ps.setDate(4, patient.getDob());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {

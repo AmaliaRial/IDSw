@@ -111,6 +111,7 @@ public class ConnectionManager {
 					+ "	IDpatient INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "	namePatient TEXT NOT NULL,"
 					+ "	surname TEXT NOT NULL,"
+					+ " username TEXT UNIQUE,"
 					+ "	DoB DATE NOT NULL);";
 			createPatientsTable.executeUpdate(createTablePatients);
 			createPatientsTable.close();

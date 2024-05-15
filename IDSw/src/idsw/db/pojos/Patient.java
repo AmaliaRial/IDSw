@@ -18,7 +18,7 @@ public class Patient implements Serializable{
 		private String surname;
 		private Date dob; //Recordad que para Date hay que importar java.sql.Date
 		private Medical_Record medicalRecord;
-		
+		private String username; //add to the database in the create tables
 		
 		public Patient() {
 			super();
@@ -92,6 +92,16 @@ public class Patient implements Serializable{
 		}
 
 
+		public String getUsername() {
+			return username;
+		}
+
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+
 		@Override
 		public int hashCode() {
 			return Objects.hash(idPatient);
@@ -114,9 +124,11 @@ public class Patient implements Serializable{
 		@Override
 		public String toString() {
 			return "Patient [idPatient=" + idPatient + ", namePatient=" + namePatient + ", surname=" + surname
-					+ ", dob=" + dob + "]";
+					+ ", dob=" + dob + ", username=" + username + "]";
 		}
-		
+
+
+	    	
 		
 
 }

@@ -9,16 +9,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import idsw.db.enums.Cause;
-import idsw.db.enums.Pain_Management;
+import idsw.db.enums.*;
 import idsw.db.jdbc.*;
-import idsw.db.jdbcInterfaces.DiseaseManager;
-import idsw.db.jdbcInterfaces.PatientManager;
-import idsw.db.jdbcInterfaces.SymptomManager;
-import idsw.db.pojos.Disease;
-import idsw.db.pojos.Patient;
-import idsw.db.pojos.Symptom;
-import idsw.db.pojos.Treatment;
+import idsw.db.jdbcInterfaces.*;
+import idsw.db.pojos.*;
+import idsw.db.jpa.*;
 
 public class menuLorena {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
@@ -28,83 +23,85 @@ public class menuLorena {
 	private static SymptomManager symptomMan;
 	private static PatientManager patientMan; 
 	private static DiseaseManager diseaseMan;
+	private static UserManager userMan;
 	
-	public static int menuP() throws NumberFormatException, IOException {
-		System.out.println("1. Add a patient");
-		System.out.println("2. Modify a patient");
-		System.out.println("3. List matching symptoms by name");
-		System.out.println("4. List symptom by disease");
-		System.out.println("5. Add symptom");
-		System.out.println("6. Modify symptom");
-		System.out.println("7. Delete symptom");
-		System.out.println("8. List patients by name");
-		System.out.println("0. Exit");
-		System.out.print("Choose your desired option: ");
-		int choice = Integer.parseInt(r.readLine());
-		return choice;
-	}
 	
-	public static void main(String arg[]) {
-		int choice = 0;
-		try {
-			System.out.println("Welcome to IDSW!");
-			conMan = new ConnectionManager();
-			patientMan = conMan.getPatientMan();
-			symptomMan = conMan.getSymptomMan();
-			diseaseMan = conMan.getDiseaseMan();
-			
-			do {
-				choice = menuP();
-			switch (choice) {
-				case 1: {
-					addPatient();
-					break;
-				}
-				case 2: {
-					modifyPatient();
-					break;
-				}
-				case 3: {
-					ListMatchingSymptomsByName();
-					
-					break;
-				}
-				case 4: {
-					searchSymptomsByDisease();
-					break;
-				}
-				case 5: {
-					addSymptom();
-					break;
-				}
-				case 6: {
-					modifySymptom();
-					break;
-				}
-				case 7: {
-					deleteSymptom();
-					break;
-				}
-				case 8: {
-					listPatientsByName();
-					break;
-				}
-				case 0: {
-					conMan.close();
-					return;
-				}
-				default:
-					throw new IllegalArgumentException("Unexpected value: " + choice);
-				}
-			
-			} while (choice != 20);
+	public static void main(String arg[])  throws NumberFormatException, IOException{
+		System.out.println("Welcome to IDSW!");
 		
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		conMan = new ConnectionManager();
+		patientMan = conMan.getPatientMan();
+		symptomMan = conMan.getSymptomMan();
+		diseaseMan = conMan.getDiseaseMan();
+		userMan = new JPAUserManager();
+		
+		System.out.println("Choose your desired option");
+		System.out.println("1. Login");
+		System.out.println("2. Register");
+		int choice = Integer.parseInt(r.readLine());
+		switch (choice) {
+			case 1: {
+				menuLogin();
+				break;
+				}
+			
+			case 2: {
+				menuRegister();
+                break;
+                }
+			
+			case 0: {
+				conMan.close();
+				return;
+			}
+			}
 		}
+
+
+private static void menuLogin() throws NumberFormatException, IOException {
+	System.out.println("Please, type your username:");
+	String username = r.readLine();
+	System.out.println("Please, type your password:");
+	String password = r.readLine();
+	User user = userMan.login(username, password);
+	if (user != null) {
+		System.out.println("Welcome " + user.getName());
+	} else {
+		System.out.println("Invalid username or password");
+	}
 }
+		
+private static void menuRegister() throws NumberFormatException, IOException {
+	System.out.println("Please, type your name:");
+	String name = r.readLine();
+	System.out.println("Please, type your surname:");
+	String surname = r.readLine();
+	System.out.println("Please, type a username:");
+	String username = r.readLine();
+	System.out.println("Please, type a password:");
+	String password = r.readLine();
+	System.out.println("Please, type your date of birth (dd-mm-yyyy):");
+	LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+	Date dob = Date.valueOf(localDate);
+	System.out.println("Please, type your sex (MALE/FEMALE):");
+	String sex =  r.readLine();
+	System.out.println("Please, type your email: ");
+	String email = r.readLine();
+	System.out.println("Please, type your phone number: ");
+	Integer phone = Integer.parseInt(r.readLine());
+	System.out.println("Please, type your DNI (without letter): ");
+	String id = r.readLine();
+	System.out.println("Please, choose your role (type it´s name:");
+	List<Role> roles = userMan.getAllRoles();
+	System.out.println(roles);
+	String roleName = r.readLine();
+	Role r = userMan.getRole(roleName);
+    User u = new User(name, surname, username, password, dob, sex, email, phone, id, r);
+	userMan.register(u);
+}
+
+
+
 
 private static void addPatient() throws NumberFormatException, IOException{
 	System.out.println("Please write the Patient info");

@@ -66,6 +66,7 @@ public class Menu {
 		System.out.println("15. Add Diagnosis.");
 		System.out.println("16. List 6 recent diseases.");
 		System.out.println("17. Add a new patient.");
+		System.out.println("18. Add treatments to a disease.");
 		System.out.println("0. Exit");
 		int choice = Integer.parseInt(r.readLine());
 		return choice;
@@ -156,6 +157,14 @@ public class Menu {
 				}
 				case 17: {
 					addPatient();
+					break;
+				}
+				case 18: {
+					addTreatmentsToaDisease();
+					break;
+				}
+				case 19: {
+					//
 					break;
 				}
 				case 0: {
@@ -278,17 +287,27 @@ public class Menu {
 		System.out.println("Please write the Diagnosis info");
 		System.out.println("Its name:");
 		String name = r.readLine();
-		System.out.println("date");
-		LocalDate todaysDate = LocalDate.now();
-		System.out.println("comment_section");
-		String comment_section = r.readLine();
-		System.out.println("idDisease:");
+		System.out.println("Date (dd-mm-yyyy):");
+		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		Date todaysDate = Date.valueOf(localDate);
+		System.out.println("\nThese are the the diseases in the database:");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for (Disease disease : diseases) {
+			System.out.println(disease);
+		}
+		System.out.println("\n Please enter the ID of the disease:");
 		Integer idDisease = Integer.parseInt(r.readLine());
 		Disease disease = diseaseMan.getDisease(idDisease);
-		System.out.println("idMedical_Record");
+		System.out.println("\nThese are the the medical records in the database:");
+		List<Medical_Record> medical_Records = medicalRecordMan.listMedicalRecords();
+		for (Medical_Record medicalR : medical_Records) {
+			System.out.println(medicalR + " " + medicalR.getPatient().getNamePatient() + " " + medicalR.getPatient().getSurname() + " " + medicalR.getPatient().getDob());
+		}
+		System.out.println("Please select the ID of the Medical_Record:");
 		Integer idMedicalRecord = Integer.parseInt(r.readLine());
 		Medical_Record medicalRecord = medicalRecordMan.getMedical_Record(idMedicalRecord);
-		
+		System.out.println("Comment_section");
+		String comment_section = r.readLine();
 		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, medicalRecord, disease);
 		diagnosisMan.addDiagnosis(diagnosis);
 	}
@@ -574,6 +593,8 @@ public class Menu {
 	    } while (true);
 	}
 	
+	
+	
 	/**
 	 * Method to add a new treatment by diagnosis
 	 * 
@@ -581,8 +602,33 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static void newTreatmentByDiagnosis() throws NumberFormatException, IOException{
-		//TODO newTreatment By Diagnosis
-	}
+		System.out.println("These are the diagnoses in the database, please insert the id of the one you wish to add treatments to: ");
+		List<Diagnosis> diagnoses = diagnosisMan.listAllDiagnosis();
+		for (Diagnosis diagnosis : diagnoses) {
+			System.out.println(diagnosis);
+		}		Integer diagnosisID = Integer.parseInt(r.readLine());
+		Diagnosis diagnosis = diagnosisMan.getDiagnosis(diagnosisID);
+		System.out.println("\nThese are the treatments in the database, please insert the Id of the ones belonging to the disease: ");
+		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+		for(Treatment treatment : treatments) {
+			System.out.println(treatment);
+		}
+		Integer id;
+		String input;
+	    do {
+	        System.out.println("\nPlease enter the ID of the treatment you want to add (enter END to finish): ");
+	        input = r.readLine();
+	        if (input.equalsIgnoreCase("END")) {
+	            break;
+	        }
+	        id = Integer.parseInt(input);
+	        Treatment treatment = treatmentMan.getTreatment(id);
+	        if (treatment != null) {
+	            treatmentMan.addTreatmentByDiagnosis(diagnosis, treatment);
+	        } else {
+	            System.out.println("Invalid treatment ID. Please try again.");
+	        }
+	    } while (true);	}
 	
 	
 	/**
@@ -687,5 +733,36 @@ public class Menu {
 	
 	private static void createMedicalRecord(Patient patient) {
 		medicalRecordMan.addMedicalRecord(patient);
+	}
+	
+	private static void addTreatmentsToaDisease() throws NumberFormatException, IOException{
+		System.out.println("These are the diseases in the database, please insert the id of the one you wish to add treatments to: ");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for(Disease disease : diseases) {
+			System.out.println(disease);
+		}
+		Integer diseaseID = Integer.parseInt(r.readLine());
+		Disease disease = diseaseMan.getDisease(diseaseID);
+		System.out.println("\nThese are the treatments in the database, please insert the Id of the ones belonging to the disease: ");
+		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+		for(Treatment treatment : treatments) {
+			System.out.println(treatment);
+		}
+		Integer id;
+		String input;
+	    do {
+	        System.out.println("\nPlease enter the ID of the treatment you want to add (enter END to finish): ");
+	        input = r.readLine();
+	        if (input.equalsIgnoreCase("END")) {
+	            break;
+	        }
+	        id = Integer.parseInt(input);
+	        Treatment treatment = treatmentMan.getTreatment(id);
+	        if (treatment != null) {
+	            treatmentMan.addTreatmentByDisease(disease, treatment);
+	        } else {
+	            System.out.println("Invalid treatment ID. Please try again.");
+	        }
+	    } while (true);
 	}
 }

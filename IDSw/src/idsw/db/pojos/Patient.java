@@ -5,19 +5,39 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-import idsw.db.jdbc.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import idsw.db.jdbc.*;
+import idsw.db.xml.utils.SQLDateAdapter;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Patient")
+@XmlType(propOrder = { "namePatient", "surname", "dob" })
 public class Patient implements Serializable{
 	
 		/**
 		* 
 	 	*/
 		private static final long serialVersionUID = -4979690235303387303L;
+		@XmlAttribute
 		private Integer idPatient;
+		@XmlElement
 		private String namePatient;
+		@XmlElement
 		private String surname;
+		@XmlElement
+		@XmlJavaTypeAdapter(SQLDateAdapter.class)
 		private Date dob; //Recordad que para Date hay que importar java.sql.Date
+		@XmlTransient
 		private Medical_Record medicalRecord;
+		@XmlAttribute
 		private String username; //add to the database in the create tables
 		
 		public Patient() {

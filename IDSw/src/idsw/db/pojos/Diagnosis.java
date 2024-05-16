@@ -1,6 +1,7 @@
 package idsw.db.pojos;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import idsw.db.xml.utils.SQLDateAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Diagnosis")
-@XmlType(propOrder = { "name", "date","disease", "treatments", "comment_section" })
+@XmlType(propOrder = { "nameDiagnosis", "date","disease", "treatments", "diagnosis_comment_section" })
 public class Diagnosis implements Serializable{
 	
 		/**
@@ -32,10 +33,10 @@ public class Diagnosis implements Serializable{
 		@XmlElement
 		// Note the type adapter
 		@XmlJavaTypeAdapter(SQLDateAdapter.class)
-		private LocalDate localDate;
+		private Date date;
 		@XmlElement
-		private String comment_section;
-		@XmlAttribute
+		private String diagnosis_comment_section;
+		@XmlElement
 		private Disease disease;
 		@XmlTransient
 		private Medical_Record medicalRecord;
@@ -49,12 +50,12 @@ public class Diagnosis implements Serializable{
 		
 		
 		
-		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, LocalDate localDate, String comment_section, Medical_Record medicalRecord,Disease disease) {
+		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, Date localDate, String comment_section, Medical_Record medicalRecord,Disease disease) {
 			super();
 			this.idDiagnosis = idDiagnosis;
 			this.nameDiagnosis = nameDiagnosis;
-			this.localDate = localDate;
-			this.comment_section = comment_section;
+			this.date = localDate;
+			this.diagnosis_comment_section = comment_section;
 			this.medicalRecord = medicalRecord;
 			this.disease = disease;
 			this.treatments = new ArrayList<Treatment>();
@@ -62,16 +63,30 @@ public class Diagnosis implements Serializable{
 			
 		}		
 		
-		public Diagnosis( String nameDiagnosis, LocalDate LocalDate, String comment_section, Medical_Record medicalRecord, Disease disease) {
+		public Diagnosis( String nameDiagnosis, Date LocalDate, String comment_section, Medical_Record medicalRecord, Disease disease) {
 			super();
 			this.nameDiagnosis = nameDiagnosis;
-			this.localDate = LocalDate;
-			this.comment_section = comment_section;
+			this.date = LocalDate;
+			this.diagnosis_comment_section = comment_section;
 			this.medicalRecord = medicalRecord;
 			this.disease = disease;
 			this.treatments = new ArrayList<Treatment>();
 			
 			
+		}
+
+
+		
+		
+
+		public Diagnosis(Integer idDiagnosis, String nameDiagnosis, Date date, String comment_section,
+				Disease disease) {
+			super();
+			this.idDiagnosis = idDiagnosis;
+			this.nameDiagnosis = nameDiagnosis;
+			this.date = date;
+			this.diagnosis_comment_section = comment_section;
+			this.disease = disease;
 		}
 
 
@@ -92,12 +107,12 @@ public class Diagnosis implements Serializable{
 			this.nameDiagnosis = nameDiagnosis;
 		}
 
-		public LocalDate getLocalDate() {
-			return localDate;
+		public Date getLocalDate() {
+			return date;
 		}
 
-		public void setLocalDate(LocalDate localDate) {
-			this.localDate = localDate;
+		public void setLocalDate(Date localDate) {
+			this.date = localDate;
 		}
 
 		public Disease getDisease() {
@@ -113,11 +128,11 @@ public class Diagnosis implements Serializable{
 		}
 
 		public String getComment_section() {
-			return comment_section;
+			return diagnosis_comment_section;
 		}
 
 		public void setComment_section(String comment_section) {
-			this.comment_section = comment_section;
+			this.diagnosis_comment_section = comment_section;
 		}
 
 		public void seMedicalRecord(Medical_Record medicalRecord) {
@@ -151,7 +166,7 @@ public class Diagnosis implements Serializable{
 
 		@Override
 		public String toString() {
-			return "Diagnosis [idDiagnosis=" + idDiagnosis + ", nameDiagnosis=" + nameDiagnosis + ", LocalDate=" + localDate
+			return "Diagnosis [idDiagnosis=" + idDiagnosis + ", nameDiagnosis=" + nameDiagnosis + ", LocalDate=" + date
 					+ ", disease=" + disease + ", medicalRecord=" + medicalRecord + "]";
 		}
 		

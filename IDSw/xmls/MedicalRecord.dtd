@@ -1,0 +1,36 @@
+<!DOCTYPE MedicalRecord [
+    <!ELEMENT MedicalRecord (Patient, Diagnoses)>
+    <!ELEMENT Patient (namePatient, surname, dob)>
+    <!ATTLIST Patient
+        idPatient CDATA #REQUIRED
+        username CDATA #REQUIRED
+    >
+    <!ELEMENT namePatient (#PCDATA)>
+    <!ELEMENT surname (#PCDATA)>
+    <!ELEMENT dob (#PCDATA)>
+    
+    <!ELEMENT Diagnoses (Diagnosis+)>
+    <!ELEMENT Diagnosis (date, disease, comment_section)>
+    <!ATTLIST Diagnosis
+        nameDiagnosis CDATA #REQUIRED
+        idDiagnosis CDATA #REQUIRED
+    >
+    <!ELEMENT date (#PCDATA)>
+    
+    <!ELEMENT disease (nameDisease, cause, comment_section)>
+    <!ATTLIST disease
+        idDisease CDATA #REQUIRED
+        infectiousRate CDATA #REQUIRED
+        mortalityRate CDATA #REQUIRED
+        incubationPeriod CDATA #REQUIRED
+        developmentPeriod CDATA #REQUIRED
+        convalescencePeriod CDATA #REQUIRED
+    >
+    <!ELEMENT nameDisease (#PCDATA)>
+    <!ELEMENT cause (#PCDATA)>
+    <!ELEMENT comment_section (#PCDATA)>
+    
+    <!ELEMENT Treatment (nameTreatment, comment_section)>
+    <!ELEMENT nameTreatment (#PCDATA)>
+    <!ELEMENT comment_section (#PCDATA)>
+]>

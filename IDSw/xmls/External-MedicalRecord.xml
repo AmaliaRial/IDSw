@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!DOCTYPE MedicalRecord [
+    <!ELEMENT MedicalRecord (Patient, Diagnoses)>
+    <!ELEMENT Patient (namePatient, surname, dob)>
+    <!ATTLIST Patient
+        idPatient CDATA #REQUIRED
+        username CDATA #REQUIRED
+    >
+    <!ELEMENT namePatient (#PCDATA)>
+    <!ELEMENT surname (#PCDATA)>
+    <!ELEMENT dob (#PCDATA)>
+    
+    <!ELEMENT Diagnoses (Diagnosis+)>
+    <!ELEMENT Diagnosis (date, disease,Treatment*,diagnosis_comment_section)>
+    <!ATTLIST Diagnosis
+        nameDiagnosis CDATA #REQUIRED
+        idDiagnosis CDATA #REQUIRED
+    >
+    <!ELEMENT date (#PCDATA)>
+    <!ELEMENT diagnosis_comment_section (#PCDATA)>
+    
+    <!ELEMENT disease (nameDisease, cause, disease_comment_section)>
+    <!ATTLIST disease
+        idDisease CDATA #REQUIRED
+        infectiousRate CDATA #REQUIRED
+        mortalityRate CDATA #REQUIRED
+        incubationPeriod CDATA #REQUIRED
+        developmentPeriod CDATA #REQUIRED
+        convalescencePeriod CDATA #REQUIRED
+    >
+    <!ELEMENT nameDisease (#PCDATA)>
+    <!ELEMENT cause (#PCDATA)>
+    <!ELEMENT disease_comment_section (#PCDATA)>
+    
+    <!ELEMENT Treatment (nameTreatment, treatment_comment_Section)>
+    <!ELEMENT nameTreatment (#PCDATA)>
+    <!ELEMENT treatment_comment_Section (#PCDATA)>
+]>
+
+<MedicalRecord>
+    <Patient idPatient="3" username="victoriarial">
+        <namePatient>Victoria</namePatient>
+        <surname>Rial Plaza</surname>
+        <dob>1999-12-22</dob>
+    </Patient>
+    <Diagnoses>
+        <Diagnosis nameDiagnosis="Strep Throat" idDiagnosis="3">
+            <date>2024-03-23</date>
+            <disease idDisease="2" infectiousRate="2.5" mortalityRate="0.05" incubationPeriod="3.5" developmentPeriod="3.0" convalescencePeriod="14.0">
+                <nameDisease>Strep Throat</nameDisease>
+                <cause>BACTERIA</cause>
+                <disease_comment_section>Streptococcus</disease_comment_section>
+            </disease>
+            <Treatment>
+                <nameTreatment>Cefuroxima</nameTreatment>
+                <treatment_comment_Section>One every 12 hours</treatment_comment_Section>
+            </Treatment>
+            <Treatment>
+                <nameTreatment>Penicillin</nameTreatment>
+                <treatment_comment_Section>As per doctor's orders</treatment_comment_Section>
+            </Treatment>
+            <Treatment>
+                <nameTreatment>Amoxicillin</nameTreatment>
+                <treatment_comment_Section>One every 12 hours</treatment_comment_Section>
+            </Treatment>
+            <diagnosis_comment_section>Patient complained of sore throat and difficulty swallowing.</diagnosis_comment_section>
+        </Diagnosis>
+        <Diagnosis nameDiagnosis="Tetanus" idDiagnosis="4">
+            <date>2012-08-09</date>
+            <disease idDisease="8" infectiousRate="0.0" mortalityRate="15.0" incubationPeriod="10.0" developmentPeriod="5.0" convalescencePeriod="18.0">
+                <nameDisease>Tetanus</nameDisease>
+                <cause>BACTERIA</cause>
+                <disease_comment_section>Clostridium tetani</disease_comment_section>
+            </disease>
+            <Treatment>
+                <nameTreatment>Metronidazole</nameTreatment>
+                <treatment_comment_Section>Take with food to recude stomach upset</treatment_comment_Section>
+            </Treatment>
+            <diagnosis_comment_section>Patient suffered a deep puncture wound.</diagnosis_comment_section>
+        </Diagnosis>
+        <Diagnosis nameDiagnosis="Chickenpox" idDiagnosis="8">
+            <date>2007-05-17</date>
+            <disease idDisease="9" infectiousRate="9.0" mortalityRate="0.7" incubationPeriod="15.0" developmentPeriod="1.5" convalescencePeriod="13.0">
+                <nameDisease>Chickenpox</nameDisease>
+                <cause>VIRUS</cause>
+                <disease_comment_section>Zoster Virus</disease_comment_section>
+            </disease>
+            <Treatment>
+                <nameTreatment>Acyclovir</nameTreatment>
+                <treatment_comment_Section>Apply sparingly to affected area</treatment_comment_Section>
+            </Treatment>
+            <diagnosis_comment_section>Patient developed characteristic rash and fever.</diagnosis_comment_section>
+        </Diagnosis>
+    </Diagnoses>
+</MedicalRecord>

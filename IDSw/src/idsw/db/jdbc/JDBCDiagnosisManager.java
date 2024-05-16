@@ -38,13 +38,12 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				Integer id = rs.getInt("idDiagnosis");
 				String name = rs.getString("nameDiagnosis");
 				Date date = rs.getDate("date");
-				LocalDate localDate = new java.sql.Date(date.getTime()).toLocalDate();
 				String comments = rs.getString("comment_section");
 				Integer idDisease = rs.getInt("disease_id");
 				Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
 				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
 				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
-				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,medicalRecord,disease);
+				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
 				diagnoses.add(diagnosis);
 			
 			}
@@ -63,7 +62,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	public List<Diagnosis> listAllDiagnosis() {
 		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		try {
-			String sql = "SELECT * FROM diagnoses ORDER BY IDdiagnosis DESC; ";
+			String sql = "SELECT * FROM diagnoses ORDER BY IDdiagnosis ;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
 			ResultSet rs= ps.executeQuery();
@@ -71,13 +70,12 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 				Integer id = rs.getInt("idDiagnosis");
 				String name = rs.getString("nameDiagnosis");
 				Date date = rs.getDate("date");
-				LocalDate localDate = new java.sql.Date(date.getTime()).toLocalDate();
 				String comments = rs.getString("comment_section");
 				Integer idDisease = rs.getInt("disease_id");
 				Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
 				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
 				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
-				Diagnosis diagnosis = new Diagnosis(id, name, localDate, comments,medicalRecord,disease);
+				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
 				diagnoses.add(diagnosis);
 			
 			}
@@ -102,12 +100,11 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
 			Date date = rs.getDate("date");
-			LocalDate localDate = new java.sql.Date(date.getTime()).toLocalDate();
 			Integer idDisease = rs.getInt("disease_id");
 			Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
 			Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
 			Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
-			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , localDate, rs.getString("comment_section"),medicalRecord,disease);
+			diagnosis = new Diagnosis(idDiagnosis, rs.getString("nameDiagnosis") , date, rs.getString("comment_section"),medicalRecord,disease);
 			return diagnosis;
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
@@ -142,9 +139,8 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, diagnosis.getNameDiagnosis());
-			LocalDate localdate = diagnosis.getLocalDate();	
-			Date date = java.sql.Date.valueOf(localdate);
-			ps.setDate(2,date);
+			Date localdate = diagnosis.getLocalDate();	
+			ps.setDate(2, localdate);
 			ps.setString(3, diagnosis.getComment_section());
 			ps.setInt(4, diagnosis.getDisease().getIdDisease());
 			ps.setInt(5, diagnosis.getMedicalRecord().getIdMedical_Record());
@@ -165,9 +161,8 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			PreparedStatement ps;
 			ps = c.prepareStatement(template);
 			ps.setString(1, diagnosis.getNameDiagnosis());
-			LocalDate localdate = diagnosis.getLocalDate();	
-			Date date = java.sql.Date.valueOf(localdate);
-			ps.setDate(2,date);
+			Date localdate = diagnosis.getLocalDate();	
+			ps.setDate(2, localdate);
 			ps.setString(3, diagnosis.getComment_section());
 			ps.setInt(4,diagnosis.getIdDiagnosis());
 			ps.executeUpdate();

@@ -48,18 +48,19 @@ public class JDBCPatientManager implements PatientManager {
 
 	@Override
 	public Patient getPatient(int patient_id) {
+		Patient patient = null;
 		try {
 			String sql = "SELECT * FROM patients WHERE IDpatient = " + patient_id;
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			Patient patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("DoB"));
-			return patient;
+			patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("dob"));
 		} catch (SQLException e) {
 			System.out.println("Error in the database");
 			e.printStackTrace();
-		}		return null;
+		}		
+		return patient;
 	}
 
 	@Override

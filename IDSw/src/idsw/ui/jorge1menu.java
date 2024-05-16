@@ -3,7 +3,9 @@ package idsw.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import idsw.db.jdbc.ConnectionManager;
@@ -17,6 +19,7 @@ import idsw.db.pojos.Medical_Record;
 
 public class jorge1menu {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 	private static DiseaseManager diseaseMan;
 	private static DiagnosisManager diagnosisMan;
@@ -88,8 +91,7 @@ public class jorge1menu {
 		System.out.println("Please write the Diagnosis info");
 		System.out.println("Its name:");
 		String name = r.readLine();
-		System.out.println("date");
-		LocalDate todaysDate = LocalDate.now();
+        Date date = Date.valueOf(LocalDate.now());
 		System.out.println("comment_section");
 		String comment_section = r.readLine();
 		System.out.println("idDisease:");
@@ -99,7 +101,7 @@ public class jorge1menu {
 		Integer idMedicalRecord = Integer.parseInt(r.readLine());
 		Medical_Record medicalRecord = medicalRecordMan.getMedical_Record(idMedicalRecord);
 		
-		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, medicalRecord, disease);
+		Diagnosis diagnosis = new Diagnosis(name, date, comment_section, medicalRecord, disease);
 		diagnosisMan.addDiagnosis(diagnosis);
 		
 	}
@@ -147,11 +149,13 @@ private static Diagnosis getDiagnosis() throws NumberFormatException, IOExceptio
 					a = false;
 			}
 			if(eleccion == 2 ) {		
-					LocalDate date = diagnosis.getLocalDate();
+					Date date = diagnosis.getLocalDate();
 					System.out.println("Date actual:" + date );
 					System.out.println("Escribe la nueva fecha YYYY-MM-DD:");
-					LocalDate dateNew = LocalDate.parse(r.readLine());
-					diagnosis.setLocalDate(dateNew);
+					String newDate = r.readLine();
+					LocalDate localDate = LocalDate.parse(newDate, formatter);
+					Date dob = Date.valueOf(localDate);
+					diagnosis.setLocalDate(dob);
 					a = false;
 			}
 			if(eleccion == 3 ) {

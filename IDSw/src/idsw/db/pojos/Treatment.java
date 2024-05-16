@@ -5,6 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Treatment")
+@XmlType(propOrder = { "nameTreatment", "treatment_comment_Section"})
 public class Treatment implements Serializable{
 
 	
@@ -12,10 +23,15 @@ public class Treatment implements Serializable{
 		* 
 	 	*/
 		private static final long serialVersionUID = -3878390729908698825L;
+		@XmlAttribute
 		private Integer idTreatment;
+		@XmlElement
 		private String nameTreatment;
-		private String comment_Section;
+		@XmlElement
+		private String treatment_comment_Section;
+		@XmlTransient
 		private List<Disease> diseases;
+		@XmlTransient
 		private List<Diagnosis> diagnosis;
 	
 		public Treatment() {
@@ -30,13 +46,13 @@ public class Treatment implements Serializable{
 			super();
 			this.idTreatment = idTreatment;
 			this.nameTreatment = nameTreatment;
-			this.comment_Section = comment_Section;
+			this.treatment_comment_Section = comment_Section;
 		}
 
 		public Treatment(String nameTreatment, String comment_Section) {
 			super();
 			this.nameTreatment = nameTreatment;
-			this.comment_Section = comment_Section;
+			this.treatment_comment_Section = comment_Section;
 		}
 
 		public Integer getIdTreatment() {
@@ -56,11 +72,11 @@ public class Treatment implements Serializable{
 		}
 
 		public String getComment_Section() {
-			return comment_Section;
+			return treatment_comment_Section;
 		}
 
 		public void setComment_Section(String comment_Section) {
-			this.comment_Section = comment_Section;
+			this.treatment_comment_Section = comment_Section;
 		}
 
 		public List<Disease> getDiseases() {
@@ -105,7 +121,7 @@ public class Treatment implements Serializable{
 		@Override
 		public String toString() {
 			return "\n Treatment [idTreatment=" + idTreatment + ", nameTreatment=" + nameTreatment + ", comment_Section="
-					+ comment_Section + "]";
+					+ treatment_comment_Section + "]";
 		}
 
 

@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlType;
 
 //xml anotations
 @XmlAccessorType(XmlAccessType.FIELD) //allows it to be turned into an xml
-@XmlRootElement(name = "Medical Record") // allows it to be a root element 
-@XmlType(propOrder = { "Patient", "Diagnoses"}) // specify the order inside the xml
+@XmlRootElement(name = "MedicalRecord") // allows it to be a root element 
+@XmlType(propOrder = { "patient", "diagnoses"}) // specify the order inside the xml
 public class Medical_Record implements Serializable{
 	
 		/**

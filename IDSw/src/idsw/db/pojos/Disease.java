@@ -5,26 +5,51 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import idsw.db.enums.*;
- 
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Disease")
+@XmlType(propOrder = { "nameDisease", "cause", "disease_comment_section" })
 public class Disease implements Serializable{
 	
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 4610418778728477479L;
+		@XmlAttribute
 		private Integer idDisease;
+		@XmlElement
 		private String nameDisease;
+		@XmlAttribute
 		private Float infectious_rate;
+		@XmlAttribute
 		private Float mortality_rate;
+		@XmlAttribute
 		private Float incubation_period;
+		@XmlAttribute
 		private Float development_period;
+		@XmlAttribute
 		private Float convalescence_period;
+		@XmlElement
 		private Cause cause;
-		private String comment_section;
+		@XmlElement
+		private String disease_comment_section;
+		@XmlTransient
 		private List<Symptom> symptoms;
+		@XmlTransient
 		private List<Treatment> treatments;
+		@XmlTransient
 		private Virtual_Population virtualPopulation;
+		@XmlTransient
 		private List<Diagnosis> diagnoses;
 		
 		
@@ -48,7 +73,7 @@ public class Disease implements Serializable{
 			this.development_period = development_period;
 			this.convalescence_period = convalescence_period;
 			this.cause = Cause.valueOf(cause1);
-			this.comment_section = comment_section;
+			this.disease_comment_section = comment_section;
 		}
 		
 		public Disease(String nameDisease, Float infectious_rate, Float mortality_rate,
@@ -61,7 +86,7 @@ public class Disease implements Serializable{
 			this.development_period = development_period;
 			this.convalescence_period = convalescence_period;
 			this.cause = Cause.valueOf(cause1.toUpperCase());
-			this.comment_section = comment_section;
+			this.disease_comment_section = comment_section;
 		}
 
 		
@@ -70,7 +95,7 @@ public class Disease implements Serializable{
 			super();
 			this.idDisease = idDisease;
 			this.nameDisease = nameDisease;
-			this.comment_section = comment_section;
+			this.disease_comment_section = comment_section;
 		}
 
 
@@ -140,11 +165,11 @@ public class Disease implements Serializable{
 		}
 
 		public String getComment_section() {
-			return comment_section;
+			return disease_comment_section;
 		}
 
 		public void setComment_section(String comment_section) {
-			this.comment_section = comment_section;
+			this.disease_comment_section = comment_section;
 		}
 
 		public List<Symptom> getSymptoms() {
@@ -203,7 +228,7 @@ public class Disease implements Serializable{
 			return "\n Disease [idDisease=" + idDisease + ", nameDisease=" + nameDisease + ", infectious_rate="
 					+ infectious_rate + ", mortality_rate=" + mortality_rate + ", incubation_period="
 					+ incubation_period + ", development_period=" + development_period + ", convalescense_period="
-					+ convalescence_period + ", cause=" + cause + ", comment_section=" + comment_section + "]";
+					+ convalescence_period + ", cause=" + cause + ", comment_section=" + disease_comment_section + "]";
 		}
 		
 

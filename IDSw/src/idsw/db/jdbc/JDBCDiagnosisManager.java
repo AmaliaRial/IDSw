@@ -174,13 +174,13 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 		}
 	}
 
-	public List<Diagnosis> listMatchinDiagnosesByPatient(Patient patient){
+	public List<Diagnosis> listMatchinDiagnosesByPatient(Integer idPatient){
 		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		try {
 			String sql = "SELECT * FROM diagnoses WHERE IDmedical_record = ? ;";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
-			ps.setInt(1,patient.getIdPatient());
+			ps.setInt(1,idPatient);
 			ResultSet rs= ps.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("idDiagnosis");

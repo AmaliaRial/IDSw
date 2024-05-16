@@ -104,6 +104,10 @@ private static void menuRegister() throws NumberFormatException, IOException {
 	
 	User u = new User(dni,dob,email,name, password, roleID, phone, sex, surname, username, role);
 	userMan.register(u);
+	if (roleName.equals("patient")) {
+		Patient patient = new Patient(name, surname, username, dob);
+		patientMan.addPatient(patient);
+	}
 }
 
 
@@ -206,7 +210,6 @@ private static void modifySymptom() throws NumberFormatException, IOException{
 	
 	symptomMan.modifySymptom(symptom);
 }
-
 
 
 private static void deleteSymptom() throws NumberFormatException, IOException{

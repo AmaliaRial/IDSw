@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Your Name">
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+        <title>Medical Record</title>
+        <style>
+					.content {
+					display: grid;
+					grid-template-columns: 1fr auto; /* Adjusted to position the
+					title on the left and the patient info box on the right */
+					align-items: flex-start; /* Aligns content to the top */
+					}
+					.header {
+					grid-column: 1; /* Title positioned on the first column */
+					margin-bottom: 10px; /* Add bottom margin to the header */
+					}
+					.patient-info {
+					position: relative;
+					z-index: 1;
+					background-color: #fff;
+					padding: 5px;
+					border: 1px solid #000;
+					width: fit-content;
+					grid-column: 2; /* Adjusted to position on the right */
+					grid-row: 1; /* Positioned on the first row */
+					align-self: flex-start; /* Aligns to the top */
+					margin-left: auto; /* Moves the box to the right */
+					margin-right: 20px; /* Adds more right margin to move the
+					box closer to the right corner */
+					}
+					.diagnosis {
+					background-color: #f0f8ff; /* Light blue background color */
+					border-radius: 5px; /* Rounded corners */
+					padding: 10px; /* Add padding */
+					margin-bottom: 10px; /* Add margin between diagnoses */
+					}
+					.patient-info p {
+					font-size: smaller; /* Adjust font size of paragraph text */
+					margin: 0; /* Remove default paragraph margins */
+					}
+					.patient-info h2 {
+					margin: 0; /* Remove default heading margins */
+					margin-bottom: 5px; /* Add a small margin below heading */
+					}
+					.h1 {
+					font-size: x-large; /* Increase font size of h1 */
+					}
+					.treatment {
+					background-color: #f2f2f2; /* Grey background color */
+					border-radius: 5px; /* Rounded corners */
+					padding: 10px; /* Add padding */
+					margin-top: 10px; /* Adjusted margin for treatments */
+					}
+					.treatment p {
+					margin-left: 20px; /* Adjusted margin for treatment comments
+					*/
+					}
+					h2.diagnoses-title {
+					font-size: larger; /* Increase font size */
+					}
+                </style>
+    </head>
+    <body>
+        <div class="content">
+            <div class="header">
+                <h1>Medical Record</h1>
+            </div>
+            <div class="patient-info">
+                <h2>Patient Information:</h2>
+                <p>ID: 3</p>
+                <p>Date of Birth: 1999-12-22</p>
+                <p>Name: Victoria</p>
+                <p>Surname: Rial Plaza</p>
+            </div>
+        </div>
+        <h2 class="diagnoses-title">Diagnoses:</h2>
+        <div class="diagnosis" xmlns="">
+            <h3>Strep Throat</h3>
+            <p>Date: 2024-03-23</p>
+            <p>Disease: Strep Throat</p>
+            <p>Cause: BACTERIA</p>
+            <p>
+                <i>Additional Information: Streptococcus</i>
+            </p>
+            <div class="treatment">
+                <h4>Treatment: Cefuroxima</h4>
+                <p>Comments: One every 12 hours</p>
+            </div>
+            <div class="treatment">
+                <h4>Treatment: Penicillin</h4>
+                <p>Comments: As per doctor's orders</p>
+            </div>
+            <div class="treatment">
+                <h4>Treatment: Amoxicillin</h4>
+                <p>Comments: One every 12 hours</p>
+            </div>
+            <p>Comment: Patient complained of sore throat and difficulty swallowing.</p>
+        </div>
+        <div class="diagnosis">
+            <h3>Tetanus</h3>
+            <p>Date: 2012-08-09</p>
+            <p>Disease: Tetanus</p>
+            <p>Cause: BACTERIA</p>
+            <p>
+                <i>Additional Information: Clostridium tetani</i>
+            </p>
+            <div class="treatment">
+                <h4>Treatment: Metronidazole</h4>
+                <p>Comments: Take with food to recude stomach upset</p>
+            </div>
+            <p>Comment: Patient suffered a deep puncture wound.</p>
+        </div>
+        <div class="diagnosis">
+            <h3>Chickenpox</h3>
+            <p>Date: 2007-05-17</p>
+            <p>Disease: Chickenpox</p>
+            <p>Cause: VIRUS</p>
+            <p>
+                <i>Additional Information: Zoster Virus</i>
+            </p>
+            <div class="treatment">
+                <h4>Treatment: Acyclovir</h4>
+                <p>Comments: Apply sparingly to affected area</p>
+            </div>
+            <p>Comment: Patient developed characteristic rash and fever.</p>
+        </div>
+    </body>
+</html>

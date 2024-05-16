@@ -178,6 +178,7 @@ public class JDBCSimulationManager implements SimulationManager {
 			System.out.println("Error in database");
 			e.printStackTrace();
 		}
+		//if no matching returns a simulation with null atributes
 		return simulationSelected;
 	}
 
@@ -208,6 +209,12 @@ public class JDBCSimulationManager implements SimulationManager {
 		}
 		
 		return matchingSimulations;
+	}
+
+	@Override
+	public List<Simulation> listSixRecentSimulation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

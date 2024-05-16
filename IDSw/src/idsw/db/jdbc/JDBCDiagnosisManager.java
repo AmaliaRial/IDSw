@@ -14,6 +14,7 @@ import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
+import idsw.db.pojos.Patient;
 
 
 public class JDBCDiagnosisManager implements DiagnosisManager {
@@ -171,6 +172,38 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
+	}
+
+	public List<Diagnosis> listMatchinDiagnosesByPatient(Patient patient){
+		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
+		try {
+			String sql = "SELECT * FROM diagnoses WHERE IDmedical_record = ? ;";
+			PreparedStatement ps;
+			ps = c.prepareStatement(sql);
+			ps.setInt(1,patient.getIdPatient());
+			ResultSet rs= ps.executeQuery();
+			while(rs.next()) {
+				Integer id = rs.getInt("idDiagnosis");
+				String name = rs.getString("nameDiagnosis");
+				Date date = rs.getDate("date");
+				String comments = rs.getString("comment_section");
+				Integer idDisease = rs.getInt("disease_id");
+				Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
+				Integer idMedicalRecord =rs.getInt("medicalrecord_id"); 
+				Medical_Record medicalRecord = conMan.getMedicalRecordMan().getMedical_Record(idMedicalRecord);
+				Diagnosis diagnosis = new Diagnosis(id, name, date, comments,medicalRecord,disease);
+				diagnoses.add(diagnosis);
+			
+			}
+			rs.close();
+			ps.close();
+			
+		}catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}		
+		
+		return diagnoses;
 	}
 
 	

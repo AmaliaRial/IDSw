@@ -20,7 +20,7 @@ public class User implements Serializable{
 	@GeneratedValue(generator = "users")
 	@TableGenerator(name = "users", table = "sqlite_sequence",
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "users") //notice how the 3 employees here match the name of the @Table
-	private Integer id;
+	private Long roleVerificationNumber;
 	@Column(nullable = false)
 	private String name;
 	@Column(nullable = false)
@@ -39,10 +39,7 @@ public class User implements Serializable{
 	@Column(nullable = false)
 	private Integer phoneNumber;
 	@Column(nullable = false, unique = true)
-	private String dni;
-	@Column(nullable = false, unique = true)
-	private Long roleVerificationNumber;
-	
+	private String dni;	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Role role;
 
@@ -50,28 +47,22 @@ public class User implements Serializable{
 		super();
 	}
 	
-	public User(String name, String surname, String username, String password, Date dob, String sex, String email,
-            Integer phoneNumber, String dni, Role role) {
+	public User(String dni,Date dob, String email, String name, String password, Long roleVerificationNumber, Integer phoneNumber, String sex, String surname, String username, Role role) {
         super();
+        this.dni = dni;
+        this.dob = dob;
+        this.email = email;
         this.name = name;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.roleVerificationNumber = roleVerificationNumber;
+        this.sex = Sex.valueOf(sex.toUpperCase());
         this.surname = surname;
         this.username = username;
         this.password = password;
-        this.dob = dob;
-        this.sex = Sex.valueOf(sex.toUpperCase());
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.dni = dni;
         this.role = role;
         }
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -152,10 +143,20 @@ public class User implements Serializable{
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	public Long getRoleVerificationNumber() {
+		return roleVerificationNumber;
+	}
+
+	public void setRoleVerificationNumber(Long roleVerificationNumber) {
+		this.roleVerificationNumber = roleVerificationNumber;
+	}
+	
+	
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(roleVerificationNumber);
 	}
 
 	@Override
@@ -167,12 +168,12 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(roleVerificationNumber, other.roleVerificationNumber);
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username + ", password="
+		return "User [name=" + name + ", surname=" + surname + ", username=" + username + ", password="
 				+ password + ", dob=" + dob + ", sex=" + sex + ", email=" + email + ", phoneNumber=" + phoneNumber
 				+ ", dni=" + dni + ", role=" + role + "]";
 	}

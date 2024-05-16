@@ -7,7 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import idsw.db.jdbcInterfaces.UserManager;
+import idsw.db.jpaInterfaces.UserManager;
 import idsw.db.pojos.Role;
 import idsw.db.pojos.User;
 

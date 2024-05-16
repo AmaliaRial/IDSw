@@ -1,4 +1,4 @@
-package idsw.db.jdbcInterfaces;
+package idsw.db.jpaInterfaces;
 
 import java.util.List;
 

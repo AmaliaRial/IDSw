@@ -14,6 +14,7 @@ import idsw.db.jdbc.*;
 import idsw.db.jdbcInterfaces.*;
 import idsw.db.pojos.*;
 import idsw.db.jpa.*;
+import idsw.db.jpaInterfaces.UserManager;
 
 public class menuLorena {
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
@@ -23,6 +24,7 @@ public class menuLorena {
 	private static SymptomManager symptomMan;
 	private static PatientManager patientMan; 
 	private static DiseaseManager diseaseMan;
+	private static MedicalRecordManager medicalRecordMan;
 	private static UserManager userMan;
 	
 	
@@ -33,6 +35,7 @@ public class menuLorena {
 		patientMan = conMan.getPatientMan();
 		symptomMan = conMan.getSymptomMan();
 		diseaseMan = conMan.getDiseaseMan();
+		medicalRecordMan = conMan.getMedicalRecordMan();
 		userMan = new JPAUserManager();
 		
 		System.out.println("Choose your desired option");
@@ -90,14 +93,21 @@ private static void menuRegister() throws NumberFormatException, IOException {
 	System.out.println("Please, type your phone number: ");
 	Integer phone = Integer.parseInt(r.readLine());
 	System.out.println("Please, type your DNI (without letter): ");
-	String id = r.readLine();
-	System.out.println("Please, choose your role (type it´s name:");
+	String dni = r.readLine();
+	System.out.println("Please, type the roleID:");
+	Long roleID =  Long.parseLong(r.readLine());
+	System.out.println("Choose your role (type its name):");
 	List<Role> roles = userMan.getAllRoles();
 	System.out.println(roles);
 	String roleName = r.readLine();
-	Role r = userMan.getRole(roleName);
-    User u = new User(name, surname, username, password, dob, sex, email, phone, id, r);
+	Role role = userMan.getRole(roleName);
+	
+	User u = new User(dni,dob,email,name, password, roleID, phone, sex, surname, username, role);
 	userMan.register(u);
+	if (roleName.equals("patient")) {
+		Patient patient = new Patient(name, surname, username, dob);
+		patientMan.addPatient(patient);
+	}
 }
 
 
@@ -117,6 +127,14 @@ private static void addPatient() throws NumberFormatException, IOException{
 	
 	Patient patient = new Patient(name, surname,username, dob);
 	patientMan.addPatient(patient);
+	Integer lastId = conMan.getLastInsertedID();
+	patient.setIdPatient(lastId);
+	createMedicalRecord(patient);
+}
+
+
+private static void createMedicalRecord(Patient patient) {
+	medicalRecordMan.addMedicalRecord(patient);
 }
 
 private static void addSymptom() throws NumberFormatException, IOException{
@@ -192,7 +210,6 @@ private static void modifySymptom() throws NumberFormatException, IOException{
 	
 	symptomMan.modifySymptom(symptom);
 }
-
 
 
 private static void deleteSymptom() throws NumberFormatException, IOException{

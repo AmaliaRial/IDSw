@@ -39,7 +39,6 @@ public class Menu {
 	private static DiagnosisManager diagnosisMan;
 	private static PatientManager patientMan;
 	private static MedicalRecordManager medicalRecordMan;
-	//TODO add interfaces
 
 	/**
 	 * Main menu
@@ -85,9 +84,7 @@ public class Menu {
 			diagnosisMan = conMan.getDiagnosisMan();
 			patientMan = conMan.getPatientMan();
 			medicalRecordMan = conMan.getMedicalRecordMan();
-			
-			//TODO add conMans
-						
+									
 			do {
 				choice = menuPrincipal();
 			switch (choice) {

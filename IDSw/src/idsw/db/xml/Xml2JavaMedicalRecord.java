@@ -18,8 +18,6 @@ import idsw.db.pojos.Patient;
 
 public class Xml2JavaMedicalRecord {
 	
-    private static final String DB_URL = "jdbc:sqlite:./db/idsw.db";
-    private static Connection c;
     private static ConnectionManager conMan;
 
     public static void main(String[] args) throws JAXBException, SQLException {
@@ -41,8 +39,8 @@ public class Xml2JavaMedicalRecord {
         System.out.println("Diagnoses: " + record.getDiagnoses());
 
         // Store the medical record in the database
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            conn.setAutoCommit(false);
+        try (Connection conn = conMan.getConnection()) {
+            //conn.setAutoCommit(false);
 
             // Persist
             // We assume the patient is not already in the database
@@ -77,6 +75,8 @@ public class Xml2JavaMedicalRecord {
                     }
                     
                 }
+                rs.close();
+                pstmt.close();
             }
 
             String insertRecordSQL = "INSERT INTO medical_records (patient) VALUES(?)";
@@ -100,7 +100,7 @@ public class Xml2JavaMedicalRecord {
 				}
 				pstmt.close();
 			}
-
+			
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

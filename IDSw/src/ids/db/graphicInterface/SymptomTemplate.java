@@ -9,7 +9,7 @@ public class SymptomTemplate extends JPanel{
 	public JPanel northPanel;
 	public JPanel centerPanel;
 		public JPanel namePanel;
-		public JPanel PainManagemetPanel;
+		public JPanel painManagementPanel;
 	public JPanel buttonsPanel;
 		public JPanel button1Panel;
 		public JPanel button2Panel;
@@ -41,13 +41,13 @@ public class SymptomTemplate extends JPanel{
 		this.namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		this.namePanel.setBackground(Color.WHITE);
 	    this.centerPanel.add(this.namePanel);
-	    this.PainManagemetPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    this.PainManagemetPanel.setBackground(Color.WHITE);
-	    this.centerPanel.add(this.PainManagemetPanel);
+	    this.painManagementPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    this.painManagementPanel.setBackground(Color.WHITE);
+	    this.centerPanel.add(this.painManagementPanel);
 		this.nameLabel = new CustomJLabel("<html>Name:</html>", 15, Color.BLACK, Color.WHITE);
 		this.namePanel.add(this.nameLabel);
 		this.PainManagemetLabel = new CustomJLabel("<html>Pain management:</html>", 15, Color.BLACK, Color.WHITE);
-		this.PainManagemetPanel.add(this.PainManagemetLabel);
+		this.painManagementPanel.add(this.PainManagemetLabel);
 	
 		
 		this.rightPanel = new JPanel();

@@ -5,10 +5,10 @@ import javax.swing.*;
 import ids.db.graphicInterface.components.*;
 import idsw.db.pojos.*;
 
-public class ReadResearcherPanel_Symptom extends SymptomTemplate{
+public class ReadResearcher_SymptomPanel extends SymptomTemplate{
 public RoundedButton button3;
 	
-	public ReadResearcherPanel_Symptom(Integer id_symptom) {
+	public ReadResearcher_SymptomPanel(Integer id_symptom) {
 		super();
 		Symptom symptom=super.conMan.getSymptomMan().getSymptom(id_symptom);
 		super.nameLabel.setText("Name: "+symptom.getNameSymptom());
@@ -27,7 +27,7 @@ public RoundedButton button3;
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ReadResearcherPanel_Symptom(1));
+        frame.getContentPane().add(new ReadResearcher_SymptomPanel(1));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

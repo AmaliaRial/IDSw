@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Create_SymptomPanel extends SymptomTemplate {
 	public JTextField nameField;
-	public JTextField PainManagementField;
+	public JComboBox<String> PainManagementField;
 
 	public Create_SymptomPanel() {
 	super();
@@ -15,8 +15,10 @@ public class Create_SymptomPanel extends SymptomTemplate {
     
     this.nameField = new JTextField(20);
     this.namePanel.add(this.nameField);
-    this.PainManagementField = new JTextField(20);
-    this.PainManagemetPanel.add(this.PainManagementField);
+    this.PainManagementField = new JComboBox<String>();
+       this.PainManagementField.addItem("MILD");
+       this.PainManagementField.addItem("SEVERE");
+    this.painManagementPanel.add(this.PainManagementField);
     
  
 }

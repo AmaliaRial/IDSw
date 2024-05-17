@@ -8,8 +8,8 @@ import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
 
 
-public class ReadPatientDoctor_Symptom extends SymptomTemplate{
-	public ReadPatientDoctor_Symptom (Integer id_symptom) {
+public class ReadPatientDoctor_SymptomPanel extends SymptomTemplate{
+	public ReadPatientDoctor_SymptomPanel (Integer id_symptom) {
 		super();
 		Symptom symptom=super.conMan.getSymptomMan().getSymptom(id_symptom);
 		super.nameLabel.setText("Name: "+symptom.getNameSymptom());
@@ -25,7 +25,7 @@ public class ReadPatientDoctor_Symptom extends SymptomTemplate{
 		// Crear y mostrar la ventana de prueba
 		JFrame frame = new JFrame("Ejemplo con Swing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new ReadPatientDoctor_Symptom(1));
+		frame.getContentPane().add(new ReadPatientDoctor_SymptomPanel(1));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);

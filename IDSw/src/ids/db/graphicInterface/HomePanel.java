@@ -113,7 +113,6 @@ public class HomePanel extends JPanel {
         this.leftSpace = new JPanel();
         this.leftSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles
         add(leftSpace, BorderLayout.WEST);
-        this.leftSpace.setBackground(Color.WHITE);
         
         this.rightSpace = new JPanel();
         this.rightSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles

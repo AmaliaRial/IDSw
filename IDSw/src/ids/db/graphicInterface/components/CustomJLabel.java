@@ -22,6 +22,15 @@ public class CustomJLabel extends JLabel {
         size.height += 5; // Altura adicional para mejorar la apariencia
         return size;
     }
+    
+    public void setBackgroundColor(Color backgroundColor) {
+    	setBackground(backgroundColor);
+    	repaint();
+    }
+    public void setTextColor(Color textColor) {
+    	setForeground(textColor);
+    	repaint();
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

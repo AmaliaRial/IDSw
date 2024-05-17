@@ -111,7 +111,16 @@ private static void menuRegister() throws NumberFormatException, IOException {
 	}
 }
 
-
+private static void getUser() throws NumberFormatException, IOException {
+	System.out.println("Please, type your username:");
+	String username = r.readLine();
+	User user = userMan.getUser(username);
+	if (user != null) {
+		System.out.println(user);
+	} else {
+		System.out.println("User not found");
+	}
+}
 
 
 private static void addPatient() throws NumberFormatException, IOException{

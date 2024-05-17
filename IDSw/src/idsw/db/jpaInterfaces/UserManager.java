@@ -15,4 +15,5 @@ public interface UserManager {
 	//Return null if there is no user
 	public User login(String username); // or do a throws UserNotFoundException
 	public boolean verifyPassword(String inputPassword, String username);
+	public User getUser(String username);
 }

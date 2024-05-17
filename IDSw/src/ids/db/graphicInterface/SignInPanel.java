@@ -28,6 +28,7 @@ public class SignInPanel extends JPanel {
 		public JPanel surnamePanel;
 		public JPanel userNamePanel;
 		public JPanel passwordPanel;
+		public JPanel passwordRepeatPanel;
 		public JPanel birthdayPanel;
 		public JPanel sexPanel;
 		public JPanel emailPanel;
@@ -35,8 +36,8 @@ public class SignInPanel extends JPanel {
 		public JPanel dniPanel;
 		public JPanel userNumberPanel;
 	public JPanel southPanel;
-			public JPanel cancelPanel;
-			public JPanel createAcountPanel;
+		public JPanel cancelPanel;
+		public JPanel createAcountPanel;
 	public JPanel leftSpace;
 	public JPanel rightSpace;
 	
@@ -46,16 +47,17 @@ public class SignInPanel extends JPanel {
 	public CustomJLabel surnameLabel;
 	public CustomJLabel userNameLabel;
 	public CustomJLabel passwordLabel;
+	public CustomJLabel passwordRepeatLabel;
 	public CustomJLabel sexLabel;
 	public CustomJLabel emailLabel;
 	public CustomJLabel phoneNumberLabel;
 	public CustomJLabel dniLabel;
 	public CustomJLabel userNumberLabel;
-	
 	public JTextField nameTextField;
 	public JTextField surnameTextField;
 	public JTextField userNameTextField;
 	public JPasswordField passwordTextField;
+	public JPasswordField passwordRepeatTextField;
 	public DateInputPanel bithdayDatePicker;
 	public JComboBox<String> SexComboBox;
 	public JTextField emailTextField;
@@ -72,7 +74,7 @@ public class SignInPanel extends JPanel {
 		this.northPanel.setBackground(Color.decode("#A5E0F1"));
 		this.add(northPanel,BorderLayout.NORTH);
 		
-		this.midlePanel=new JPanel(new GridLayout(10,1));
+		this.midlePanel=new JPanel(new GridLayout(11,1));
 		this.midlePanel.setBackground(Color.WHITE);
 		this.add(midlePanel, BorderLayout.CENTER);
 			this.namePanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -87,6 +89,9 @@ public class SignInPanel extends JPanel {
 			this.passwordPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
 			this.passwordPanel.setBackground(Color.WHITE);
 			this.midlePanel.add(passwordPanel);
+			this.passwordRepeatPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
+			this.passwordRepeatPanel.setBackground(Color.WHITE);
+			this.midlePanel.add(passwordRepeatPanel);
 			this.birthdayPanel=new JPanel(new FlowLayout(FlowLayout.LEFT));
 			this.birthdayPanel.setBackground(Color.WHITE);
 			this.midlePanel.add(birthdayPanel);
@@ -123,6 +128,7 @@ public class SignInPanel extends JPanel {
 		this.surnameLabel= new CustomJLabel("Surname: ",15, Color.BLACK,Color.WHITE);
 		this.userNameLabel= new CustomJLabel("UserName: ",15, Color.BLACK,Color.WHITE);
 		this.passwordLabel= new CustomJLabel("Password: ",15, Color.BLACK,Color.WHITE);
+		this.passwordRepeatLabel= new CustomJLabel("Password Repeat: ",15, Color.BLACK,Color.WHITE);
 		this.bithdayDatePicker= new DateInputPanel();
 		this.sexLabel=new CustomJLabel("Sex: ",15, Color.BLACK,Color.WHITE);
 		String[] sexs= {"MALE", "FEMALE"};
@@ -132,20 +138,47 @@ public class SignInPanel extends JPanel {
 		this.dniLabel=new CustomJLabel("DNI: ",15, Color.BLACK,Color.WHITE);
 		this.userNumberLabel=new CustomJLabel("userNumberField: ",15, Color.BLACK,Color.WHITE);
 		
+		this.nameTextField=new JTextField(20);
+		this.surnameTextField=new JTextField(20);
+		this.userNameTextField=new JTextField(20);
+		this.passwordTextField= new JPasswordField(20);
+		this.passwordRepeatTextField= new JPasswordField(20);
+		this.emailTextField=new JTextField(20);
+		this.phoneNumberField=new JTextField(20);
+		this.dniField=new JTextField(20);
+		this.userNumberField=new JTextField(20);
+		
 		this.namePanel.add(nameLabel);
+		this.namePanel.add(new JLabel());
+		this.namePanel.add(nameTextField);
 		this.surnamePanel.add(surnameLabel);
+		this.surnamePanel.add(new JLabel());
+		this.surnamePanel.add(surnameTextField);
 		this.userNamePanel.add(userNameLabel);
+		this.userNamePanel.add(userNameTextField);
 		this.passwordPanel.add(passwordLabel);
+		this.passwordPanel.add(new JLabel());
+		this.passwordPanel.add(passwordTextField);
+		this.passwordRepeatPanel.add(passwordRepeatLabel);
+		this.passwordRepeatPanel.add(passwordRepeatTextField);
 		this.birthdayPanel.add(bithdayDatePicker);
 		this.sexPanel.add(sexLabel);
 		this.sexPanel.add(SexComboBox);
 		this.emailPanel.add(emailLabel);
+		this.emailPanel.add(new JLabel());
+		this.emailPanel.add(emailTextField);
 		this.phoneNumberPanel.add(phoneNumberLabel);
+		this.phoneNumberPanel.add(new JLabel());
+		this.phoneNumberPanel.add(phoneNumberField);
 		this.dniPanel.add(dniLabel);
+		this.dniPanel.add(new JLabel());
+		this.dniPanel.add(dniField);
 		this.userNumberPanel.add(userNumberLabel);
+		this.userNumberPanel.add(new JLabel());
+		this.userNumberPanel.add(userNumberField);
 		
 		this.cancelButton=new RoundedButton("CANCEL", Color.decode("#09A8E4"));
-		this.cancelButton.setPreferredSize(new Dimension(80, 30));
+		this.cancelButton.setPreferredSize(new Dimension(90, 30));
 		this.cancelPanel.add(cancelButton);
 		this.createAcountButton=new RoundedButton("CREATE ACOUNT", Color.decode("#09A8E4"));
 		this.createAcountButton.setPreferredSize(new Dimension(130, 30));

@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -72,12 +73,13 @@ public class LogInPanel extends JPanel{
 		this.userNameLable=new CustomJLabel("User Name:", 15, Color.BLACK,Color.WHITE);
 		this.userNamePanel.add(userNameLable);
 		this.userNameTextField= new JTextField(20);
-		//this.userNamePanel.add(userNameTextField);
+		this.userNamePanel.add(userNameTextField);
 		
 		this.passwordLable=new CustomJLabel("Password:", 15, Color.BLACK,Color.WHITE);
 		this.passwordPanel.add(passwordLable);
-		this.passwordTextField= new JPasswordField(30);
-		//this.passwordPanel.add(passwordTextField);
+		this.passwordPanel.add(new JLabel());
+		this.passwordTextField= new JPasswordField(20);
+		this.passwordPanel.add(passwordTextField);
 		
 		this.continueButton= new RoundedButton("CONTINUE", Color.decode("#09A8E4"));
 		this.continueButton.setPreferredSize(new Dimension(90, 30));

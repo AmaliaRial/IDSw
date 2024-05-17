@@ -13,5 +13,6 @@ public interface UserManager {
 	public List<Role>  getAllRoles();
 	public void assignRole(User u, Role r);
 	//Return null if there is no user
-	public User login(String username, String password); // or do a throws UserNotFoundException
+	public User login(String username); // or do a throws UserNotFoundException
+	public boolean verifyPassword(String inputPassword, String username);
 }

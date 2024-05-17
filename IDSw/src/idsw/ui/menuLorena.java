@@ -66,8 +66,9 @@ private static void menuLogin() throws NumberFormatException, IOException {
 	String username = r.readLine();
 	System.out.println("Please, type your password:");
 	String password = r.readLine();
-	User user = userMan.login(username, password);
-	if (user != null) {
+	Boolean verified = userMan.verifyPassword(password, username);
+	if (verified.equals(true)) {
+		User user = userMan.login(username);
 		System.out.println("Welcome " + user.getName());
 	} else {
 		System.out.println("Invalid username or password");
@@ -104,7 +105,7 @@ private static void menuRegister() throws NumberFormatException, IOException {
 	
 	User u = new User(dni,dob,email,name, password, roleID, phone, sex, surname, username, role);
 	userMan.register(u);
-	if (roleName.equals("patient")) {
+	if (roleName.equalsIgnoreCase("patient")) {
 		Patient patient = new Patient(name, surname, username, dob);
 		patientMan.addPatient(patient);
 	}

@@ -7,6 +7,8 @@ import java.util.Objects;
 import javax.persistence.*;
 
 import idsw.db.enums.Sex;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @Entity
 @Table(name="users")
@@ -17,9 +19,6 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 2454800077990284437L;
 	@Id
-	@GeneratedValue(generator = "users")
-	@TableGenerator(name = "users", table = "sqlite_sequence",
-	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "users") //notice how the 3 employees here match the name of the @Table
 	private Long roleVerificationNumber;
 	@Column(nullable = false)
 	private String name;
@@ -59,7 +58,7 @@ public class User implements Serializable{
         this.sex = Sex.valueOf(sex.toUpperCase());
         this.surname = surname;
         this.username = username;
-        this.password = password;
+        this.password = hashPassword(password);
         this.role = role;
         }
 
@@ -93,7 +92,7 @@ public class User implements Serializable{
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = hashPassword(password);
 	}
 
 	public Date getDob() {
@@ -178,5 +177,12 @@ public class User implements Serializable{
 				+ ", dni=" + dni + ", role=" + role + "]";
 	}
 	
+
+    public static String hashPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+    
+    
 	
 }

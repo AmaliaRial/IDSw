@@ -10,6 +10,8 @@ import javax.persistence.Query;
 import idsw.db.jpaInterfaces.UserManager;
 import idsw.db.pojos.Role;
 import idsw.db.pojos.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 public class JPAUserManager implements UserManager {
 	
@@ -68,11 +70,10 @@ public class JPAUserManager implements UserManager {
 	}
 
 	@Override
-	public User login(String username, String password) {
+	public User login(String username) {
 		User u = null;
-		Query q = em.createNativeQuery("SELECT * FROM users WHERE username = ? AND password = ?;", User.class);
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE username = ?;", User.class);
 		q.setParameter(1, username);
-		q.setParameter(2, password);
 		try {
 			u = (User)q.getSingleResult();
 		} catch (NoResultException e) {
@@ -80,5 +81,24 @@ public class JPAUserManager implements UserManager {
 		}
 		return u;
 	}
+	
+	private String returnPassword(String username) {
+		String password = null;
+		Query q = em.createNativeQuery("SELECT * FROM users WHERE username = ?;", User.class);
+		q.setParameter(1, username);
+		try {
+			User u  = (User) q.getSingleResult();
+			password = u.getPassword();
+		} catch (NoResultException e) {
+			return null;
+		}
+		return password;
+	}
+	
+	@Override
+	 public boolean verifyPassword(String inputPassword, String username) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(inputPassword, returnPassword(username));
+	 }
 
 }

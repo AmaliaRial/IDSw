@@ -702,7 +702,7 @@ public class Menu {
 			diagnosis = diagnosisMan.getDiagnosis(integer);
 			diagnoses.add(diagnosis);
 		}
-		List <Treatment> treatments = treatmentMan.listTreatmentByDiagnosis(diagnoses);
+		List <Treatment> treatments = treatmentMan.listTreatmentByDiagnoses(diagnoses);
 		for (Treatment treatment : treatments) {
 			System.out.println(treatment);
 		}

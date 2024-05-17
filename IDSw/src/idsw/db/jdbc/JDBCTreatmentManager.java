@@ -302,7 +302,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	 * @return  List of treatments
 	 */
 	@Override
-	public List<Treatment> listTreatmentByDiagnosis(List<Diagnosis> diagnoses) {
+	public List<Treatment> listTreatmentByDiagnoses(List<Diagnosis> diagnoses) {
 		List<Treatment> treatments = new ArrayList<Treatment>();
 		try {
 			String template = "SELECT nameTreatment, t.comment_section FROM treatments AS t JOIN diagnosis_has_treatments ON IDtreatment = treatment_id JOIN diagnoses ON IDdiagnosis = diagnosis_id WHERE ?";
@@ -329,6 +329,28 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			e.printStackTrace();
 		}catch (NullPointerException e) {
 			System.out.println("The list provided is Null, please insert some data.");
+			e.printStackTrace();
+		}
+		return treatments;
+	}
+
+	@Override
+	public List<Treatment> getTreatmentsByDiagnosis(Diagnosis diagnosis) {
+		List<Treatment> treatments = new ArrayList<>();
+		try {
+			String selectTreatmentsSQL = "SELECT treatments.* FROM treatments "
+                    + "JOIN diagnosis_has_treatments ON IDtreatment = treatment_id WHERE diagnosis_id = ?";
+			PreparedStatement psTreatments = c.prepareStatement(selectTreatmentsSQL);
+			psTreatments.setInt(1, diagnosis.getIdDiagnosis());
+			ResultSet rsTreatments = psTreatments.executeQuery();
+			while (rsTreatments.next()) {
+				String treatmentName = rsTreatments.getString("nameTreatment");
+				String comment_section = rsTreatments.getString("comment_section");
+				Treatment treatment = new Treatment(treatmentName, comment_section);
+				treatments.add(treatment);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
 			e.printStackTrace();
 		}
 		return treatments;

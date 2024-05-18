@@ -13,6 +13,6 @@ public interface SymptomManager {
 	public void deleteSymptom(int idSymptom);
 	public void addSymptom(Symptom symptom);
 	public void modifySymptom(Symptom symptom);
-
+	public List<Symptom> getSymptomsByDisease(Disease disease);
 
 }

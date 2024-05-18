@@ -1,4 +1,4 @@
-package ids.db.graphicInterface;
+package idsws.db.graphicInterface;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

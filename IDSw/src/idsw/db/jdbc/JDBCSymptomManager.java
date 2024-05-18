@@ -157,5 +157,28 @@ public class JDBCSymptomManager implements SymptomManager {
 
 	}
 
+	@Override
+	public List<Symptom> getSymptomsByDisease(Disease disease) {
+		List<Symptom> symptoms = new ArrayList<>();
+		try {
+			String selectTreatmentsSQL = "SELECT symptoms.* FROM symptoms "
+                    + "JOIN disease_has_symptoms ON IDsymptoms = symptom_id WHERE disease_id = ?";
+			PreparedStatement psSymptoms = c.prepareStatement(selectTreatmentsSQL);
+			psSymptoms.setInt(1, disease.getIdDisease());
+			ResultSet rsSymptoms = psSymptoms.executeQuery();
+			while (rsSymptoms.next()) {
+				String symptomName = rsSymptoms.getString("nameSymptom");
+				String pain_Management = rsSymptoms.getString("comment_section");
+				Symptom symptom = new Symptom(symptomName, pain_Management);
+				symptoms.add(symptom);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return symptoms;
+		
+	}
+
 
 }

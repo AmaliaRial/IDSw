@@ -1,4 +1,4 @@
-package ids.db.graphicInterface.components;
+package idsw.db.graphicInterface.components;
 
 import idsw.db.jdbc.*;
 import idsw.db.pojos.Symptom;

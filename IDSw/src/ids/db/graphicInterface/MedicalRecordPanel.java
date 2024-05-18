@@ -1,4 +1,4 @@
-package ids.db.graphicInterface;
+package idsw.db.graphicInterface;
 
 import ids.db.graphicInterface.components.CircularIconButton;
 import ids.db.graphicInterface.components.CustomJLabel;

@@ -1,4 +1,4 @@
-package ids.db.graphicInterface;
+package idsw.db.graphicInterface;
 
 import java.awt.Dimension;
 import java.util.List;

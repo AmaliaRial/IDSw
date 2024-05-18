@@ -14,7 +14,7 @@ import idsw.db.pojos.Medical_Record;
 public class CreateFullXML {
 	
 	/**
-	 * This method creates a new XML file with the DTD content and the XML content so it can later be turned into an HTML file.
+	 * This method creates a new XML file with the DTD content and the XML content so it can later be turned into an HTML file. 
 	 */
 	public static void createFULLxml() {
 		// Paths to the existing files

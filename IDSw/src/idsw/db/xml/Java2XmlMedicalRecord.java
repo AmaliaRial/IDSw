@@ -33,7 +33,8 @@ public class Java2XmlMedicalRecord {
     
     public static void createXML(int record_id) {
         // Get a connection to the database
-        try {
+
+    	try {
 			c = DriverManager.getConnection("jdbc:sqlite:./db/idsw.db"); // replace with your database connection string
 
 			// Create the JAXBContext

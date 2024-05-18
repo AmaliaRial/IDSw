@@ -1,6 +1,7 @@
 package idsw.db.graphicInterface;
 
 import idsw.db.graphicInterface.components.CircularIconButton;
+
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.DateInputPanel;
 import idsw.db.graphicInterface.components.RoundedButton;
@@ -100,7 +101,7 @@ public class MedicalRecordPanel extends JPanel {
 		this.userPhotoBottonPanel.add(userPhotoBotton);
 		this.nameLabel=new CustomJLabel("Name: "+patient.getNamePatient(), 15,Color.decode("#09A8E4"),Color.decode("#A5E0F1"));
 		this.namePanel.add(nameLabel);
-		this.surnameLabel=new CustomJLabel("Surname: "+patient.getNamePatient(), 15,Color.decode("#09A8E4"),Color.decode("#A5E0F1"));
+		this.surnameLabel=new CustomJLabel("Surname: "+patient.getSurname(), 15,Color.decode("#09A8E4"),Color.decode("#A5E0F1"));
 		this.surnamePanel.add(surnameLabel);
 		
 		this.TitleLabel= new CustomJLabel("<html><b>MEDICAL RECORD</b></html>", 30,Color.decode("#09A8E4"),Color.WHITE);
@@ -118,11 +119,7 @@ public class MedicalRecordPanel extends JPanel {
 		
 		
 		List<Diagnosis> diagnoses= this.conMan.getDiagnosisMan().listMatchinDiagnosesByPatient(id_patient);
-		ArrayList<String> diagnosesName=ListNameofDiagnoses(diagnoses);
-		DefaultListModel<String> listModel = new DefaultListModel<>();
-		for (String elemento : diagnosesName) {
-            listModel.addElement(elemento);
-        }
+		DefaultListModel<String> listModel = ListNameofDiagnoses(diagnoses);
 		JList<String> lista = new JList<>(listModel);
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.diagnosesList= new JScrollPane(lista);
@@ -148,12 +145,12 @@ public class MedicalRecordPanel extends JPanel {
      
 	}
 	
-	private ArrayList<String> ListNameofDiagnoses(List<Diagnosis> diagnoses){
-		ArrayList<String> listDiagnosisName=new  ArrayList<String>();
+	private DefaultListModel<String> ListNameofDiagnoses(List<Diagnosis> diagnoses){
+		DefaultListModel<String> listModel = new DefaultListModel<>();
 		for(Diagnosis diagnosis:diagnoses) {
-			listDiagnosisName.add(diagnosis.getNameDiagnosis());
+			listModel.addElement(diagnosis.getNameDiagnosis());
 		}
-		return listDiagnosisName;
+		return listModel;
 	}
 	
 	
@@ -162,7 +159,7 @@ public class MedicalRecordPanel extends JPanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new MedicalRecordPanel(1));
+        frame.getContentPane().add(new MedicalRecordPanel(3));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

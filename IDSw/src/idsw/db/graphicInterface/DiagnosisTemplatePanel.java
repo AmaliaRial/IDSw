@@ -1,6 +1,7 @@
 package idsw.db.graphicInterface;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -86,7 +87,7 @@ public class DiagnosisTemplatePanel extends JPanel {
 			this.nameDiseasePanel.add(nameDiseaseLabel);
 			this.dateLabel=new CustomJLabel("Date: ", 15,Color.BLACK,Color.WHITE);
 			this.datePanel.add(dateLabel);
-			this.comentSectionLabel=new CustomJLabel("Coment Section: ", 15,Color.BLACK,Color.WHITE);
+			this.comentSectionLabel=new CustomJLabel("Comment Section: ", 15,Color.BLACK,Color.WHITE);
 			this.comentSectionPanel.add(comentSectionLabel);
 			this.treatmentsLabel=new CustomJLabel("Treatments: ", 15,Color.BLACK,Color.WHITE);
 			this.treatmentsTitlePanel.add(treatmentsLabel);

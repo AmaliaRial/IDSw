@@ -26,6 +26,7 @@ public class BuscadorTextoSymptoms extends JPanel {
         this.conMan = new ConnectionManager();
         // Configuración del JPanel
         setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(400,200));
 
         // Panel para la barra de búsqueda y el botón
         JPanel panelBusqueda = new JPanel();
@@ -34,6 +35,7 @@ public class BuscadorTextoSymptoms extends JPanel {
         // JTextField para la búsqueda
         textField = new JTextField();
         panelBusqueda.add(textField, BorderLayout.CENTER);
+        panelBusqueda.setBackground(Color.WHITE);
 
         // Botón de búsqueda
         buscarButton = new RoundedButton("Buscar", Color.decode("#09A8E4"));
@@ -103,7 +105,7 @@ public class BuscadorTextoSymptoms extends JPanel {
         }
     }
 
-    private void agregarSeleccion(String seleccion) {
+    public void agregarSeleccion(String seleccion) {
         seleccionesActuales.add(seleccion);
 
         JPanel panelSeleccion = new JPanel();

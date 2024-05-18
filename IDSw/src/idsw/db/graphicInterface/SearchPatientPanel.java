@@ -2,7 +2,8 @@ package idsw.db.graphicInterface;
 
 import javax.swing.*;
 
-import ids.db.graphicInterface.components.*;
+
+import idsw.db.graphicInterface.components.*;
 
 import java.awt.*;
 

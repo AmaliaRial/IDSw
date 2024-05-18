@@ -20,7 +20,6 @@ public class CreateUpdate_DiagnosisPanel extends DiagnosisTemplatePanel {
 	
 	public CreateUpdate_DiagnosisPanel() {
 		super();
-	
 		this.treatmenSearchPanel= new BuscadorTextoTreatments();
 		super. treatmentsPanel.add(treatmenSearchPanel);
 		super.backCalceButton.setButtonText("Cancel");

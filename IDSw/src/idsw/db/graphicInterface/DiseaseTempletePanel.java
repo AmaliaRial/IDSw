@@ -1,6 +1,7 @@
-package idsws.db.graphicInterface;
+package idsw.db.graphicInterface;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,8 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import ids.db.graphicInterface.components.CustomJLabel;
-import ids.db.graphicInterface.components.RoundedButton;
+import idsw.db.graphicInterface.components.CustomJLabel;
+import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jdbc.ConnectionManager;
 
 public class DiseaseTempletePanel extends JPanel {

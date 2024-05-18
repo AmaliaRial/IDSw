@@ -1,13 +1,14 @@
 package idsw.db.graphicInterface;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import ids.db.graphicInterface.components.BuscadorTextoSymptoms;
-import ids.db.graphicInterface.components.BuscadorTextoTreatments;
-import ids.db.graphicInterface.components.RoundedButton;
+import idsw.db.graphicInterface.components.BuscadorTextoSymptoms;
+import idsw.db.graphicInterface.components.BuscadorTextoTreatments;
+import idsw.db.graphicInterface.components.RoundedButton;
 
 public class ResearcherTreatmentSearchPanel extends SearchTempletePanel{
 	public BuscadorTextoTreatments treatmentsSearchpanel;

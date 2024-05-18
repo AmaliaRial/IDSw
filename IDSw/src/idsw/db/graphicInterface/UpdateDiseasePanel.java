@@ -1,13 +1,14 @@
 package idsw.db.graphicInterface;
 
 import java.awt.Dimension;
+
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import idsw.db.pojos.*;
-import ids.db.graphicInterface.components.PlaceholderTextField;
+import idsw.db.graphicInterface.components.PlaceholderTextField;
 
 public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public PlaceholderTextField diseaseNameTextField;

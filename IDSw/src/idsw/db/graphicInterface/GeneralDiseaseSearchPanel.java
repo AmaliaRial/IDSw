@@ -2,7 +2,8 @@ package idsw.db.graphicInterface;
 
 import javax.swing.JFrame;
 
-import ids.db.graphicInterface.components.BuscadorTextoDisease;
+
+import idsw.db.graphicInterface.components.BuscadorTextoDisease;
 
 public class GeneralDiseaseSearchPanel extends SearchTempletePanel {
 	public BuscadorTextoDisease searchDiseasePanel;

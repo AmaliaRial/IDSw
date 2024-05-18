@@ -29,7 +29,7 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 	@Override
 	public void addVirtualPopulation(Virtual_Population virtualPopulation) {
 		
-		String template = "INSERT INTO virtual_populations(Initial_population, p_infected, p_healthy, p_immune, Immunity_period, disease_id) VALUES ('?','?','?','?','?','?')";
+		String template = "INSERT INTO virtual_populations(Initial_population, p_infected, p_healthy, p_immune, Immunity_period, disease_id) VALUES (?,?,?,?,?,?)";
 		PreparedStatement pstmt;
 		try {
 			pstmt = c.prepareStatement(template);

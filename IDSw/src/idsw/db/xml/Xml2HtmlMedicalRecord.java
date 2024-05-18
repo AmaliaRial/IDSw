@@ -26,7 +26,7 @@ public class Xml2HtmlMedicalRecord {
 	}
 
 	public static void main(String[] args) {
-		simpleTransform("./xmls/External-MedicalRecord.xml", "./xmls/MedicalRecord-Style.xslt", "./xmls/External-MedicalRecord.html");
+		simpleTransform("./xmls/External_MedicalRecord.xml", "./xmls/MedicalRecord-Style.xslt", "./xmls/External-MedicalRecord.html");
 
 	}
 }

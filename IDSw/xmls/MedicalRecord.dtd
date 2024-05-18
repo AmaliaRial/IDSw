@@ -10,14 +10,15 @@
     <!ELEMENT dob (#PCDATA)>
     
     <!ELEMENT Diagnoses (Diagnosis+)>
-    <!ELEMENT Diagnosis (date, disease, comment_section)>
+    <!ELEMENT Diagnosis (date, disease,Treatment*,diagnosis_comment_section)>
     <!ATTLIST Diagnosis
         nameDiagnosis CDATA #REQUIRED
         idDiagnosis CDATA #REQUIRED
     >
     <!ELEMENT date (#PCDATA)>
+    <!ELEMENT diagnosis_comment_section (#PCDATA)>
     
-    <!ELEMENT disease (nameDisease, cause, comment_section)>
+    <!ELEMENT disease (nameDisease, cause, disease_comment_section)>
     <!ATTLIST disease
         idDisease CDATA #REQUIRED
         infectiousRate CDATA #REQUIRED
@@ -28,9 +29,9 @@
     >
     <!ELEMENT nameDisease (#PCDATA)>
     <!ELEMENT cause (#PCDATA)>
-    <!ELEMENT comment_section (#PCDATA)>
+    <!ELEMENT disease_comment_section (#PCDATA)>
     
-    <!ELEMENT Treatment (nameTreatment, comment_section)>
+    <!ELEMENT Treatment (nameTreatment, treatment_comment_Section)>
     <!ELEMENT nameTreatment (#PCDATA)>
-    <!ELEMENT comment_section (#PCDATA)>
+    <!ELEMENT treatment_comment_Section (#PCDATA)>
 ]>

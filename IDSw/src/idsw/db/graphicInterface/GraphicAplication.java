@@ -7,10 +7,10 @@ public class GraphicAplication extends JFrame{
 	private ChooseUserSignInPanel chooseUserSignInPanel;
 	private SignInPanel signInPanel;
 	private HomePanel homePanel;
-	private DeleteVerificationPanel deleteVerificationPanel;
+
 	
 	private SearchOptionPanel searchOptionPanel;
-	public SearchPanel searchPanel;
+	
 	
 	private SearchPatientPanel searchPatientPanel;
 	private MedicalRecordPanel medicalRecordPanel;
@@ -24,14 +24,10 @@ public class GraphicAplication extends JFrame{
 	private LogOutPanel logOutPanel;
 	private UpdateAcountPanel updateAcountPanel;
 	
-	private ChooseOptionSimulationPanel chooseOptionSimulatioPanel;
-	private SearchSimulationPanel searchSimulationPanel;
-	private ViewSimulationResultPanel viewSimulationResultPanel;
-	private CreateSimulationPanel createSimulationPanel;
-	private SearchSimulationByPopulationPanel searchSimulationByPopulationPanel;
 	
-	private ViewSymptomPanel viewSymptomPanel;
-	private ViewTreatmentPanel viewTreatmentPanel;
+	private CreateSimulationPanel createSimulationPanel;
+	
+	
 
 	
 	

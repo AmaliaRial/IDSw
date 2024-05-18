@@ -61,10 +61,6 @@ public class JDBCM_RecordManager implements MedicalRecordManager {
 	}
 	
 
-	@Override
-	public void modifyMedical_Record(int idMedical_record) {
-		//se puede modificar el medical record?
-	}
 
 	@Override
 	public List<Medical_Record> listMedicalRecords() {

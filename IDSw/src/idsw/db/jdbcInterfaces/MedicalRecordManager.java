@@ -9,7 +9,6 @@ public interface MedicalRecordManager {
 	
 	public Medical_Record getMedical_Record ( int idMedical_record);
 	public void addMedicalRecord(Patient patient);
-	public void modifyMedical_Record ( int idMedical_record);
 	public List<Medical_Record> listMedicalRecords();
 
 

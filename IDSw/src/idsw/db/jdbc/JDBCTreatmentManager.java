@@ -356,4 +356,26 @@ public class JDBCTreatmentManager implements TreatmentManager {
 		return treatments;
 	}
 
+	@Override
+	public List<Treatment> getTreatmentsByDisease(Disease disease) {
+		List<Treatment> treatments = new ArrayList<>();
+		try {
+			String selectTreatmentsSQL = "SELECT treatments.* FROM treatments "
+                    + "JOIN disease_has_treatments ON IDtreatment = treatment_id WHERE disease_id = ?";
+			PreparedStatement psTreatments = c.prepareStatement(selectTreatmentsSQL);
+			psTreatments.setInt(1, disease.getIdDisease());
+			ResultSet rsTreatments = psTreatments.executeQuery();
+			while (rsTreatments.next()) {
+				String treatmentName = rsTreatments.getString("nameTreatment");
+				String comment_section = rsTreatments.getString("comment_section");
+				Treatment treatment = new Treatment(treatmentName, comment_section);
+				treatments.add(treatment);
+			}
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}
+		return treatments;
+	}
+
 }

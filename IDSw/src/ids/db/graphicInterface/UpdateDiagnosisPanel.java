@@ -29,7 +29,7 @@ public class UpdateDiagnosisPanel extends CreateUpdate_DiagnosisPanel{
 		super.nameDiseasePanel.add(this.diseaseNameTextField);
 		super.comentSectionPanel.add(comentSectionTextField);
 		
-		List<Treatment> listTreatments= diagnosis.getTreatments();
+		List<Treatment> listTreatments= super.conMan.getTreatmentMan().getTreatmentsByDiagnosis(diagnosis);
 		for(Treatment treatment:listTreatments) {
 			super.treatmenSearchPanel.agregarSeleccion(treatment.getNameTreatment());
 		}

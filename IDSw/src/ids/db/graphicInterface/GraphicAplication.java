@@ -31,10 +31,8 @@ public class GraphicAplication extends JFrame{
 	private SearchSimulationByPopulationPanel searchSimulationByPopulationPanel;
 	
 	private ViewSymptomPanel viewSymptomPanel;
-	private CreateUpdate_SymptomPanel cuSymptomPanel;
-	
 	private ViewTreatmentPanel viewTreatmentPanel;
-	private CreateUpdate_Treatmentpanel cuTreatmentPanel;
+
 	
 	
 	

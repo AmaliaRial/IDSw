@@ -130,11 +130,6 @@ public class BuscadorTextoTreatments extends JPanel {
         panelSelecciones.revalidate();
         panelSelecciones.repaint();
     }
-    
- // Método para obtener las selecciones actuales
-    public Set<String> getSeleccionesActuales() {
-        return new HashSet<>(seleccionesActuales);
-    }
 
     public static void main(String[] args) {
         // Crear el JFrame para contener el JPanel

@@ -17,6 +17,7 @@ public class SearchPatientPanel extends JPanel{
 	public CustomJLabel searchLabel;
 	public JTextField searchField;
 	public CircularIconButton searchButton;
+	public RoundedButton backButton;
 	
 	public SearchPatientPanel() {
 		this.setLayout(new BorderLayout());
@@ -38,10 +39,12 @@ public class SearchPatientPanel extends JPanel{
 		this.centerPanel.add(this.searchButton);
 		
 		
-		this.southPanel = new JPanel();
-		this.southPanel.setPreferredSize(new Dimension(20, 20));
+		this.southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		this.southPanel.setBackground(Color.WHITE);
 		this.add(this.southPanel, BorderLayout.SOUTH);
+		this.backButton=new RoundedButton("Back", Color.decode("#09A8E4"));
+		this.backButton.setPreferredSize(new Dimension(90, 30));
+		this.southPanel.add(backButton);
 		this.rightPanel = new JPanel();
 		this.rightPanel.setPreferredSize(new Dimension(20, 20));
 		this.rightPanel.setBackground(Color.WHITE);

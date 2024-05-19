@@ -61,9 +61,9 @@ public class DiseaseTempletePanel extends JPanel {
 	
 	public ConnectionManager conMan;
 	
-	public DiseaseTempletePanel() {
-		this.conMan= new ConnectionManager();
-		
+	public DiseaseTempletePanel(ConnectionManager conMan) {
+	
+		this.conMan=conMan;
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
 		this.northPanel.setBackground(Color.decode("#A5E0F1"));
@@ -186,7 +186,7 @@ public class DiseaseTempletePanel extends JPanel {
 	    // Crear y mostrar la ventana de prueba
 	    JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(new DiseaseTempletePanel());
+	    //frame.getContentPane().add(new DiseaseTempletePanel());
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);

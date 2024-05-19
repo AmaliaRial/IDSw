@@ -21,14 +21,14 @@ public class HomePanelDoctor extends HomePanel{
 		super();
 		this.conMan=new ConnectionManager();
 		this.sixTreatments= this.conMan.getTreatmentMan().listSixRecentTreatment();
-		/*
+		
 		super.b1.setButtonText("Recent Treatment: "+sixTreatments.get(0).getNameTreatment());
 		super.b2.setButtonText("Recent Treatment: "+sixTreatments.get(1).getNameTreatment());
 		super.b3.setButtonText("Recent Treatment: "+sixTreatments.get(2).getNameTreatment());
 		super.b4.setButtonText("Recent Treatment: "+sixTreatments.get(3).getNameTreatment());
 		super.b5.setButtonText("Recent Treatment: "+sixTreatments.get(4).getNameTreatment());
 		super.b6.setButtonText("Recent Treatment: "+sixTreatments.get(5).getNameTreatment());
-		*/
+		
 		super.b1.setButtonColor(Color.decode("#D152EA"));
 		super.b2.setButtonColor(Color.decode("#D152EA"));
 		super.b3.setButtonColor(Color.decode("#D152EA"));

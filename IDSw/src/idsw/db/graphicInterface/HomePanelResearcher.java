@@ -21,14 +21,14 @@ public class HomePanelResearcher extends HomePanel {
 	public HomePanelResearcher() {
 		super();
 		this.conMan=new ConnectionManager();
-		/*this.sixSimulations= this.conMan.getSimulationMan().listSixRecentSimulation();
+		this.sixSimulations= this.conMan.getSimulationMan().listSixRecentSimulation();
 		super.b1.setButtonText("Recent Simulation: "+sixSimulations.get(0).getVirtualPopulation().getDisease().getNameDisease());
 		super.b2.setButtonText("Recent Simulation: "+sixSimulations.get(1).getVirtualPopulation().getDisease().getNameDisease());
 		super.b3.setButtonText("Recent Simulation: "+sixSimulations.get(0).getVirtualPopulation().getDisease().getNameDisease());
 		super.b4.setButtonText("Recent Simulation: "+sixSimulations.get(0).getVirtualPopulation().getDisease().getNameDisease());
 		super.b5.setButtonText("Recent Simulation: "+sixSimulations.get(0).getVirtualPopulation().getDisease().getNameDisease());
 		super.b6.setButtonText("Recent Simulation: "+sixSimulations.get(0).getVirtualPopulation().getDisease().getNameDisease());
-		*/
+		
 	
 		
 		this.treatmentButton=new RoundedButton("TREATMENTS", Color.decode("#09A8E4"));

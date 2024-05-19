@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import idsw.db.jdbc.ConnectionManager;
+
 public class CreateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public JTextField diseaseNameTextField;
 	public JTextField mortalityRateTextField;
@@ -16,8 +18,8 @@ public class CreateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public JTextField convalencesePeriodTextField;
 	public JTextField commentSectionTextField;
 	
-	public CreateDiseasePanel(){
-		super();
+	public CreateDiseasePanel(ConnectionManager conMan){
+		super(conMan);
 		this.diseaseNameTextField= new JTextField(20);
 		super.namePanel.add(new JLabel());
 		super.namePanel.add(this.diseaseNameTextField);
@@ -45,7 +47,7 @@ public class CreateDiseasePanel extends CreateUpdate_DiseasePanel{
 	    // Crear y mostrar la ventana de prueba
 	    JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(new CreateDiseasePanel());
+	    //frame.getContentPane().add(new CreateDiseasePanel());
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);

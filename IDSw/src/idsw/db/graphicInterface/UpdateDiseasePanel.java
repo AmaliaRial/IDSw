@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import idsw.db.pojos.*;
 import idsw.db.graphicInterface.components.PlaceholderTextField;
+import idsw.db.jdbc.ConnectionManager;
 
 public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public PlaceholderTextField diseaseNameTextField;
@@ -19,8 +20,8 @@ public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public PlaceholderTextField convalencesePeriodTextField;
 	public PlaceholderTextField commentSectionTextField;
 	
-	public UpdateDiseasePanel(Integer id_Disease){
-		super();
+	public UpdateDiseasePanel(Integer id_Disease,ConnectionManager conMan){
+		super(conMan);
 		Disease disease=super.conMan.getDiseaseMan().getDisease(id_Disease);
 		this.diseaseNameTextField= new PlaceholderTextField(disease.getNameDisease());
 		this.diseaseNameTextField.setPreferredSize(new Dimension(200,20));
@@ -66,7 +67,7 @@ public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 	    // Crear y mostrar la ventana de prueba
 	    JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(new UpdateDiseasePanel(1));
+	    //frame.getContentPane().add(new UpdateDiseasePanel(1));
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);

@@ -2,9 +2,12 @@ package idsw.db.graphicInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import idsw.db.graphicInterface.components.*;
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.pojos.Simulation;
+import idsw.db.utilities.GraphUtilities;
 
 public class ViewSimulationResultPanel extends JPanel{
 	public JPanel northPanel;
@@ -32,6 +35,7 @@ public class ViewSimulationResultPanel extends JPanel{
 	public CustomJLabel totalDeathsLabel;
 	public CustomJLabel finalTotalInmunityLabel;
 	public CustomJLabel finalPopulationLabel;
+	public ImagePanel graphImage;
 	
 	public RoundedButton exitButton;
 	
@@ -112,8 +116,14 @@ public class ViewSimulationResultPanel extends JPanel{
 		this.downloadButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		this.downloadButtonPanel.setBackground(Color.WHITE);
 		this.buttonsPanel.add(this.downloadButtonPanel); 
-	}
 		
+		GraphUtilities utilGraph= new GraphUtilities();
+		BufferedImage chartSimulationImage= utilGraph.binaryIntoImage(simulation.getSimulationGraph());
+		this.graphImage=new ImagePanel(chartSimulationImage);
+		this.graphImage.setPreferredSize(new Dimension(400,200));
+		this.graphPanel.add(this.graphImage);
+	}	
+	
 	
 	public static void main(String[] args) {
         // Crear y mostrar la ventana de prueba
@@ -124,6 +134,5 @@ public class ViewSimulationResultPanel extends JPanel{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-	
 
 }

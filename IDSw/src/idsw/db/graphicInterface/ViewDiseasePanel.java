@@ -1,5 +1,6 @@
 package idsw.db.graphicInterface;
 
+import idsw.db.jdbc.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -35,8 +36,8 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 	public JScrollPane symptomList;
 	public ChartPanel developmentChart;
 	
-	public ViewDiseasePanel(Integer id_Disease){
-		super();
+	public ViewDiseasePanel(Integer id_Disease, ConnectionManager conMan){
+		super(conMan);
 		super.namePanel.remove(super.nameLabel);
 		Disease disease= super.conMan.getDiseaseMan().getDisease(id_Disease);
 		super.titleLabel.setText("<html><b>"+disease.getNameDisease()+"</b></html>");
@@ -101,7 +102,7 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 	    // Crear y mostrar la ventana de prueba
 	    JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(new ViewDiseasePanel(2));
+	    //frame.getContentPane().add(new ViewDiseasePanel(2));
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);

@@ -11,14 +11,15 @@ import javax.swing.JLabel;
 import idsw.db.graphicInterface.components.BuscadorTextoSymptoms;
 import idsw.db.graphicInterface.components.BuscadorTextoTreatments;
 import idsw.db.graphicInterface.components.RoundedButton;
+import idsw.db.jdbc.ConnectionManager;
 
 public class CreateUpdate_DiseasePanel extends DiseaseTempletePanel {
 	public BuscadorTextoSymptoms symptomSearchPanel;
 	public BuscadorTextoTreatments treatmentSearchPanel;
 	public JComboBox<String>  diseaseCuaseBox;
 	public RoundedButton saveButton;
-	public  CreateUpdate_DiseasePanel() {
-		super();
+	public  CreateUpdate_DiseasePanel(ConnectionManager conMan) {
+		super(conMan);
 		String[] causes={"VIRUS","BACTERIA"};
 		this.diseaseCuaseBox=new JComboBox<>(causes);
 		this.diseaseCuaseBox.setPreferredSize(new Dimension(90,20));
@@ -38,7 +39,7 @@ public class CreateUpdate_DiseasePanel extends DiseaseTempletePanel {
 	    // Crear y mostrar la ventana de prueba
 	    JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(new CreateUpdate_DiseasePanel());
+	   // frame.getContentPane().add(new CreateUpdate_DiseasePanel());
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);

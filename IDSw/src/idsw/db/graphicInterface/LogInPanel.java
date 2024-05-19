@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,8 +17,10 @@ import javax.swing.JTextField;
 import idsw.db.graphicInterface.components.CircularIconButton;
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.RoundedButton;
+import idsw.db.jpa.JPAUserManager;
+import idsw.db.pojos.User;
 
-public class LogInPanel extends JPanel{
+public class LogInPanel extends JPanel implements ActionListener{
 	public JPanel titlePanel;
 	public JPanel inputPanel;
 		public JPanel continuePanel;
@@ -37,7 +41,13 @@ public class LogInPanel extends JPanel{
 	public CustomJLabel notHaveAcountLabel;
 	public RoundedButton createAcountButton;
 	
-	public LogInPanel(){
+	public JPAUserManager jpaConMan;
+	public GraphicAplication app;
+	
+	public LogInPanel(JPAUserManager jpaConMan, GraphicAplication app){
+		this.jpaConMan=jpaConMan;
+		this.app=app;
+		
 		this.setLayout(new BorderLayout());
 		this.titlePanel= new JPanel(new FlowLayout(FlowLayout.CENTER));
 			this.titlePanel.setBackground(Color.decode("#A5E0F1"));
@@ -89,6 +99,7 @@ public class LogInPanel extends JPanel{
 		this.notHaveAcountTextPanel.add(notHaveAcountLabel);
 		this.createAcountButton= new RoundedButton("Create Acount", Color.decode("#09A8E4"));
 		this.createAcountButton.setPreferredSize(new Dimension(100, 30));
+		this.createAcountButton.addActionListener(this);
 		this.createAcountButtonPanel.add(createAcountButton);
 		
 		this.leftSpace = new JPanel();
@@ -103,14 +114,39 @@ public class LogInPanel extends JPanel{
         	
 	}
 	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==this.continueButton) {
+			String userName= this.userNameTextField.getText();
+			char[]passwordChar= this.passwordTextField.getPassword();
+			String password=passwordChar.toString();
+			User user=this.jpaConMan.login(userName);
+			if(user.getRole().getName()=="researcher") {
+				
+			}else if(user.getRole().getName()=="doctor"){
+				
+			}else if(user.getRole().getName()=="patient"){
+				
+			}
+		}else if(e.getSource()==this.createAcountButton){
+			this.app.fromLogInPanelToChooseUserSignInPanel();
+		}
+		
+	}
+	
+
 	public static void main(String[] args) {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new LogInPanel());
+        //frame.getContentPane().add(new LogInPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+
+
 	
 }

@@ -1,0 +1,117 @@
+package idsw.db.panelsSwichingInterface;
+
+import idsw.db.graphicInterface.CreateSearchSimulationOptionPanel;
+import idsw.db.graphicInterface.ResearcherTreatmentSearchPanel;
+
+public interface PanelSwichingInterface {
+	public void fromLogInPanelToChooseUserSignInPanel();
+	public void fromLogInPanelToHomePanelDoctor();
+	public void fromLogInPanelToHomePanelResearcher();
+	public void fromLogInPanelToHomePanelPatient();
+	
+	public void fromChooseUserSignInPanelToLogInPanel();
+	public void fromChooseUserSignInToSingInPanelDoctor();
+	public void fromChooseUserSignInToSingInPanelPatient();
+	public void fromChooseUserSignInToSingInPanelResearcher();
+	
+	public void fromSingInPanelDoctorToChooseUserSignInPanel();
+	public void fromSingInPanelDoctorToHomePanelDoctor();
+	
+	public void fromSingInPanelReasearcherToChooseUserSignInPanel();
+	public void fromSingInPanelResearcherToHomePanelResearcher();
+	
+	public void fromSingInPanelPatientToChooseUserSignInPanel();
+	public void fromSingInPanelPatientToHomePanelPatient();
+	
+	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel();
+	public void fromHomePanelDoctorToSearchPatientPanel();
+	public void fromHomePanelDoctorToSearchDiseaseOptionPanel();
+	public void fromHomePanelDoctorToLogOutPanel();
+	
+	public void fromHomePanelPatientToViewDiagnosisPanel();
+	public void fromHomePanelPatientToMedicalRecordPanel();
+	public void fromHomePanelPatientToSearchDiseaseOptionPanel();
+	public void fromHomePanelPatientToLogOutPanel();
+	
+	public void fromHomePanelResearcherToViewSimulationResultPanel();
+	public void fromHomePanelResearcherToCreateSearchSimulationOptionPanel();
+	public void fromHomePanelResearcherToResearcherTreatmentSearchPanel();
+	public void fromHomePanelResearcherToResearcherSymptomSearchPanel();
+	public void fromHomePanelResearcherToSearchDiseaseOptionPanel();
+	public void fromHomePanelResearcherToLogOutPanel();
+	
+	public void fromSearchPatientPanelToMedicalRecordForDoctorPanel();
+	public void fromSearchPatientPanelToHomePanelDoctor();
+	
+	public void fromMedicalRecordPanelToViewDiagnosisPanel();
+	public void fromMedicalRecordPanelToHomePanelPatient();
+	
+	public void MedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor();
+	public void MedicalRecordForDoctorPanelToHomePanelDoctor();
+	public void MedicalRecordForDoctorPanelToUpdateDiagnosisPanel();
+	public void MedicalRecordForDoctorPanelToCreateDiagnosispanel();
+	public void MedicalRecordForDoctorPanelToDeleteVerificationPanel();
+	
+	public void fromDeleteVerificationPanelToMedicalRecordForDoctorPanel();
+	
+	public void fromCreateDiagnosisPanelToMedicalRecordForDoctorPanel();
+	public void fromCreateDiagnosisPanelToViewDiagnosisPanelForDoctor();
+	
+	public void fromModifyDiagnosisPanelToMedicalRecordForDoctorPanel();
+	public void fromModifyDiagnosisPanelToViewDiagnosisPanelForDoctor();
+	
+	public void fromViewDiagnosisPanelForDoctorToMedicalRecordForDoctorPanel();
+	public void fromViewDiagnosisPanelForDoctorToModifyDiagnosisPanel();
+	
+	public void fromSearchDiseaseOptionPanelToGeneralDiseaseSearchPanel();
+	public void fromSearchDiseaseOptionPanelToReasearcherDiseaseSearchPanel();
+	public void fromSearchDiseaseOptionPanelToGeneralSymptomSearchPanel();
+	
+	public void fromReasearcherDiseaseSearchPanelToDeleteVerificationPanel();
+	public void fromReasearcherDiseaseSearchPanelToCreateDiseasePanel();
+	public void fromReasearcherDiseaseSearchPanelToModifyDiseasePanel();
+	public void fromReasearcherDiseaseSearchPanelToHomePanelResearcher();
+	public void fromReasearcherDiseaseSearchPanelToViewDiseasePanelForReasearcher();
+	
+	public void fromGeneralDiseaseSearchPanelToViewDiseasePanel();
+	public void fromGeneralDiseaseSearchPanelToHomePanelDoctor();
+	public void fromGeneralDiseaseSearchPanelToHomePanelPatient();
+	
+	public void fromDeleteVerificationPanelToSearchDiseaseOptionPanel();
+	
+	public void fromCreateDiseasePanelToSearchDiseaseOptionPanel();
+	public void fromCreateDiseasePanelToViewDiseasePanelForReasearcher();
+	
+	public void fromModifyDiseasePanelToSearchDiseaseOptionPanel();
+	public void fromModifyDiseasePanelToViewDiseasePanelForResearcher();
+	
+	public void fromViewDiseasePanelForResearcherToReasearcherDiseaseSearchPanel();
+	public void fromViewDiseasePanelForResearcherToModifyDiseasePanel();
+	
+	public void fromLogOutPanelToUpdateAcountPanel();
+	public void fromLogOutPanelToLogInPanel();
+	public void fromLogOutPanelToOUT();
+	public void fromLogOutPanelToHomePanelDoctor();
+	public void fromLogOutPanelToHomePanelResearcher();
+	public void fromLogOutPanelToHomePanelPatient();
+	
+	public void  fromReasearcherTreatmentSearchPanelToHomePanelResearcher();
+	public void  fromReasearcherTreatmentSearchPanelToDeleteVerificationPanel();
+	public void  fromReasearcherTreatmentSearchPanelToCreate_TreatmentPanel();
+	public void  fromReasearcherTreatmentSearchPanelToUpdate_TreatmentPanel();
+	
+	public void fromDeleteVerificationPanelToReasearcherTreatmentSearchPanel();
+	
+	public void fromReasearcherSymptomSearchPanelToHomePanelResearcher();
+	public void fromReasearcherSymptomSearchPanelToDeleteVerificationPanel();
+	public void fromReasearcherSymptomSearchPanelToCreate_SymptomPanel();
+	public void fromReasearcherSymptomSearchPanelToUpdateSymptomPanel();
+
+	public void fromDeleteVerificationPanelToReasearcherSymptomSearchPanel();
+
+	
+	
+	
+	
+	
+}

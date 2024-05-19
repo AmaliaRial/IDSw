@@ -59,11 +59,11 @@ public class HomePanel extends JPanel {
 			this.homePanel= new JPanel(new  FlowLayout(FlowLayout.LEFT));
 				this.homePanel.setBackground(Color.decode("#A5E0F1"));
 		
-		this.userButton = new CircularIconButton(new ImageIcon("./src/ids/db/graphicInterface/components/user.png"));
+		this.userButton = new CircularIconButton(new ImageIcon("./src/idsw/db/graphicInterface/components/user.png"));
         
         this.userPanel.add(userButton);
         
-        this.homeButton = new CircularIconButton(new ImageIcon("./src/ids/db/graphicInterface/components/Home.png"));
+        this.homeButton = new CircularIconButton(new ImageIcon("./src/idsw/db/graphicInterface/components/Home.png"));
         this.homePanel.add(homeButton);
         
         this.homeUserPanel.add(homePanel);
@@ -113,6 +113,7 @@ public class HomePanel extends JPanel {
         this.leftSpace = new JPanel();
         this.leftSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles
         add(leftSpace, BorderLayout.WEST);
+        this.leftSpace.setBackground(Color.WHITE);
         
         this.rightSpace = new JPanel();
         this.rightSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles

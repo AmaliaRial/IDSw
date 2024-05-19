@@ -1,7 +1,7 @@
 package idsw.db.graphicInterface;
 
 import java.awt.Color;
-
+import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
 
@@ -11,12 +11,16 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.PlaceholderTextField;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
+import idsw.db.utilities.GraphUtilities;
 
 public class ViewDiseasePanel extends DiseaseTempletePanel{
 	
@@ -29,6 +33,7 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 	public CustomJLabel commentSectionLabel;
 	public JScrollPane treatmentList;
 	public JScrollPane symptomList;
+	public ChartPanel developmentChart;
 	
 	public ViewDiseasePanel(Integer id_Disease){
 		super();
@@ -49,7 +54,7 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 		super.convalescensePeriotPanel.add(convalencesePeriodLabel);
 		this.commentSectionLabel=new CustomJLabel(disease.getComment_section(), 15, Color.BLACK, Color.WHITE);
 		super.commentSectionPanel.add(commentSectionLabel);
-		/**
+	
 		List<Symptom> simptoms= this.conMan.getSymptomMan().getSymptomsByDisease(disease);
 		DefaultListModel<String> listModel = ListNameofSymptoms(simptoms);
 		JList<String> lista = new JList<>(listModel);
@@ -65,7 +70,13 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 		this.treatmentList= new JScrollPane(lista);
 		this.treatmentList.setPreferredSize(new Dimension(400, 200));
 		this.treatmentsPanel.add(treatmentList);
-		*/
+		
+		GraphUtilities utilGraph= new GraphUtilities();
+		JFreeChart developmentJChart=utilGraph.graphDiseaseDevelopment(disease);
+		this.developmentChart= new ChartPanel(developmentJChart);
+		this.developmentChart.setPreferredSize(new Dimension(460,305));
+		super.developmentGraphPanel.add(this.developmentChart);
+		
 		
 		super.backCalceButton.setButtonText("BACK");
 	}
@@ -90,7 +101,7 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 	    // Crear y mostrar la ventana de prueba
 	    JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.getContentPane().add(new ViewDiseasePanel(1));
+	    frame.getContentPane().add(new ViewDiseasePanel(2));
 	    frame.pack();
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);

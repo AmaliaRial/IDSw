@@ -14,6 +14,7 @@ public class Create_SymptomPanel extends SymptomTemplate {
     super.button2.setButtonText("Continue");
     
     this.nameField = new JTextField(20);
+    this.namePanel.add(new JLabel());
     this.namePanel.add(this.nameField);
     this.PainManagementField = new JComboBox<String>();
        this.PainManagementField.addItem("MILD");

@@ -19,7 +19,6 @@ public class GraphicAplication extends JFrame{
 	
 	private ViewDiseasePanel viewDiseasePanel;
 	private CreateUpdate_DiseasePanel cuDiseasePanel;
-	private ViewDevelopmentGraphPanel viewDevelopmentGraphPanel;
 	
 	private LogOutPanel logOutPanel;
 	private UpdateAcountPanel updateAcountPanel;

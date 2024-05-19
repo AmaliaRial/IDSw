@@ -59,12 +59,16 @@ public class CreateSimulationPanel extends SymptomTemplate {
 		this.inmunePercentagePanel.setBackground(Color.WHITE);
 	    this.centerPanel.add(this.inmunePercentagePanel);
 	    this.numberPeopleLabel = new CustomJLabel("<html>Number of People:</html>", 15, Color.BLACK, Color.WHITE);
+		this.numberPeoplePanel.add(new Label());
 		this.numberPeoplePanel.add(this.numberPeopleLabel);
 		this.inmunityLabel = new CustomJLabel("<html>Inmunity Period:</html>", 15, Color.BLACK, Color.WHITE);
+		this.inmunityPanel.add(new Label());
 		this.inmunityPanel.add(this.inmunityLabel);
 		this.illPercentageLabel = new CustomJLabel("<html>Ill Percentage:</html>", 15, Color.BLACK, Color.WHITE);
+		this.illPercentagePanel.add(new Label());
 		this.illPercentagePanel.add(this.illPercentageLabel);
 		this.inmunePercentageLabel = new CustomJLabel("<html>Inmune Percentage:</html>", 15, Color.BLACK, Color.WHITE);
+		this.inmunePercentagePanel.add(new Label());
 		this.inmunePercentagePanel.add(this.inmunePercentageLabel);
 		this.numberPeopleField = new JTextField(20);
 		this.numberPeoplePanel.add(this.numberPeopleField);

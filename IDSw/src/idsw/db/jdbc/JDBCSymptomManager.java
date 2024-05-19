@@ -162,7 +162,7 @@ public class JDBCSymptomManager implements SymptomManager {
 		List<Symptom> symptoms = new ArrayList<>();
 		try {
 			String selectTreatmentsSQL = "SELECT symptoms.* FROM symptoms "
-                    + "JOIN disease_has_symptoms ON IDsymptoms = symptom_id WHERE disease_id = ?";
+                    + "JOIN disease_has_symptoms ON IDsymptom = symptom_id WHERE disease_id = ?";
 			PreparedStatement psSymptoms = c.prepareStatement(selectTreatmentsSQL);
 			psSymptoms.setInt(1, disease.getIdDisease());
 			ResultSet rsSymptoms = psSymptoms.executeQuery();

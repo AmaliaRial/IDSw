@@ -95,10 +95,15 @@ public interface PanelSwichingInterface {
 	public void fromLogOutPanelToHomePanelResearcher();
 	public void fromLogOutPanelToHomePanelPatient();
 	
+	public void fromUpdateAcountPanelToLogOutPanel();
+	
 	public void  fromReasearcherTreatmentSearchPanelToHomePanelResearcher();
 	public void  fromReasearcherTreatmentSearchPanelToDeleteVerificationPanel();
 	public void  fromReasearcherTreatmentSearchPanelToCreate_TreatmentPanel();
 	public void  fromReasearcherTreatmentSearchPanelToUpdate_TreatmentPanel();
+	public void  fromReasearcherTreatmentSearchPanelToReadReasearcher2_TreatmentPanel();
+
+	
 	
 	public void fromDeleteVerificationPanelToReasearcherTreatmentSearchPanel();
 	
@@ -106,11 +111,71 @@ public interface PanelSwichingInterface {
 	public void fromReasearcherSymptomSearchPanelToDeleteVerificationPanel();
 	public void fromReasearcherSymptomSearchPanelToCreate_SymptomPanel();
 	public void fromReasearcherSymptomSearchPanelToUpdateSymptomPanel();
+	public void fromReasearcherSymptomSearchPanelToReadReasearcher2_SymptomPanel();
+
 
 	public void fromDeleteVerificationPanelToReasearcherSymptomSearchPanel();
 
+	public void fromUpdate_TreatmentPanelToReasearcherTreatmentSearchPanel();
+	public void fromUpdate_TreatmentPanelToReadResearcher_TreatmentPanel();
 	
+	public void fromCreate_TreatmentPanelToReasearcherTreatmentSearchPanel();
+	public void fromCreate_TreatmentPanelToReadResearcher_TreatmentPanel();
 	
+	public void fromReadReasearcher_TreatmentPanelToUpdate_TreatmentPanel();
+	public void fromReadReasearcher_TreatmentPanelToReasearcherTreatmentSearchPanel();
+	
+	public void fromReadReasearcher2_TreatmentPanelToReasearcherTreatmentSearchPanel();
+	public void fromReadReasearcher2_TreatmentPanelToDeleteVerificationPanel();
+	public void fromReadReasearcher2_TreatmentPanelToUpdate_TreatmentPanel();
+	public void fromReadReasearcher2_TreatmentPanelToViewDiagnosisPanel();
+	public void fromReadReasearcher2_TreatmentPanelToViewDiagnosisPanelForDoctor();
+	public void fromReadReasearcher2_TreatmentPanelToViewDiseasePanel();
+	public void fromReadReasearcher2_TreatmentPanelToViewDiseasePanelForResearcher();
+
+	public void fromDeleteVerificationPanelToReadReasearcher2_TreatmentPanel();
+	
+	public void fromUpdateSymptomPanelToReasearcherSymptomSearchPanel();
+	public void fromUpdateSymptomPanelToReadResearcher_SymptomPanel();
+
+	public void fromCreate_SymptomPanelToReasearcherSymptomSearchPanel();
+	public void fromCreate_SymptomPanelToReadResearcher_SymptomPanel();
+
+	public void fromReadReasearcher_SymptomPanelToUpdateSymptomPanel();
+	public void fromReadReasearcher_SymptomPanelToReasearcherSymptomSearchPanel();
+
+	public void fromReadReasearcher2_SymptomPanelToReasearcherSymptomSearchPanel();
+	public void fromReadReasearcher2_SymptomPanelToDeleteVerificationPanel();
+	public void fromReadReasearcher2_SymptomPanelToUpdateSymptomPanel();
+	public void fromReadReasearcher2_SymptomPanelToViewDiagnosisPanel();
+	public void fromReadReasearcher2_SymptomPanelToViewDiagnosisPanelForDoctor();
+	public void fromReadReasearcher2_SymptomPanelToViewDiseasePanel();
+	public void fromReadReasearcher2_SymptomPanelToViewDiseasePanelForResearcher();
+
+	public void fromDeleteVerificationPanelToReadReasearcher2_SymptomPanel();
+	
+	public void fromCreateSearchSimulationOptionPanelToSearchOptionPanel();
+	
+	public void fromGeneralDiseaseSearchPanelToSearchPopulationFromDiseaseSimulationPanel();
+	public void fromGeneralDiseaseSearchPanelToCreateSimulationPanel();
+
+	public void fromSearchPopulationFromDiseaseSimulationPanelToSearchSimulationByPopulation();
+	public void fromSearchPopulationFromDiseaseSimulationPanelToGeneralDiseaseSearchPanel();
+	
+	public void fromSearchSimulationByPopulationToViewSimulationResultFromSearchPanel();
+	public void fromSearchSimulationByPopulationToSearchPopulationFromDiseaseSimulationPanel();
+	
+	public void fromViewSimulationResultFromSearchPanelToHomePanelResearcher();
+	public void fromViewSimulationResultFromSearchPanelToSearchSimulationbyPopulation();
+	
+	public void fromCreateSimulationPanelToSearchOptionPanel();
+	public void fromCreateSimulationPanelToViewSimulationResulPanel();
+	
+	public void fromViewSimulationResulPanelToHomePanelResearcher();
+
+
+	
+
 	
 	
 	

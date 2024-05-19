@@ -97,7 +97,7 @@ public class MedicalRecordPanel extends JPanel {
 		
 		Patient patient=this.conMan.getPatientMan().getPatient(id_patient);
 		
-		this.userPhotoBotton= new CircularIconButton(new ImageIcon("./src/ids/db/graphicInterface/components/user.png"));
+		this.userPhotoBotton= new CircularIconButton(new ImageIcon("./src/idsw/db/graphicInterface/components/user.png"));
 		this.userPhotoBottonPanel.add(userPhotoBotton);
 		this.nameLabel=new CustomJLabel("Name: "+patient.getNamePatient(), 15,Color.decode("#09A8E4"),Color.decode("#A5E0F1"));
 		this.namePanel.add(nameLabel);

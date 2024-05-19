@@ -6,10 +6,10 @@ import javax.swing.*;
 import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.pojos.Treatment;
 
-public class ReadRearcher_TreatmentPanel extends TreatmentTemplate{
+public class ReadResearcher_TreatmentPanel extends TreatmentTemplate{
 	public RoundedButton button3;
 	
-	public ReadRearcher_TreatmentPanel(Integer id_treatment) {
+	public ReadResearcher_TreatmentPanel(Integer id_treatment) {
 		super();
 		Treatment treatment=super.conMan.getTreatmentMan().getTreatment(id_treatment);
 		super.nameLabel.setText("<html>Name: "+treatment.getNameTreatment()+"</html>");
@@ -28,7 +28,7 @@ public class ReadRearcher_TreatmentPanel extends TreatmentTemplate{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ReadRearcher_TreatmentPanel(1));
+        frame.getContentPane().add(new ReadResearcher_TreatmentPanel(1));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

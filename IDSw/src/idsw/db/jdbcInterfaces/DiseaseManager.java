@@ -15,5 +15,6 @@ public interface DiseaseManager {
 	public void addDisease(Disease disease);
 	public void modifyDisease(Disease disease);
 	public void addSymptomByDisease(Disease disease, Symptom symptom);
+	public Disease getMostMatchingDiseaseBySymptoms(List<Symptom> symptoms);
 
 }

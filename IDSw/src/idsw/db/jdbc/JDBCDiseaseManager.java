@@ -107,36 +107,47 @@ public class JDBCDiseaseManager implements DiseaseManager {
 	 */
 	@Override
 	public List<Disease> listMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
-		List<Disease> diseases = new ArrayList<>();
+	    List<Disease> diseases = new ArrayList<>();
+
 	    try {
 	        StringBuilder conditionBuilder = new StringBuilder();
 	        for (Symptom symptom : symptoms) {
-	            conditionBuilder.append("AND IDsymptom = ").append(symptom.getIdSymptom()).append(" ");
-	        }
-	        // Remove the first "AND "
-	        if (conditionBuilder.length() > 0) {
-	            conditionBuilder.delete(0, 4); //AND + " "
+	            if (conditionBuilder.length() > 0) {
+	                conditionBuilder.append(" OR ");
+	            }
+	            conditionBuilder.append("IDsymptom = ").append(symptom.getIdSymptom());
 	        }
 
-	        String template = "SELECT IDdisease, nameDisease, comment_section FROM diseases JOIN disease_has_symptoms ON IDdisease = disease_id JOIN symptoms ON IDsymptom = symptom_id WHERE "
-	                + conditionBuilder.toString();
+	        String template = "SELECT diseases.* FROM diseases JOIN disease_has_symptoms ON IDdisease = disease_id JOIN symptoms ON IDsymptom = symptom_id WHERE "
+	                + conditionBuilder.toString() + " GROUP BY IDdisease";
 
 	        PreparedStatement p = c.prepareStatement(template);
 	        ResultSet rs = p.executeQuery();
 	        while (rs.next()) {
-	        	int idDisease = rs.getInt("IDdisease");
+	            int idDisease = rs.getInt("IDdisease");
 	            String diseaseName = rs.getString("nameDisease");
+	            Float infectiousRate = rs.getFloat("infectious_rate");
+	            Float mortalityRate = rs.getFloat("mortality_rate");
+	            Float incubationPeriod = rs.getFloat("incubation_period");
+	            Float developmentPeriod = rs.getFloat("development_period");
+	            Float convalescencePeriod = rs.getFloat("convalescence_period");
+	            String cause = rs.getString("cause");
 	            String commentSection = rs.getString("comment_section");
-	            Disease disease = new Disease(idDisease, diseaseName, commentSection);
+	            Disease disease = new Disease(idDisease, diseaseName,infectiousRate,mortalityRate,incubationPeriod,developmentPeriod,convalescencePeriod,cause, commentSection);
 	            diseases.add(disease);
 	        }
 	    } catch (SQLException e) {
 	        System.out.println("Error in the database");
 	        e.printStackTrace();
 	    }
-	
-		return diseases;
+
+	    if (diseases.isEmpty()) {
+	        System.out.println("No diseases found that match the provided symptoms");
+	    }
+
+	    return diseases;
 	}
+	
 
 	/**
 	 * JDBC method that provides you with the disease that matches the id provided
@@ -262,6 +273,57 @@ public class JDBCDiseaseManager implements DiseaseManager {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public Disease getMostMatchingDiseaseBySymptoms(List<Symptom> symptoms) {
+		List<Disease> diseases = listMatchingDiseaseBySymptoms(symptoms);
+	    Disease mostMatchingDisease = null;
+	    double highestRelation = 0;
+
+	    try {
+	        for (Disease disease : diseases) {
+	            StringBuilder symptomIds = new StringBuilder();
+	            for (Symptom symptom : symptoms) {
+	                if (symptomIds.length() > 0) {
+	                    symptomIds.append(", ");
+	                }
+	                symptomIds.append(symptom.getIdSymptom());
+	            }
+
+	            String sql = "SELECT COUNT(*) FROM disease_has_symptoms WHERE disease_id = ? AND symptom_id IN (" + symptomIds.toString() + ")";
+	            PreparedStatement p = c.prepareStatement(sql);
+	            p.setInt(1, disease.getIdDisease());
+	            ResultSet rs = p.executeQuery();
+	            if (rs.next()) {
+	                int matchingSymptoms = rs.getInt(1);
+
+	                sql = "SELECT COUNT(*) FROM disease_has_symptoms WHERE disease_id = ?";
+	                p = c.prepareStatement(sql);
+	                p.setInt(1, disease.getIdDisease());
+	                rs = p.executeQuery();
+	                if (rs.next()) {
+	                    int totalSymptoms = rs.getInt(1);
+	                    double relation = (double) matchingSymptoms / totalSymptoms;
+	                    if (relation > highestRelation) {
+	                        highestRelation = relation;
+	                        mostMatchingDisease = disease;
+	                    }
+	                }
+	            } else {
+	                System.out.println("No symptoms found for disease with ID: " + disease.getIdDisease());
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error in the database");
+	        e.printStackTrace();
+	    }
+
+	    if (mostMatchingDisease == null) {
+	        System.out.println("No matching disease found for the given symptoms");
+	    }
+
+	    return mostMatchingDisease;
 	}
 
 	public ConnectionManager getConMan() {

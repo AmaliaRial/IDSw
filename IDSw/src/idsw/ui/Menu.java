@@ -161,7 +161,7 @@ public class Menu {
 					break;
 				}
 				case 19: {
-					//
+					mostMatchingDiseaseBySymptom();
 					break;
 				}
 				case 0: {
@@ -181,6 +181,35 @@ public class Menu {
 		}
 		
 	}
+	
+	private static void mostMatchingDiseaseBySymptom() throws NumberFormatException, IOException{
+		System.out.println(
+				"These are the symptoms in the database, please enter the IDs of the symptoms you wish to search, press enter to finish: ");
+		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
+		for (Symptom symptom : symptoms) {
+			System.out.println(symptom);
+		}
+		List<Integer> symptomIds = new ArrayList<>();
+		String lineread;
+		while (!(lineread = r.readLine()).equals("")) {
+			symptomIds.add(Integer.parseInt(lineread));
+		}
+
+		List<Symptom> selectedSymptoms = new ArrayList<>();
+		for (Integer id : symptomIds) {
+			Symptom symptom = symptomMan.getSymptom(id);
+			if (symptom != null) {
+				selectedSymptoms.add(symptom);
+			} else {
+				System.out.println("Symptom with ID " + id + " not found.");
+			}
+		}
+
+		Disease disease = diseaseMan.getMostMatchingDiseaseBySymptoms(selectedSymptoms);
+		System.out.println("The most matching disease is: ");
+		System.out.println(disease);
+	}
+	
 	
 	/**
 	 * Method to add a new disease

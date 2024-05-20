@@ -14,6 +14,8 @@ Record and manage symptoms with detailed descriptions.
 Store treatment plans associated with specific diseases and diagnoses.
 * ### Diagnosis Management
 Track diagnoses made by *Doctors* associated with specific *Medical Records* and *Patients*.
+* ### Medical Records
+Store and manage patient medical records, including multiple diagnoses, each with its specific treatment plan.
 * ### Graphical Disease Development Simulation
 Simulate disease spread and progression based on user-defined parameters.
 * ### Graphical Development Representation

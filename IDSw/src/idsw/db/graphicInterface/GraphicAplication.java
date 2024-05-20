@@ -172,11 +172,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 
 	@Override
 	public void fromLogInPanelToChooseUserSignInPanel() {
-			setAllPanelsVisibilityOff();
-			this.chooseUserSignInPanel.setVisible(true);
-			this.getContentPane().add(this.chooseUserSignInPanel);
-	        this.pack();
-		}  
+		setAllPanelsVisibilityOff();
+		this.chooseUserSignInPanel.setVisible(true);
+		this.getContentPane().add(this.chooseUserSignInPanel);
+        this.pack();
+	}  
 
 	@Override
 	public void fromLogInPanelToHomePanelDoctor() {

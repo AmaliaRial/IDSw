@@ -8,9 +8,11 @@ import idsw.db.pojos.Treatment;
 import java.awt.*;
 
 public class ReadPatientDoctor_TreatmentPanel extends TreatmentTemplate {
+	public Integer id_treatment;
 	public ReadPatientDoctor_TreatmentPanel (Integer id_treatment) {
 		super();
-		Treatment treatment=super.conMan.getTreatmentMan().getTreatment(id_treatment);
+		this.id_treatment=id_treatment;
+		Treatment treatment=super.conMan.getTreatmentMan().getTreatment(this.id_treatment);
 		super.nameLabel.setText("<html>Name: "+treatment.getNameTreatment()+"</html>");
 		super.comentSectionLabel.setText("<html>Comment Section: "+treatment.getComment_Section()+"</html>");
 		super.titleLabel.setText("<html><b>TREATMENT</b></html>");
@@ -19,7 +21,7 @@ public class ReadPatientDoctor_TreatmentPanel extends TreatmentTemplate {
 		
 
 	}
-
+	
 	public static void main(String[] args) {
 		// Crear y mostrar la ventana de prueba
 		JFrame frame = new JFrame("Ejemplo con Swing");

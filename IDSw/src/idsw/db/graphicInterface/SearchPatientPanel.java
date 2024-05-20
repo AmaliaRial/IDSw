@@ -4,10 +4,14 @@ import javax.swing.*;
 
 
 import idsw.db.graphicInterface.components.*;
+import idsw.db.jdbc.ConnectionManager;
+import idsw.db.pojos.Patient;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SearchPatientPanel extends JPanel{
+public class SearchPatientPanel extends JPanel implements ActionListener{
 	public JPanel northPanel;
 	public JPanel centerPanel;
 	public JPanel southPanel;
@@ -19,7 +23,12 @@ public class SearchPatientPanel extends JPanel{
 	public CircularIconButton searchButton;
 	public RoundedButton backButton;
 	
-	public SearchPatientPanel() {
+	public ConnectionManager conMan;
+	public GraphicAplication app;
+	
+	public SearchPatientPanel(ConnectionManager conMan, GraphicAplication app) {
+		this.conMan=conMan;
+		this.app=app;
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
 		this.northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -64,5 +73,19 @@ public class SearchPatientPanel extends JPanel{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Integer id_patient;
+		if(e.getSource()==this.searchButton) {
+			Long hiNumber=Long.parseLong(this.searchField.getText());
+			Patient patient =this.conMan.getPatientMan().getPatientByName(this.app.getUser().getName());
+			id_patient=patient.getIdPatient();
+			this.app.fromSearchPatientPanelToMedicalRecordForDoctorPanel(id_patient);	
+		}else if(e.getSource()==this.backButton) {
+			this.app.fromSearchPatientPanelToHomePanelDoctor();	
+		}
+		
+	}
 
 }

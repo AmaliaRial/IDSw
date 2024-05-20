@@ -53,8 +53,8 @@ public class MedicalRecordPanel extends JPanel {
 	
 	private ConnectionManager conMan;
 	
-	public MedicalRecordPanel(Integer id_patient){
-		this.conMan=new ConnectionManager();
+	public MedicalRecordPanel(Integer id_patient, ConnectionManager conMan){
+		this.conMan=conMan;
 		
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new GridLayout(2,2));
@@ -159,7 +159,7 @@ public class MedicalRecordPanel extends JPanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new MedicalRecordPanel(3));
+        //frame.getContentPane().add(new MedicalRecordPanel(3));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

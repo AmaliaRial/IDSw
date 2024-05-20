@@ -9,12 +9,14 @@ import idsw.db.graphicInterface.components.ImagePanel;
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.jpa.JPAUserManager;
 import idsw.db.panelsSwichingInterface.PanelSwitchingInterface;
+import idsw.db.pojos.User;
 
 public class GraphicAplication extends JFrame implements PanelSwitchingInterface{
 	
 	private ArrayList<JPanel> allPanels;
 	private ConnectionManager conMan;
 	private JPAUserManager jpaConMan;
+	private User user;
 	
 	private LogInPanel logInPanel;
 	private ChooseUserSignInPanel chooseUserSignInPanel;
@@ -82,6 +84,68 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         
         this.chooseUserSignInPanel=new ChooseUserSignInPanel(this.jpaConMan,this);
         this.allPanels.add(this.chooseUserSignInPanel);
+        
+        //this.signInPanelDoctor=new SignInPanelDoctor(this.jpaConMan,this);
+        //this.allPanels.add(this.signInPanelDoctor);
+        
+        this.signInPanelPatient=new SignInPanelPatient(this.jpaConMan,this);
+        this.allPanels.add(this.signInPanelPatient);
+        
+        //this.signInPanelResearcher=new SignInPanelPatient(this.jpaConMan,this);
+        //this.allPanels.add(this.signInPanelResearcher);
+        
+        this.homePanelDoctor=new HomePanelDoctor(this.jpaConMan,this);
+        this.allPanels.add(this.homePanelDoctor);
+        
+        this.homePanelPatient=new HomePanelPatient(this.jpaConMan,this,this.conMan);
+        this.allPanels.add(this.homePanelPatient);
+        
+        this.homePanelResearcher=new HomePanelResearcher(this.jpaConMan,this,this.conMan);
+        this.allPanels.add(this.homePanelResearcher);
+        
+        
+        //this.medicalRecordPanel=new MedicalRecordPanel(this.jpaConMan,this);
+        //this.allPanels.add(this.medicalRecordPanel);
+        
+        this.medicalRecordForDoctorPanel=new MedicalRecordForDoctorPanel(null,this.conMan);
+        this.allPanels.add(this.medicalRecordForDoctorPanel);
+        
+        this.searchPatientPanel=new SearchPatientPanel(this.conMan,this);
+        this.allPanels.add(this.searchPatientPanel);
+        
+        this.createDiagnosisPanel=new CreateDiagnosisPanel();
+        this.allPanels.add(this.createDiagnosisPanel);
+        
+        //TODO ADD viewDiagnosisPanelForDoctor
+        
+        this.searchDiseaseOptionPanel=new SearchDiseaseOptionPanel();
+        this.allPanels.add(this.searchDiseaseOptionPanel);
+        
+        this.researcherSymptomSearchPanel=new ResearcherSymptomSearchPanel();
+        this.allPanels.add(this.researcherSymptomSearchPanel);
+        
+        this.viewDiseasePanel=new ViewDiseasePanel(null, this.conMan,this.jpaConMan, this);
+        this.allPanels.add(this.viewDiseasePanel);
+        
+        this.logOutPanel=new LogOutPanel(null,this.jpaConMan,this);
+        this.allPanels.add(this.logOutPanel);
+        
+        this.createSearchSimulationOptionPanel=new CreateSearchSimulationOptionPanel();
+        this.allPanels.add(this.createSearchSimulationOptionPanel);
+        
+        this.generalDiseaseSearchPanel=new GeneralDiseaseSearchPanel();
+        this.allPanels.add(this.generalDiseaseSearchPanel);
+        
+        this.createSimulationPanel=new CreateSimulationPanel();
+        this.allPanels.add(this.createSimulationPanel);
+        
+        this.viewSimulationResultPanel=new ViewSimulationResultPanel(null, null, this.conMan,this);
+        this.allPanels.add(this.viewSimulationResultPanel);
+        
+        
+        
+        
+        
        
         
      
@@ -103,6 +167,8 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	public static void main(String[] args) {
 		GraphicAplication aplication= new GraphicAplication();
 	}
+	
+	
 
 	@Override
 	public void fromLogInPanelToChooseUserSignInPanel() {
@@ -217,9 +283,10 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel() {
+	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel(Integer id_treatment) {
 	    setAllPanelsVisibilityOff();
-	    this.readPatientDoctor_TreatmentPanel.setVisible(true);
+	    this.readPatientDoctor_TreatmentPanel=new ReadPatientDoctor_TreatmentPanel(id_treatment);
+	    this.readPatientDoctor_TreatmentPanel.setVisible(true);	
 	    this.getContentPane().add(this.readPatientDoctor_TreatmentPanel);
 	    this.pack();
 	}
@@ -249,8 +316,9 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void fromHomePanelPatientToViewDiagnosisPanel() {
+	public void fromHomePanelPatientToViewDiagnosisPanel(Integer id_diagnosis) {
 	    setAllPanelsVisibilityOff();
+	    this.viewDiagnosisPanel=new ViewDiagnosisPanel(id_diagnosis);
 	    this.viewDiagnosisPanel.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanel);
 	    this.pack();
@@ -281,8 +349,10 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void fromHomePanelResearcherToViewSimulationResultPanel() {
+	public void fromHomePanelResearcherToViewSimulationResultPanel(Integer id_simulation) {
 	    setAllPanelsVisibilityOff();
+	    //TODO correhir tabla de simulation
+	    //this.viewSimulationResultPane=new ViewSimulationResultFromSearchPanel(id_simulation);
 	    this.viewSimulationResultPanel.setVisible(true);
 	    this.getContentPane().add(this.viewSimulationResultPanel);
 	    this.pack();
@@ -329,8 +399,9 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void fromSearchPatientPanelToMedicalRecordForDoctorPanel() {
+	public void fromSearchPatientPanelToMedicalRecordForDoctorPanel(Integer id_patient) {
 	    setAllPanelsVisibilityOff();
+	    this.medicalRecordForDoctorPanel=new MedicalRecordForDoctorPanel(id_patient, this.conMan);
 	    this.medicalRecordForDoctorPanel.setVisible(true);
 	    this.getContentPane().add(this.medicalRecordForDoctorPanel);
 	    this.pack();
@@ -361,7 +432,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void MedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor() {
+	public void fromMedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor() {
 		//TODO crear panel viewDiagnosisPanelForDoctor
 	   /** setAllPanelsVisibilityOff();
 	    this.viewDiagnosisPanelForDoctor.setVisible(true);
@@ -371,7 +442,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void MedicalRecordForDoctorPanelToHomePanelDoctor() {
+	public void fromMedicalRecordForDoctorPanelToHomePanelDoctor() {
 	    setAllPanelsVisibilityOff();
 	    this.homePanelDoctor.setVisible(true);
 	    this.getContentPane().add(this.homePanelDoctor);
@@ -379,7 +450,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void MedicalRecordForDoctorPanelToUpdateDiagnosisPanel() {
+	public void fromMedicalRecordForDoctorPanelToUpdateDiagnosisPanel() {
 	    setAllPanelsVisibilityOff();
 	    this.updateDiagnosisPanel.setVisible(true);
 	    this.getContentPane().add(this.updateDiagnosisPanel);
@@ -387,7 +458,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void MedicalRecordForDoctorPanelToCreateDiagnosispanel() {
+	public void fromMedicalRecordForDoctorPanelToCreateDiagnosispanel() {
 	    setAllPanelsVisibilityOff();
 	    this.createDiagnosisPanel.setVisible(true);
 	    this.getContentPane().add(this.createDiagnosisPanel);
@@ -395,7 +466,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	}
 
 	@Override
-	public void MedicalRecordForDoctorPanelToDeleteVerificationPanel() {
+	public void fromMedicalRecordForDoctorPanelToDeleteVerificationPanel() {
 	    setAllPanelsVisibilityOff();
 	    this.deleteVerificationPanel.setVisible(true);
 	    this.getContentPane().add(this.deleteVerificationPanel);
@@ -1091,6 +1162,23 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	    this.homePanelResearcher.setVisible(true);
 	    this.getContentPane().add(this.homePanelResearcher);
 	    this.pack();
+	}
+
+	@Override
+	public void fromViewDiseasePanelToGeneralDiseaseSearchPanel() {
+		setAllPanelsVisibilityOff();
+	    this.generalDiseaseSearchPanel.setVisible(true);
+	    this.getContentPane().add(this.generalDiseaseSearchPanel);
+	    this.pack();
+		
+	}
+
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user=user;
 	}
 	
 

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import idsw.db.graphicInterface.components.RoundedButton;
+import idsw.db.jdbc.ConnectionManager;
 
 public class MedicalRecordForDoctorPanel extends MedicalRecordPanel{
 	public JPanel addPanel;
@@ -20,8 +21,8 @@ public class MedicalRecordForDoctorPanel extends MedicalRecordPanel{
 	public RoundedButton modifyButton;
 	public RoundedButton deleteButton;
 	
-	MedicalRecordForDoctorPanel(Integer id_patient){
-		super(id_patient);
+	MedicalRecordForDoctorPanel(Integer id_patient, ConnectionManager conMan){
+		super(id_patient, conMan);
 		this.addButton=new RoundedButton("ADD", Color.decode("#09A8E4"));
 		this.addButton.setPreferredSize(new Dimension(80, 25));
 		this.modifyButton=new RoundedButton("MODIFY", Color.decode("#09A8E4"));

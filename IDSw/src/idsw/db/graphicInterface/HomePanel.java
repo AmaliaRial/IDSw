@@ -8,11 +8,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import idsw.db.graphicInterface.components.*;
+import idsw.db.jpa.JPAUserManager;
+import idsw.db.pojos.User;
 
 import javax.swing.*;
 
@@ -38,10 +42,9 @@ public class HomePanel extends JPanel {
 	public RoundedButton b5;
 	public RoundedButton b6;
 	public CustomJLabel titleLabel;
-
-    
 	
 	public HomePanel(){
+		
 		this.setLayout(new BorderLayout());
 		this.northPanel = new JPanel(new GridLayout(2,1));
 		this.northPanel.setPreferredSize(new Dimension(400,110));
@@ -128,6 +131,7 @@ public class HomePanel extends JPanel {
 		
 	}
 	
+	
 	public static void main(String[] args) {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
@@ -137,8 +141,6 @@ public class HomePanel extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-	
-	//buscar como poner espacios superiores e infereiores en un grid layer
 	
 
 }

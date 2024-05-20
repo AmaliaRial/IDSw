@@ -108,7 +108,6 @@ public class ChooseUserSignInPanel extends JPanel{
 		}else if(e.getSource()==this.LogInButton) {
 			this.app.fromChooseUserSignInPanelToLogInPanel();;
 		}
-		
 	}
 	
 	

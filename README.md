@@ -11,7 +11,7 @@ Store and manage information about infectious diseases including attributes such
 * ### Symptom Management
 Record and manage symptoms with detailed descriptions.
 * ### Treatment Plan Management
-Store treatment plans associated with specific diseases.
+Store treatment plans associated with specific diseases and diagnoses.
 * ### Diagnosis Management
 Track diagnoses made by *Doctors* associated with specific *Medical Records* and *Patients*.
 * ### Graphical Disease Development Simulation

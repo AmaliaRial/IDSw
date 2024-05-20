@@ -3,7 +3,7 @@ package idsw.db.panelsSwichingInterface;
 import idsw.db.graphicInterface.CreateSearchSimulationOptionPanel;
 import idsw.db.graphicInterface.ResearcherTreatmentSearchPanel;
 
-public interface PanelSwichingInterface {
+public interface PanelSwitchingInterface {
 	public void fromLogInPanelToChooseUserSignInPanel();
 	public void fromLogInPanelToHomePanelDoctor();
 	public void fromLogInPanelToHomePanelResearcher();
@@ -166,12 +166,12 @@ public interface PanelSwichingInterface {
 	public void fromSearchSimulationByPopulationToSearchPopulationFromDiseaseSimulationPanel();
 	
 	public void fromViewSimulationResultFromSearchPanelToHomePanelResearcher();
-	public void fromViewSimulationResultFromSearchPanelToSearchSimulationbyPopulation();
+	public void fromViewSimulationResultFromSearchPanelToSearchSimulationByPopulation();
 	
 	public void fromCreateSimulationPanelToSearchOptionPanel();
-	public void fromCreateSimulationPanelToViewSimulationResulPanel();
+	public void fromCreateSimulationPanelToViewSimulationResultPanel();
 	
-	public void fromViewSimulationResulPanelToHomePanelResearcher();
+	public void fromViewSimulationResultPanelToHomePanelResearcher();
 
 
 	

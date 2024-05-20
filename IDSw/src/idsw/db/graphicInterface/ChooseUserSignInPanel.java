@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.RoundedButton;
+import idsw.db.jpa.JPAUserManager;
+import idsw.db.pojos.User;
 
 public class ChooseUserSignInPanel extends JPanel{
 	public JPanel titlePanel;
@@ -33,8 +35,13 @@ public class ChooseUserSignInPanel extends JPanel{
 	public RoundedButton researcherButton;
 	public CustomJLabel alreadyAcountLabel;
 	public RoundedButton LogInButton;
+	public JPAUserManager jpaConMan;
+	public GraphicAplication app;
 	
-	public ChooseUserSignInPanel() {
+	public ChooseUserSignInPanel(JPAUserManager jpaConMan, GraphicAplication app) {
+		this.jpaConMan=jpaConMan;
+		this.app=app;
+		
 		this.setLayout(new BorderLayout());
 		this.titlePanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
 		this.add(titlePanel,BorderLayout.NORTH);
@@ -91,6 +98,18 @@ public class ChooseUserSignInPanel extends JPanel{
         this.rightSpace.setBackground(Color.WHITE);
 		
 	}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==this.patientButton) {
+			this.app.fromChooseUserSignInToSingInPanelDoctor();
+		}else if(e.getSource()==this.doctorButton){
+			this.app.fromChooseUserSignInToSingInPanelPatient();
+		}else if(e.getSource()==this.researcherButton) {
+			this.app.fromChooseUserSignInToSingInPanelResearcher();
+		}else if(e.getSource()==this.LogInButton) {
+			this.app.fromChooseUserSignInPanelToLogInPanel();;
+		}
+		
+	}
 	
 	
 	
@@ -98,7 +117,7 @@ public class ChooseUserSignInPanel extends JPanel{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ChooseUserSignInPanel());
+        //frame.getContentPane().add(new ChooseUserSignInPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

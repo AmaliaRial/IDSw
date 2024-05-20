@@ -93,6 +93,7 @@ public class LogInPanel extends JPanel implements ActionListener{
 		
 		this.continueButton= new RoundedButton("CONTINUE", Color.decode("#09A8E4"));
 		this.continueButton.setPreferredSize(new Dimension(90, 30));
+		this.continueButton.addActionListener(this);
 		this.continuePanel.add(continueButton);
 		
 		this.notHaveAcountLabel=new CustomJLabel("¿Don´t have an account?", 10, Color.BLACK,Color.WHITE);
@@ -120,14 +121,14 @@ public class LogInPanel extends JPanel implements ActionListener{
 		if(e.getSource()==this.continueButton) {
 			String userName= this.userNameTextField.getText();
 			char[]passwordChar= this.passwordTextField.getPassword();
-			String password=passwordChar.toString();
+			String password=passwordChar.toString();//TODO comprovar la contraseña
 			User user=this.jpaConMan.login(userName);
 			if(user.getRole().getName()=="researcher") {
-				
+				this.app.fromLogInPanelToHomePanelResearcher();
 			}else if(user.getRole().getName()=="doctor"){
-				
+				this.app.fromLogInPanelToHomePanelDoctor();
 			}else if(user.getRole().getName()=="patient"){
-				
+				this.app.fromLogInPanelToHomePanelDoctor();
 			}
 		}else if(e.getSource()==this.createAcountButton){
 			this.app.fromLogInPanelToChooseUserSignInPanel();

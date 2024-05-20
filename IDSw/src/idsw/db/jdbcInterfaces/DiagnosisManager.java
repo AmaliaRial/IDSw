@@ -9,7 +9,7 @@ import idsw.db.pojos.Symptom;
 
 public interface DiagnosisManager {
 	
-	public List<Diagnosis> listSixRecentDiagnosis();
+	public List<Diagnosis> listSixRecentDiagnosis(Integer id_patient);
 	public List<Diagnosis> listAllDiagnosis();
 	public List<Diagnosis> listMatchinDiagnosesByPatient(Integer idPatient);
 	public Diagnosis getDiagnosis( int idDiagnosis);

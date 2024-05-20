@@ -124,10 +124,13 @@ public class LogInPanel extends JPanel implements ActionListener{
 			String password=passwordChar.toString();//TODO comprovar la contraseña
 			User user=this.jpaConMan.login(userName);
 			if(user.getRole().getName()=="researcher") {
+				this.app.setUser(user);
 				this.app.fromLogInPanelToHomePanelResearcher();
 			}else if(user.getRole().getName()=="doctor"){
+				this.app.setUser(user);
 				this.app.fromLogInPanelToHomePanelDoctor();
 			}else if(user.getRole().getName()=="patient"){
+				this.app.setUser(user);
 				this.app.fromLogInPanelToHomePanelDoctor();
 			}
 		}else if(e.getSource()==this.createAcountButton){

@@ -56,10 +56,15 @@ public class MedicalRecordPanel extends JPanel {
 	public GraphicAplication app;
 	public JPAUserManager jpaConMan;
 	
+<<<<<<< HEAD
 	public MedicalRecordPanel(Integer id_patient, ConnectionManager conMan, GraphicAplication app, JPAUserManager jpaConMan){
 		this.conMan= conMan;
 		this.app= app;
 		this.jpaConMan= jpaConMan;
+=======
+	public MedicalRecordPanel(Integer id_patient, ConnectionManager conMan){
+		this.conMan=conMan;
+>>>>>>> branch 'master' of https://github.com/AmaliaRial/IDSw
 		
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new GridLayout(2,2));

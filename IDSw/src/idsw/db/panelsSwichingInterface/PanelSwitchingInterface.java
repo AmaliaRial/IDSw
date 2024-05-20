@@ -23,34 +23,35 @@ public interface PanelSwitchingInterface {
 	public void fromSingInPanelPatientToChooseUserSignInPanel();
 	public void fromSingInPanelPatientToHomePanelPatient();
 	
-	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel();
+	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel(Integer id_treatment);
 	public void fromHomePanelDoctorToSearchPatientPanel();
 	public void fromHomePanelDoctorToSearchDiseaseOptionPanel();
 	public void fromHomePanelDoctorToLogOutPanel();
 	
-	public void fromHomePanelPatientToViewDiagnosisPanel();
+	
+	public void fromHomePanelPatientToViewDiagnosisPanel(Integer id_dignosis);
 	public void fromHomePanelPatientToMedicalRecordPanel();
 	public void fromHomePanelPatientToSearchDiseaseOptionPanel();
 	public void fromHomePanelPatientToLogOutPanel();
 	
-	public void fromHomePanelResearcherToViewSimulationResultPanel();
+	public void fromHomePanelResearcherToViewSimulationResultPanel(Integer id_simulation);
 	public void fromHomePanelResearcherToCreateSearchSimulationOptionPanel();
 	public void fromHomePanelResearcherToResearcherTreatmentSearchPanel();
 	public void fromHomePanelResearcherToResearcherSymptomSearchPanel();
 	public void fromHomePanelResearcherToSearchDiseaseOptionPanel();
 	public void fromHomePanelResearcherToLogOutPanel();
 	
-	public void fromSearchPatientPanelToMedicalRecordForDoctorPanel();
+	public void fromSearchPatientPanelToMedicalRecordForDoctorPanel(Integer id_patient);
 	public void fromSearchPatientPanelToHomePanelDoctor();
 	
 	public void fromMedicalRecordPanelToViewDiagnosisPanel();
 	public void fromMedicalRecordPanelToHomePanelPatient();
 	
-	public void MedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor();
-	public void MedicalRecordForDoctorPanelToHomePanelDoctor();
-	public void MedicalRecordForDoctorPanelToUpdateDiagnosisPanel();
-	public void MedicalRecordForDoctorPanelToCreateDiagnosispanel();
-	public void MedicalRecordForDoctorPanelToDeleteVerificationPanel();
+	public void fromMedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor();
+	public void fromMedicalRecordForDoctorPanelToHomePanelDoctor();
+	public void fromMedicalRecordForDoctorPanelToUpdateDiagnosisPanel();
+	public void fromMedicalRecordForDoctorPanelToCreateDiagnosispanel();
+	public void fromMedicalRecordForDoctorPanelToDeleteVerificationPanel();
 	
 	public void fromDeleteVerificationPanelToMedicalRecordForDoctorPanel();
 	
@@ -76,6 +77,8 @@ public interface PanelSwitchingInterface {
 	public void fromGeneralDiseaseSearchPanelToViewDiseasePanel();
 	public void fromGeneralDiseaseSearchPanelToHomePanelDoctor();
 	public void fromGeneralDiseaseSearchPanelToHomePanelPatient();
+	
+	public void fromViewDiseasePanelToGeneralDiseaseSearchPanel();
 	
 	public void fromDeleteVerificationPanelToSearchDiseaseOptionPanel();
 	

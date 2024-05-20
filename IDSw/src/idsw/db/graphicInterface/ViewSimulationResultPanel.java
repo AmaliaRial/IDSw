@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import idsw.db.graphicInterface.components.*;
 import idsw.db.jdbc.ConnectionManager;
 import idsw.db.pojos.Simulation;
+import idsw.db.pojos.Virtual_Population;
 import idsw.db.utilities.GraphUtilities;
 
 public class ViewSimulationResultPanel extends JPanel{
@@ -39,12 +40,15 @@ public class ViewSimulationResultPanel extends JPanel{
 	
 	public RoundedButton exitButton;
 	
-	
+	public GraphicAplication app;
 	public ConnectionManager conMan;
 	
-	public ViewSimulationResultPanel(Integer id_simulation, Integer numberOfPeople, Integer inmunityPeriod, Float illPercentage, Float imnunePercentage, Float healthyPercentage) {
-		this.conMan = new ConnectionManager();
+	
+	public ViewSimulationResultPanel(Integer id_simulation, Integer id_Vpopulatio, ConnectionManager conMan, GraphicAplication app) {
+		this.conMan = conMan;
+		this.app=app;
 		Simulation simulation=this.conMan.getSimulationMan().selectSimulation(id_simulation);
+		Virtual_Population vPopulation=this.conMan.getVirtualPopulationMan().getVirtualPopulation(id_Vpopulatio);
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
 		this.northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -69,15 +73,15 @@ public class ViewSimulationResultPanel extends JPanel{
 		this.initialParametersPanel.add(this.Label);
 		this.initialParametersLabel = new CustomJLabel("<html><b>INITIAL PARAMETERS:</b></html>", 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.initialParametersLabel);
-		this.numberPeopleLabel = new CustomJLabel("Number of people: " + numberOfPeople, 15, Color.BLACK, Color.WHITE);
+		this.numberPeopleLabel = new CustomJLabel("Number of people: " + vPopulation.getInitial_population(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.numberPeopleLabel);
-		this.inmunityPeriodLabel = new CustomJLabel("Inmunity Period: " + inmunityPeriod , 15, Color.BLACK, Color.WHITE);
+		this.inmunityPeriodLabel = new CustomJLabel("Inmunity Period: " + vPopulation.getImmunity_period() , 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.inmunityPeriodLabel);
-		this.illPercentageLabel = new CustomJLabel("Ill Percentage: " + illPercentage, 15, Color.BLACK, Color.WHITE);
+		this.illPercentageLabel = new CustomJLabel("Ill Percentage: " + vPopulation.getP_infected(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.illPercentageLabel);
-		this.imnunePercentageLabel = new CustomJLabel("Imnune Percentage: " + imnunePercentage, 15, Color.BLACK, Color.WHITE);
+		this.imnunePercentageLabel = new CustomJLabel("Imnune Percentage: " + vPopulation.getP_immune(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.imnunePercentageLabel);
-		this.healthyPercentageLabel = new CustomJLabel("Healthy Percentage: " + healthyPercentage, 15, Color.BLACK, Color.WHITE);
+		this.healthyPercentageLabel = new CustomJLabel("Healthy Percentage: " + vPopulation.getP_healthy(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.healthyPercentageLabel);
 		this.simulationResultsLabel = new CustomJLabel("<html><b>SIMULATION RESULTS:</b></html>", 15, Color.BLACK, Color.WHITE);
 		this.simulationResultsPanel.add(this.simulationResultsLabel);
@@ -129,7 +133,7 @@ public class ViewSimulationResultPanel extends JPanel{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ViewSimulationResultPanel(1, 100, 10, (float) 0.1, (float) 0.1, (float) 0.8));
+        //frame.getContentPane().add(new ViewSimulationResultPanel(1, 100, 10, (float) 0.1, (float) 0.1, (float) 0.8));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

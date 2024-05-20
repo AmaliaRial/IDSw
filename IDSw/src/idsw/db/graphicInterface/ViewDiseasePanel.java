@@ -1,9 +1,15 @@
 package idsw.db.graphicInterface;
 
 import idsw.db.jdbc.*;
+import idsw.db.jpa.JPAUserManager;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -17,13 +23,16 @@ import org.jfree.chart.JFreeChart;
 
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.PlaceholderTextField;
+import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
+import idsw.db.pojos.Role;
 import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
+import idsw.db.pojos.User;
 import idsw.db.utilities.GraphUtilities;
 
-public class ViewDiseasePanel extends DiseaseTempletePanel{
+public class ViewDiseasePanel extends DiseaseTempletePanel implements ActionListener{
 	
 	public CustomJLabel causeLabel;
 	public CustomJLabel mortalityRateLabel;
@@ -36,8 +45,8 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 	public JScrollPane symptomList;
 	public ChartPanel developmentChart;
 	
-	public ViewDiseasePanel(Integer id_Disease, ConnectionManager conMan){
-		super(conMan);
+	public ViewDiseasePanel(Integer id_Disease, ConnectionManager conMan,JPAUserManager jpaConMan, GraphicAplication app){
+		super(conMan,jpaConMan,app);
 		super.namePanel.remove(super.nameLabel);
 		Disease disease= super.conMan.getDiseaseMan().getDisease(id_Disease);
 		super.titleLabel.setText("<html><b>"+disease.getNameDisease()+"</b></html>");
@@ -55,7 +64,8 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 		super.convalescensePeriotPanel.add(convalencesePeriodLabel);
 		this.commentSectionLabel=new CustomJLabel(disease.getComment_section(), 15, Color.BLACK, Color.WHITE);
 		super.commentSectionPanel.add(commentSectionLabel);
-	
+		super.backCancelButton.addActionListener(this);
+		
 		List<Symptom> simptoms= this.conMan.getSymptomMan().getSymptomsByDisease(disease);
 		DefaultListModel<String> listModel = ListNameofSymptoms(simptoms);
 		JList<String> lista = new JList<>(listModel);
@@ -79,7 +89,7 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 		super.developmentGraphPanel.add(this.developmentChart);
 		
 		
-		super.backCalceButton.setButtonText("BACK");
+		super.backCancelButton.setButtonText("BACK");
 	}
 	
 	private DefaultListModel<String> ListNameofTreatments(List<Treatment> treatments){
@@ -97,6 +107,13 @@ public class ViewDiseasePanel extends DiseaseTempletePanel{
 		}
 		return listModel;
 	}
+	
+	 public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==this.backCancelButton) {
+			this.app.fromViewDiseasePanelToGeneralDiseaseSearchPanel();			
+			}
+		
+	
 	
 	public static void main(String[] args) {
 	    // Crear y mostrar la ventana de prueba

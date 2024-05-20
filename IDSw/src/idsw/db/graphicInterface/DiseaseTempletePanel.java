@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jdbc.ConnectionManager;
+import idsw.db.jpa.JPAUserManager;
 
 public class DiseaseTempletePanel extends JPanel {
 	public JPanel northPanel;
@@ -57,12 +58,16 @@ public class DiseaseTempletePanel extends JPanel {
 	
 
 	
-	public RoundedButton backCalceButton;
+	public RoundedButton backCancelButton;
 	
 	public ConnectionManager conMan;
+	public JPAUserManager jpaConMan;
+	public GraphicAplication app;
 	
-	public DiseaseTempletePanel(ConnectionManager conMan) {
 	
+	public DiseaseTempletePanel(ConnectionManager conMan, JPAUserManager jpaConMan,GraphicAplication app) {
+		this.jpaConMan=jpaConMan;
+		this.app=app;
 		this.conMan=conMan;
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -141,9 +146,9 @@ public class DiseaseTempletePanel extends JPanel {
 			this.savePanel=new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			this.savePanel.setBackground(Color.WHITE);
 			this.southPanel.add(savePanel);
-			this.backCalceButton=new RoundedButton("Back/Canccel",Color.decode("#09A8E4"));
-			this.backCalcelPanel.add(backCalceButton);
-			this.backCalceButton.setPreferredSize(new Dimension(90,30));
+			this.backCancelButton=new RoundedButton("Back/Canccel",Color.decode("#09A8E4"));
+			this.backCalcelPanel.add(backCancelButton);
+			this.backCancelButton.setPreferredSize(new Dimension(90,30));
 			
 			
 			this.titleLabel=new CustomJLabel("<html><b>TITLE</b></html>", 30,Color.decode("#09A8E4"),Color.decode("#A5E0F1"));

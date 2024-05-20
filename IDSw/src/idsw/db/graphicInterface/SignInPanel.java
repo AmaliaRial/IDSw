@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.ComboBoxModel;
@@ -19,6 +20,7 @@ import idsw.db.enums.Sex;
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.DateInputPanel;
 import idsw.db.graphicInterface.components.RoundedButton;
+import idsw.db.jpa.JPAUserManager;
 
 public class SignInPanel extends JPanel {
 	
@@ -68,7 +70,13 @@ public class SignInPanel extends JPanel {
 	public RoundedButton cancelButton;
 	public RoundedButton createAcountButton;
 	
-	public SignInPanel(){
+	public JPAUserManager jpaConMan;
+	public GraphicAplication app;
+	
+	
+	public SignInPanel(JPAUserManager jpaConMan, GraphicAplication app){
+		this.jpaConMan=jpaConMan;
+		this.app=app;
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
 		this.northPanel.setBackground(Color.decode("#A5E0F1"));
@@ -193,13 +201,13 @@ public class SignInPanel extends JPanel {
         this.rightSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles
         add(rightSpace, BorderLayout.EAST);
         this.rightSpace.setBackground(Color.WHITE);
-		
 	}
+      
 	public static void main(String[] args) {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new SignInPanel());
+      //  frame.getContentPane().add(new SignInPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

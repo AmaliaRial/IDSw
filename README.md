@@ -1,19 +1,21 @@
 # IDSw - Infectious Disease Storage Web
 ## Project Description
-IDSw is a web-based application designed to manage infectious disease data. It offers a range of features for storing, updating, inserting, and deleting information related to various *viral or bacterial* infectious diseases. The system includes comprehensive functionality covering disease attributes, symptoms, treatment plans, disease development simulation, diagnosis tracking and more.
+IDSw is a web-based application designed to manage infectious disease data. It offers a range of features for storing, updating, inserting, and deleting information related to various *viral or bacterial* infectious diseases. The system includes comprehensive functionality covering disease attributes, symptoms, treatment plans, disease development simulation, diagnosis tracking, and more.
 ## Features
 * ### Role-based Access Control
 Differentiate user permissions and functionalities based on roles such as patient, doctor, and researcher, each with specific permissions and access levels.
 * ### User Authentication
 Secure login system for user authentication and access control.
 * ### Disease Management
-Store and manage information about infectious diseases including attributes such as name, symptoms, mortality rate, infectious rate, cause *(virus, bacteria)*, incubation period, development period, convalescence period, and treatment plan.
+Store and manage information about infectious diseases including attributes such as name, symptoms, mortality rate, infectious rate, cause *(virus, bacteria)*, incubation period, development period, convalescence period, treatment plan, and symptoms.
 * ### Symptom Management
 Record and manage symptoms with detailed descriptions.
 * ### Treatment Plan Management
-Store treatment plans associated with specific diseases.
+Store treatment plans associated with specific diseases and diagnoses.
 * ### Diagnosis Management
 Track diagnoses made by *Doctors* associated with specific *Medical Records* and *Patients*.
+* ### Medical Records
+Store and manage patient medical records, including multiple diagnoses, each with its specific treatment plan.
 * ### Graphical Disease Development Simulation
 Simulate disease spread and progression based on user-defined parameters.
 * ### Graphical Development Representation

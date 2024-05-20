@@ -28,12 +28,13 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 	}
 
 	@Override
-	public List<Diagnosis> listSixRecentDiagnosis() {
+	public List<Diagnosis> listSixRecentDiagnosis(Integer id_patient) {
 		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		try {
-			String sql = "SELECT * FROM diagnoses ORDER BY IDdiagnosis DESC LIMIT 6; ";
+			String sql = "SELECT * FROM diagnoses WHERE medicalRecord_id ="+ id_patient +" ORDER BY IDdiagnosis DESC LIMIT 6; ";
 			PreparedStatement ps;
 			ps = c.prepareStatement(sql);
+			
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Integer id = rs.getInt("idDiagnosis");

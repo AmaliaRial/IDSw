@@ -26,6 +26,7 @@ public class Simulation implements Serializable{
 	private Integer totalPopulation;
 	private byte[]  simulationGraph;
 	private Virtual_Population Vpopulation;
+
 	
 	public Simulation() {
 		super();
@@ -49,6 +50,7 @@ public class Simulation implements Serializable{
 		this.simulationGraph= simulationGrap1;
 		this.Vpopulation=Vpopulation1;
 	}
+
 
 	public Integer getIdSimulation() {
 		return idSimulation;

@@ -3,6 +3,8 @@ package idsw.db.graphicInterface;
 import java.awt.Color;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +15,21 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import idsw.db.graphicInterface.components.CustomJLabel;
+import idsw.db.jdbc.ConnectionManager;
+import idsw.db.jpa.JPAUserManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Treatment;
 
-public class ViewDiagnosisPanel extends DiagnosisTemplatePanel{
+public class ViewDiagnosisPanel extends DiagnosisTemplatePanel implements ActionListener{
 	public CustomJLabel viewNameLabel;
 	public CustomJLabel viewDateLabel;
 	public CustomJLabel viewcommentSectionLabel;
 	public JScrollPane treatmentList;
+		
 	
-	public ViewDiagnosisPanel(Integer id_Diagnosis) {
-		super();
+	public ViewDiagnosisPanel(Integer id_Diagnosis,ConnectionManager conMan,GraphicAplication app,JPAUserManager jpaConMan) {
+		super(conMan,app,jpaConMan);
+		
 		Diagnosis diagnosis= super.conMan.getDiagnosisMan().getDiagnosis(id_Diagnosis);
 		super.titleLabel.setText("<html><b>"+diagnosis.getNameDiagnosis()+"</b></html>");
 		this.viewNameLabel= new CustomJLabel(diagnosis.getDisease().getNameDisease(), 15, Color.BLACK, Color.WHITE);
@@ -42,6 +48,7 @@ public class ViewDiagnosisPanel extends DiagnosisTemplatePanel{
 		this.treatmentsPanel.add(treatmentList);
 		
 		super.backCalceButton.setButtonText("BACK");
+		super.backCalceButton.addActionListener(this);
 		
 	}
 	
@@ -52,13 +59,24 @@ public class ViewDiagnosisPanel extends DiagnosisTemplatePanel{
 		}
 		return listModel;
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==this.backCalceButton) {
+			this.app.fromViewDiagnosisPanelToMedicalRecordPanel();
+		}
+	}
+	
+	
 	public static void main(String[] args) {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ViewDiagnosisPanel(2));
+        //frame.getContentPane().add(new ViewDiagnosisPanel(2));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+	
 }

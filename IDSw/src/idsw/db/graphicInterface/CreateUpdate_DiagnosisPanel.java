@@ -11,6 +11,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import idsw.db.graphicInterface.components.*;
+import idsw.db.jdbc.ConnectionManager;
+import idsw.db.jpa.JPAUserManager;
 
 public class CreateUpdate_DiagnosisPanel extends DiagnosisTemplatePanel {
 
@@ -18,8 +20,8 @@ public class CreateUpdate_DiagnosisPanel extends DiagnosisTemplatePanel {
 	public RoundedButton continueButton;
 	public JPanel continuePanel;
 	
-	public CreateUpdate_DiagnosisPanel() {
-		super();
+	public CreateUpdate_DiagnosisPanel(ConnectionManager conMan,GraphicAplication app,JPAUserManager jpaConMan) {
+		super(conMan, app, jpaConMan);
 		this.treatmenSearchPanel= new BuscadorTextoTreatments();
 		super. treatmentsPanel.add(treatmenSearchPanel);
 		super.backCalceButton.setButtonText("Cancel");
@@ -35,7 +37,7 @@ public class CreateUpdate_DiagnosisPanel extends DiagnosisTemplatePanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new CreateUpdate_DiagnosisPanel());
+        //frame.getContentPane().add(new CreateUpdate_DiagnosisPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -6,6 +6,7 @@ import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.DateInputPanel;
 import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jdbc.ConnectionManager;
+import idsw.db.jpa.JPAUserManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -52,9 +53,13 @@ public class MedicalRecordPanel extends JPanel {
 	private RoundedButton enterButton;
 	
 	private ConnectionManager conMan;
+	public GraphicAplication app;
+	public JPAUserManager jpaConMan;
 	
-	public MedicalRecordPanel(Integer id_patient){
-		this.conMan=new ConnectionManager();
+	public MedicalRecordPanel(Integer id_patient, ConnectionManager conMan, GraphicAplication app, JPAUserManager jpaConMan){
+		this.conMan= conMan;
+		this.app= app;
+		this.jpaConMan= jpaConMan;
 		
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new GridLayout(2,2));
@@ -159,7 +164,7 @@ public class MedicalRecordPanel extends JPanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new MedicalRecordPanel(3));
+        //frame.getContentPane().add(new MedicalRecordPanel(3));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

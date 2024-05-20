@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import idsw.db.graphicInterface.components.CustomJLabel;
 import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jdbc.ConnectionManager;
+import idsw.db.jpa.JPAUserManager;
 
 public class DiagnosisTemplatePanel extends JPanel {
 	public JPanel northPanel;
@@ -36,12 +37,17 @@ public class DiagnosisTemplatePanel extends JPanel {
 	public CustomJLabel comentSectionLabel;
 	public CustomJLabel treatmentsLabel;
 	
+	
 	public RoundedButton backCalceButton;
 	
 	public ConnectionManager conMan;
+	public GraphicAplication app;
+	public JPAUserManager jpaConMan;
 	
-	public DiagnosisTemplatePanel() {
-		this.conMan= new ConnectionManager();
+	public DiagnosisTemplatePanel(ConnectionManager conMan,GraphicAplication app,JPAUserManager jpaConMan) {
+		this.conMan= conMan;
+		this.app= app;
+		this.jpaConMan= jpaConMan;
 		
 		this.setLayout(new BorderLayout());
 		this.northPanel=new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -108,7 +114,7 @@ public class DiagnosisTemplatePanel extends JPanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new DiagnosisTemplatePanel());
+       // frame.getContentPane().add(new DiagnosisTemplatePanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

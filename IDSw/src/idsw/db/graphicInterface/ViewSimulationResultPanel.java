@@ -2,15 +2,19 @@ package idsw.db.graphicInterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import idsw.db.graphicInterface.components.*;
 import idsw.db.jdbc.ConnectionManager;
+import idsw.db.pojos.Role;
 import idsw.db.pojos.Simulation;
+import idsw.db.pojos.User;
 import idsw.db.pojos.Virtual_Population;
 import idsw.db.utilities.GraphUtilities;
 
-public class ViewSimulationResultPanel extends JPanel{
+public class ViewSimulationResultPanel extends JPanel implements ActionListener{
 	public JPanel northPanel;
 	public JPanel centerPanel;
 		public JPanel infoPanel;
@@ -40,15 +44,16 @@ public class ViewSimulationResultPanel extends JPanel{
 	
 	public RoundedButton exitButton;
 	
-	public GraphicAplication app;
+	
 	public ConnectionManager conMan;
+	public GraphicAplication app;
 	
-	
-	public ViewSimulationResultPanel(Integer id_simulation, Integer id_Vpopulatio, ConnectionManager conMan, GraphicAplication app) {
+	public ViewSimulationResultPanel(Simulation simulation1,Virtual_Population vPopulation1, GraphicAplication app,ConnectionManager conMan) {
 		this.conMan = conMan;
-		this.app=app;
-		Simulation simulation=this.conMan.getSimulationMan().selectSimulation(id_simulation);
-		Virtual_Population vPopulation=this.conMan.getVirtualPopulationMan().getVirtualPopulation(id_Vpopulatio);
+		this.app = app;
+		Virtual_Population vPopulation = vPopulation1;
+		
+		Simulation simulation= simulation1;
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
 		this.northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -56,6 +61,7 @@ public class ViewSimulationResultPanel extends JPanel{
 		this.add(this.northPanel, BorderLayout.NORTH);
 		this.titleLabel = new CustomJLabel("<html><b>SIMULATION OF DISEASE</b></html>", 20, Color.decode("#09A8E4"), Color.decode("#A5E0F1"));
 		this.northPanel.add(this.titleLabel);
+		this.exitButton.addActionListener(this);
 		
 		this.centerPanel = new JPanel(new GridLayout(1, 2, 10, 10));
 		this.centerPanel.setBackground(Color.WHITE);
@@ -73,15 +79,15 @@ public class ViewSimulationResultPanel extends JPanel{
 		this.initialParametersPanel.add(this.Label);
 		this.initialParametersLabel = new CustomJLabel("<html><b>INITIAL PARAMETERS:</b></html>", 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.initialParametersLabel);
-		this.numberPeopleLabel = new CustomJLabel("Number of people: " + vPopulation.getInitial_population(), 15, Color.BLACK, Color.WHITE);
+		this.numberPeopleLabel = new CustomJLabel("Number of people: " + vPopulation.getInitial_population() , 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.numberPeopleLabel);
-		this.inmunityPeriodLabel = new CustomJLabel("Inmunity Period: " + vPopulation.getImmunity_period() , 15, Color.BLACK, Color.WHITE);
+		this.inmunityPeriodLabel = new CustomJLabel("Inmunity Period: " + vPopulation.getImmunity_period(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.inmunityPeriodLabel);
 		this.illPercentageLabel = new CustomJLabel("Ill Percentage: " + vPopulation.getP_infected(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.illPercentageLabel);
-		this.imnunePercentageLabel = new CustomJLabel("Imnune Percentage: " + vPopulation.getP_immune(), 15, Color.BLACK, Color.WHITE);
+		this.imnunePercentageLabel = new CustomJLabel("Imnune Percentage: " + vPopulation.getP_infected(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.imnunePercentageLabel);
-		this.healthyPercentageLabel = new CustomJLabel("Healthy Percentage: " + vPopulation.getP_healthy(), 15, Color.BLACK, Color.WHITE);
+		this.healthyPercentageLabel = new CustomJLabel("Healthy Percentage: " +vPopulation.getP_healthy(), 15, Color.BLACK, Color.WHITE);
 		this.initialParametersPanel.add(this.healthyPercentageLabel);
 		this.simulationResultsLabel = new CustomJLabel("<html><b>SIMULATION RESULTS:</b></html>", 15, Color.BLACK, Color.WHITE);
 		this.simulationResultsPanel.add(this.simulationResultsLabel);
@@ -127,6 +133,14 @@ public class ViewSimulationResultPanel extends JPanel{
 		this.graphImage.setPreferredSize(new Dimension(400,200));
 		this.graphPanel.add(this.graphImage);
 	}	
+	
+
+	 public void actionPerformed(ActionEvent e) {
+	
+			if(e.getSource()==this.exitButton) {
+				this.app.fromViewSimulationResultPanelToHomePanelResearcher();
+			}
+	 }	
 	
 	
 	public static void main(String[] args) {

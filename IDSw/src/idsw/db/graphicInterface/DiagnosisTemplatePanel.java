@@ -37,7 +37,6 @@ public class DiagnosisTemplatePanel extends JPanel {
 	public CustomJLabel comentSectionLabel;
 	public CustomJLabel treatmentsLabel;
 	
-	
 	public RoundedButton backCalceButton;
 	
 	public ConnectionManager conMan;
@@ -114,7 +113,7 @@ public class DiagnosisTemplatePanel extends JPanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // frame.getContentPane().add(new DiagnosisTemplatePanel());
+      //  frame.getContentPane().add(new DiagnosisTemplatePanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

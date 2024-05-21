@@ -22,11 +22,15 @@ public class SymptomTemplate extends JPanel{
 	public CustomJLabel PainManagemetLabel;
 	public RoundedButton button1;
 	public RoundedButton button2;
+	
 	public ConnectionManager conMan;
+	public GraphicAplication app;
+
 	
 	
-	public SymptomTemplate(){
-		this.conMan = new ConnectionManager();
+	public SymptomTemplate(ConnectionManager conMan,GraphicAplication app){
+		this.conMan = conMan;
+		this.app=app;
 		
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
@@ -78,11 +82,12 @@ public class SymptomTemplate extends JPanel{
 		this.button2Panel.add(this.button2);
 	}
 	
+	
 	public static void main(String[] args) {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new SymptomTemplate());
+        //frame.getContentPane().add(new SymptomTemplate());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

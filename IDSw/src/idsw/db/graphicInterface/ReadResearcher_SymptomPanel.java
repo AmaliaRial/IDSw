@@ -4,13 +4,14 @@ import java.awt.*;
 import javax.swing.*;
 
 import idsw.db.graphicInterface.components.*;
+import idsw.db.jdbc.ConnectionManager;
 import idsw.db.pojos.*;
 
 public class ReadResearcher_SymptomPanel extends SymptomTemplate{
 public RoundedButton button3;
 	
-	public ReadResearcher_SymptomPanel(Integer id_symptom) {
-		super();
+	public ReadResearcher_SymptomPanel(Integer id_symptom,ConnectionManager conMan,GraphicAplication app) {
+		super(conMan,app);
 		Symptom symptom=super.conMan.getSymptomMan().getSymptom(id_symptom);
 		super.nameLabel.setText("Name: "+symptom.getNameSymptom());
 		super.PainManagemetLabel.setText("<html>Pain management: "+symptom.getPain_management()+"</html>");
@@ -28,7 +29,7 @@ public RoundedButton button3;
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ReadResearcher_SymptomPanel(1));
+       // frame.getContentPane().add(new ReadResearcher_SymptomPanel(1));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

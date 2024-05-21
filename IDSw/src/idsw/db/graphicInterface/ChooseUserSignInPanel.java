@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +18,7 @@ import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jpa.JPAUserManager;
 import idsw.db.pojos.User;
 
-public class ChooseUserSignInPanel extends JPanel {
+public class ChooseUserSignInPanel extends JPanel implements ActionListener {
 	public JPanel titlePanel;
 	public JPanel midlePanel;
 		public JPanel choosePanel;
@@ -96,7 +97,7 @@ public class ChooseUserSignInPanel extends JPanel {
         this.rightSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles
         add(rightSpace, BorderLayout.EAST);
         this.rightSpace.setBackground(Color.WHITE);
-        
+ 
         this.patientButton.addActionListener(this);
 		
 	}

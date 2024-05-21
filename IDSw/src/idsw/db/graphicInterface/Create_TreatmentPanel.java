@@ -3,12 +3,16 @@ package idsw.db.graphicInterface;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import idsw.db.jdbc.ConnectionManager;
+
 public class Create_TreatmentPanel extends TreatmentTemplate {
 	public JTextField nameField;
 	public JTextField comentSectionField;
 
-	public Create_TreatmentPanel() {
-	super();
+	
+	
+	public Create_TreatmentPanel(ConnectionManager conMan,GraphicAplication app) {
+	super(conMan,app);
 	super.titleLabel.setText("<html><b>INPUT DATA OF NEW TREATMENT</b></html>");
     super.button1.setButtonText("Cancel");
     super.button2.setButtonText("Continue");
@@ -25,7 +29,7 @@ public static void main(String[] args) {
     // Crear y mostrar la ventana de prueba
     JFrame frame = new JFrame("Ejemplo con Swing");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.getContentPane().add(new Create_TreatmentPanel());
+    //frame.getContentPane().add(new Create_TreatmentPanel());
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);

@@ -10,8 +10,8 @@ import idsw.db.pojos.Treatment;
 
 
 public class ReadPatientDoctor_SymptomPanel extends SymptomTemplate{
-	public ReadPatientDoctor_SymptomPanel (Integer id_symptom) {
-		super();
+	public ReadPatientDoctor_SymptomPanel (Integer id_symptom,ConnectionManager conMan,GraphicAplication app) {
+		super(conMan,app);
 		Symptom symptom=super.conMan.getSymptomMan().getSymptom(id_symptom);
 		super.nameLabel.setText("Name: "+symptom.getNameSymptom());
 		super.PainManagemetLabel.setText("<html>Pain management: "+symptom.getPain_management()+"</html>");
@@ -26,7 +26,7 @@ public class ReadPatientDoctor_SymptomPanel extends SymptomTemplate{
 		// Crear y mostrar la ventana de prueba
 		JFrame frame = new JFrame("Ejemplo con Swing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new ReadPatientDoctor_SymptomPanel(1));
+		//frame.getContentPane().add(new ReadPatientDoctor_SymptomPanel(1));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);

@@ -3,14 +3,15 @@ package idsw.db.graphicInterface;
 import javax.swing.*;
 
 import idsw.db.graphicInterface.components.*;
+import idsw.db.jdbc.ConnectionManager;
 import idsw.db.pojos.Treatment;
 
 import java.awt.*;
 
 public class ReadPatientDoctor_TreatmentPanel extends TreatmentTemplate {
 	public Integer id_treatment;
-	public ReadPatientDoctor_TreatmentPanel (Integer id_treatment) {
-		super();
+	public ReadPatientDoctor_TreatmentPanel (Integer id_treatment,ConnectionManager conMan,GraphicAplication app) {
+		super(conMan,app);
 		this.id_treatment=id_treatment;
 		Treatment treatment=super.conMan.getTreatmentMan().getTreatment(this.id_treatment);
 		super.nameLabel.setText("<html>Name: "+treatment.getNameTreatment()+"</html>");
@@ -26,7 +27,7 @@ public class ReadPatientDoctor_TreatmentPanel extends TreatmentTemplate {
 		// Crear y mostrar la ventana de prueba
 		JFrame frame = new JFrame("Ejemplo con Swing");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new ReadPatientDoctor_TreatmentPanel(1));
+		//frame.getContentPane().add(new ReadPatientDoctor_TreatmentPanel(1));
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);

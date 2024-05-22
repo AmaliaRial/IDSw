@@ -3,13 +3,14 @@ package idsw.db.graphicInterface;
 import javax.swing.*;
 
 import idsw.db.graphicInterface.components.*;
+import idsw.db.jdbc.ConnectionManager;
 import idsw.db.pojos.Treatment;
 
 import java.awt.*;
 
 public class ReadResearcher2_TreatmentPanel extends TreatmentTemplate {
-	public ReadResearcher2_TreatmentPanel(Integer id_treatment) {
-		super();
+	public ReadResearcher2_TreatmentPanel(Integer id_treatment,ConnectionManager conMan,GraphicAplication app) {
+		super(conMan,app);
 		Treatment treatment=super.conMan.getTreatmentMan().getTreatment(id_treatment);
 		super.nameLabel.setText("Name: "+treatment.getNameTreatment());
 		super.comentSectionLabel.setText("<html>Comment Section: "+treatment.getComment_Section()+"</html>");
@@ -23,7 +24,7 @@ public class ReadResearcher2_TreatmentPanel extends TreatmentTemplate {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new ReadResearcher2_TreatmentPanel(1));
+        //frame.getContentPane().add(new ReadResearcher2_TreatmentPanel(1));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

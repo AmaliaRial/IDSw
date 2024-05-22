@@ -23,11 +23,15 @@ public class TreatmentTemplate extends JPanel {
 	public CustomJLabel comentSectionLabel;
 	public RoundedButton button1;
 	public RoundedButton button2;
+	
 	public ConnectionManager conMan;
+	public GraphicAplication app;
 	
 	
-	public TreatmentTemplate(){
-		this.conMan = new ConnectionManager();
+	public TreatmentTemplate(ConnectionManager conMan,GraphicAplication app){
+		this.conMan = conMan;
+		this.app = app;
+		
 		
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
@@ -82,7 +86,7 @@ public class TreatmentTemplate extends JPanel {
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new TreatmentTemplate());
+       // frame.getContentPane().add(new TreatmentTemplate());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

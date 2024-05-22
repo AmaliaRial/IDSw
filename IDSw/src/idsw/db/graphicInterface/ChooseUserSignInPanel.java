@@ -1,12 +1,12 @@
 package idsw.db.graphicInterface;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -97,7 +97,7 @@ public class ChooseUserSignInPanel extends JPanel implements ActionListener{
         this.rightSpace.setPreferredSize(new Dimension(20, 10)); // Ancho de 10 píxeles
         add(rightSpace, BorderLayout.EAST);
         this.rightSpace.setBackground(Color.WHITE);
-        
+ 
         this.patientButton.addActionListener(this);
         this.doctorButton.addActionListener(this);
         this.researcherButton.addActionListener(this);

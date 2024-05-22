@@ -35,7 +35,7 @@ public class HomePanelDoctor extends HomePanel implements ActionListener{
 		super.b4.addActionListener(this);
 		super.b5.addActionListener(this);
 		super.b6.addActionListener(this);
-		this.medicalRecordButton.addActionListener(this);
+		//this.medicalRecordButton.addActionListener(this);
 		
 		this.conMan=new ConnectionManager();
 		this.sixTreatments= this.conMan.getTreatmentMan().listSixRecentTreatment();
@@ -53,6 +53,8 @@ public class HomePanelDoctor extends HomePanel implements ActionListener{
 		super.b4.setButtonColor(Color.decode("#D152EA"));
 		super.b5.setButtonColor(Color.decode("#D152EA"));
 		super.b6.setButtonColor(Color.decode("#D152EA"));
+		
+		
 		
 		this.medicalRecordButton=new RoundedButton("RECORD", Color.decode("#09A8E4"));
 		this.medicalRecordButton.setPreferredSize(new Dimension(90, 30));

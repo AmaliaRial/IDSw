@@ -63,7 +63,7 @@ public class ViewDiagnosisPanel extends DiagnosisTemplatePanel implements Action
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==this.backCalceButton) {
-			this.app.fromViewDiagnosisPanelToMedicalRecordPanel();
+			//this.app.fromViewDiagnosisPanelToMedicalRecordPanel();
 		}
 	}
 	

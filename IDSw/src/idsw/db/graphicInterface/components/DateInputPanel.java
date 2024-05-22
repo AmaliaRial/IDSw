@@ -1,12 +1,13 @@
 package idsw.db.graphicInterface.components;
 
 import javax.swing.*;
+import java.sql.Date;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
 
 public class DateInputPanel extends JPanel {
     private JComboBox<Integer> dayComboBox;
@@ -47,15 +48,14 @@ public class DateInputPanel extends JPanel {
     }
 
     // Método para obtener la fecha seleccionada como un objeto Date
-    public java.sql.Date getDate() throws ParseException {
-    	String selectedDay = (String) dayComboBox.getSelectedItem();
-        String selectedMonth = (String) monthComboBox.getSelectedItem();
-        String selectedYear = (String) yearComboBox.getSelectedItem();
+    public Date getDate() throws ParseException {
+    	Integer selectedDay = (Integer) dayComboBox.getSelectedItem();
+        Integer selectedMonth = (Integer) monthComboBox.getSelectedItem();
+        Integer  selectedYear = (Integer) yearComboBox.getSelectedItem();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-        String dateString = selectedDay + " " + selectedMonth + " " + selectedYear;
-        Date utilDate = dateFormat.parse(dateString);
-        return new java.sql.Date(utilDate.getTime());
+        String dateString = selectedYear + "-" + selectedMonth + "-" +selectedDay;
+
+        return  Date.valueOf(dateString);
     }
 
     public static void main(String[] args) {
@@ -75,8 +75,9 @@ public class DateInputPanel extends JPanel {
             }
         });
         frame.add(submitButton, BorderLayout.SOUTH);
-
+        
         frame.pack();
         frame.setVisible(true);
+        
     }
 }

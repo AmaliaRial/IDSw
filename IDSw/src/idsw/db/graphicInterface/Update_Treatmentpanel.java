@@ -8,7 +8,7 @@ import idsw.db.graphicInterface.components.PlaceholderTextField;
 import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
 
-public class Update_Treatmentpanel extends TreatmentTemplate{
+/*public class Update_Treatmentpanel extends TreatmentTemplate{
 	
 		public PlaceholderTextField nameField;
 		public PlaceholderTextField comentSectionField;
@@ -37,4 +37,4 @@ public class Update_Treatmentpanel extends TreatmentTemplate{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-}
+}*/

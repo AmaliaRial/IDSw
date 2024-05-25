@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 import idsw.db.jdbc.ConnectionManager;
 
-public class CreateDiseasePanel extends CreateUpdate_DiseasePanel{
+/*public class CreateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public JTextField diseaseNameTextField;
 	public JTextField mortalityRateTextField;
 	public JTextField infectiousRateTextField;
@@ -54,4 +54,4 @@ public class CreateDiseasePanel extends CreateUpdate_DiseasePanel{
 	}
 	
 
-}
+}*/

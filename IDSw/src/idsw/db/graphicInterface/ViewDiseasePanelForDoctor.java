@@ -6,7 +6,7 @@ import java.awt.*;
 import idsw.db.pojos.*;
 
 
-public class ViewDiseasePanelForDoctor extends ViewDiseasePanel {
+/*public class ViewDiseasePanelForDoctor extends ViewDiseasePanel {
 	public RoundedButton continueButton;
 	
 	public ViewDiseasePanelForDoctor(Integer id_disease) {
@@ -25,4 +25,4 @@ public class ViewDiseasePanelForDoctor extends ViewDiseasePanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-}
+}*/

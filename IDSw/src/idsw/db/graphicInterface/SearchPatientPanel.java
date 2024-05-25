@@ -68,7 +68,7 @@ public class SearchPatientPanel extends JPanel implements ActionListener{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new SearchPatientPanel());
+        //frame.getContentPane().add(new SearchPatientPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

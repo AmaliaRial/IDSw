@@ -13,10 +13,9 @@ import javax.swing.JPanel;
 
 import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jdbc.ConnectionManager;
-<<<<<<< HEAD
+
 import idsw.db.jpa.JPAUserManager;
-=======
->>>>>>> branch 'master' of https://github.com/AmaliaRial/IDSw
+
 
 public class MedicalRecordForDoctorPanel extends MedicalRecordPanel implements ActionListener{
 	public JPanel addPanel;
@@ -29,15 +28,15 @@ public class MedicalRecordForDoctorPanel extends MedicalRecordPanel implements A
 	public RoundedButton exportHTMLButton;
 	public RoundedButton importFromHTMLButton;
 	
-<<<<<<< HEAD
+
 	public MedicalRecordForDoctorPanel(Integer id_patient, ConnectionManager conMan,GraphicAplication app,JPAUserManager jpaConMan){
 		super(id_patient, conMan, app, jpaConMan);
 		this.exportHTMLButton=new RoundedButton("Export to HTML", Color.decode("#09A8E4"));
-		this.exportHTMLButton.setPreferredSize(new Dimension(140, 25));
-=======
+		this.exportHTMLButton.setPreferredSize(new Dimension(140, 25));}
+
 	MedicalRecordForDoctorPanel(Integer id_patient, ConnectionManager conMan){
 		super(id_patient, conMan);
->>>>>>> branch 'master' of https://github.com/AmaliaRial/IDSw
+
 		this.addButton=new RoundedButton("ADD", Color.decode("#09A8E4"));
 		this.addButton.setPreferredSize(new Dimension(80, 25));
 		this.importFromHTMLButton=new RoundedButton("Import from HTML", Color.decode("#09A8E4"));
@@ -68,23 +67,23 @@ public class MedicalRecordForDoctorPanel extends MedicalRecordPanel implements A
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==this.diagnosesList) {
-			Integer id_diagnosis= super.diagnosesList.;
+			//Integer id_diagnosis= super.diagnosesList.;
 		}
 		else if(e.getSource()==this.addButton) {
-			this.app.fromMedicalRecordForDoctorPanelToCreateDiagnosisPanel();
+			//this.app.fromMedicalRecordForDoctorPanelToCreateDiagnosisPanel();
 		}
 		else if(e.getSource()==this.modifyButton) {
-			this.app.fromMedicalRecordPanelForDoctorToUpdateDiagnosisPanel(id_diagnosis);
+			//this.app.fromMedicalRecordPanelForDoctorToUpdateDiagnosisPanel(id_diagnosis);
 		}
 		else if(e.getSource()==this.deleteButton) {
-            this.app.fromMedicalRecordPanelForDoctorToDeleteVerificationPanel(id_diagnosis);
+            //this.app.fromMedicalRecordPanelForDoctorToDeleteVerificationPanel(id_diagnosis);
         }
         else if(e.getSource()==this.exportHTMLButton) {
             
         }
         else if(e.getSource()==this.importFromHTMLButton) {
-            
-		}
+        	
+        }}
 
 	
 	public static void main(String[] args) {

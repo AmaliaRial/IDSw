@@ -150,7 +150,7 @@ public class CreateSimulationPanel extends SymptomTemplate implements ActionList
 				this.conMan.getVirtualPopulationMan().fillPopulation(VPopulation);
 				Simulation simulation = this.conMan.getSimulationMan().createSimulation(VPopulation);
 				this.conMan.getSimulationMan().addSimulation(simulation);
-				this.app.fromCreateSimulationPanelToViewSimulationResultPanel(simulation);
+				//this.app.fromCreateSimulationPanelToViewSimulationResultPanel(simulation);
 			}
 
 	 }	

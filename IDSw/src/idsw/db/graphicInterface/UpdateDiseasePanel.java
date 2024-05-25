@@ -11,7 +11,7 @@ import idsw.db.pojos.*;
 import idsw.db.graphicInterface.components.PlaceholderTextField;
 import idsw.db.jdbc.ConnectionManager;
 
-public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
+/*public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 	public PlaceholderTextField diseaseNameTextField;
 	public PlaceholderTextField mortalityRateTextField;
 	public PlaceholderTextField infectiousRateTextField;
@@ -61,7 +61,7 @@ public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 		for(Treatment treatment:listTreatments) {
 			super.treatmentSearchPanel.agregarSeleccion(treatment.getNameTreatment());
 		}
-		*/
+		
 	}
 	public static void main(String[] args) {
 	    // Crear y mostrar la ventana de prueba
@@ -73,4 +73,4 @@ public class UpdateDiseasePanel extends CreateUpdate_DiseasePanel{
 	    frame.setVisible(true);
 	}
 
-}
+}*/

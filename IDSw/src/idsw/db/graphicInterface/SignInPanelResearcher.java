@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
-public class SignInPanelResearcher extends SignInPanel{
+/*public class SignInPanelResearcher extends SignInPanel{
 	public SignInPanelResearcher(){
 		super();
 		super.northPanel.setBackground(Color.decode("#FFE68B"));
@@ -24,4 +24,4 @@ public class SignInPanelResearcher extends SignInPanel{
         frame.setVisible(true);
     }
 
-}
+}*/

@@ -42,10 +42,10 @@ public class UpdateDiagnosisPanel extends CreateUpdate_DiagnosisPanel implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.backCalceButton) {
-			this.app.fromModifyDiagnosisPanelToMedicalRecordForDoctorPanel(id_patient);
+			//this.app.fromModifyDiagnosisPanelToMedicalRecordForDoctorPanel(id_patient);
 		}
 		else if (e.getSource() == this.continueButton) {
-			this.app.fromModifyDiagnosisPanelToViewDiagnosisPanelForDoctor(id_diagnosis);
+			//this.app.fromModifyDiagnosisPanelToViewDiagnosisPanelForDoctor(id_diagnosis);
 		}
 		
 	}

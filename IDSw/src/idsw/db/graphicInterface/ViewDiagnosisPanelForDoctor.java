@@ -24,10 +24,10 @@ public RoundedButton continueButton;
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==this.backCalceButton) {
-			this.app.fromViewDiagnosisPanelForDoctorToMedicalRecordForDoctorPanel(id_patient);
+			//this.app.fromViewDiagnosisPanelForDoctorToMedicalRecordForDoctorPanel(id_patient);
 		}
 		else if (e.getSource() == this.continueButton) {
-			this.app.fromViewDiagnosisPanelForDoctorToModifyDiagnosisPanel(id_diagnosis);
+			//this.app.fromViewDiagnosisPanelForDoctorToModifyDiagnosisPanel(id_diagnosis);
 		} 
 	}
 			

@@ -20,9 +20,9 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	
 	private LogInPanel logInPanel;
 	private ChooseUserSignInPanel chooseUserSignInPanel;
-	private SignInPanelDoctor signInPanelDoctor;
+	//private SignInPanelDoctor signInPanelDoctor;
 	private SignInPanelPatient signInPanelPatient;
-	private SignInPanelResearcher signInPanelResearcher;
+	//private SignInPanelResearcher signInPanelResearcher;
 	
 	private HomePanelDoctor homePanelDoctor;
 	private HomePanelPatient homePanelPatient;
@@ -36,20 +36,20 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	private ViewDiagnosisPanel viewDiagnosisPanel;
 	
 	private ResearcherDiseaseSearchPanel researcherDiseaseSearchPanel;
-	private CreateDiseasePanel createDiseasePanel;
+	//private CreateDiseasePanel createDiseasePanel;
 	private ViewDiseasePanel viewDiseasePanel;
-	private UpdateDiseasePanel  updateDiseasePanel;	
+	//private UpdateDiseasePanel  updateDiseasePanel;	
 	
 	private ResearcherSymptomSearchPanel researcherSymptomSearchPanel;
 	private Create_SymptomPanel create_SymptomPanel;
-	private UpdateSymptomPanel updateSymptomPanel;
+	//private UpdateSymptomPanel updateSymptomPanel;
 	private ReadResearcher_SymptomPanel readResearcher_SymptomPanel;
 	private ReadResearcher2_SymptomsPanel readResearcher2_SymptomPanel;
 	private ReadPatientDoctor_SymptomPanel readPatientDoctor_SymptomPanel;
 	
 	private ResearcherTreatmentSearchPanel researcherTreatmentSearchPanel;
 	private Create_TreatmentPanel create_TreatmentPanel;
-	private Update_Treatmentpanel update_TreatmentPanel ;
+	//private Update_Treatmentpanel update_TreatmentPanel ;
 	private ReadResearcher_TreatmentPanel readResearcher_TreatmentPanel;
 	private ReadResearcher2_TreatmentPanel readResearcher2_TreatmentPanel;
 	private ReadPatientDoctor_TreatmentPanel readPatientDoctor_TreatmentPanel;
@@ -98,7 +98,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         this.allPanels.add(this.homePanelDoctor);
      
         
-        this.homePanelPatient=new HomePanelPatient(this.jpaConMan,this,this.conMan);
+       // this.homePanelPatient=new HomePanelPatient(this.jpaConMan,this,this.conMan);
         this.allPanels.add(this.homePanelPatient);
         
         this.homePanelResearcher=new HomePanelResearcher(this.jpaConMan,this,this.conMan);
@@ -114,7 +114,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         this.searchPatientPanel=new SearchPatientPanel(this.conMan,this);
         this.allPanels.add(this.searchPatientPanel);
         
-        this.createDiagnosisPanel=new CreateDiagnosisPanel();
+        //this.createDiagnosisPanel=new CreateDiagnosisPanel();
         this.allPanels.add(this.createDiagnosisPanel);
         
         //TODO ADD viewDiagnosisPanelForDoctor
@@ -137,10 +137,10 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         this.generalDiseaseSearchPanel=new GeneralDiseaseSearchPanel();
         this.allPanels.add(this.generalDiseaseSearchPanel);
         
-        this.createSimulationPanel=new CreateSimulationPanel();
+        //this.createSimulationPanel=new CreateSimulationPanel();
         this.allPanels.add(this.createSimulationPanel);
         
-        this.viewSimulationResultPanel=new ViewSimulationResultPanel(null, null, this.conMan,this);
+        //this.viewSimulationResultPanel=new ViewSimulationResultPanel(null, null, this.conMan,this);
         this.allPanels.add(this.viewSimulationResultPanel);
 
 	
@@ -281,7 +281,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel(Integer id_treatment) {
 	    setAllPanelsVisibilityOff();
-	    this.readPatientDoctor_TreatmentPanel=new ReadPatientDoctor_TreatmentPanel(id_treatment);
+	    //this.readPatientDoctor_TreatmentPanel=new ReadPatientDoctor_TreatmentPanel(id_treatment);
 	    this.readPatientDoctor_TreatmentPanel.setVisible(true);	
 	    this.getContentPane().add(this.readPatientDoctor_TreatmentPanel);
 	    this.pack();
@@ -430,11 +430,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromMedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor() {
 		//TODO crear panel viewDiagnosisPanelForDoctor
-	   /** setAllPanelsVisibilityOff();
+	    setAllPanelsVisibilityOff();
 	    this.viewDiagnosisPanelForDoctor.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanelForDoctor);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -488,11 +488,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromCreateDiagnosisPanelToViewDiagnosisPanelForDoctor() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO create viewDiagnosisPanelForDoctor
+	    TODO create viewDiagnosisPanelForDoctor
 	    this.viewDiagnosisPanelForDoctor.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanelForDoctor);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -506,11 +506,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromModifyDiagnosisPanelToViewDiagnosisPanelForDoctor() {
 	    setAllPanelsVisibilityOff();
-	    /**TODO Create viewDiagnosisPanelForDoctor
+	    TODO Create viewDiagnosisPanelForDoctor
 	    this.viewDiagnosisPanelForDoctor.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanelForDoctor);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -548,11 +548,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromSearchDiseaseOptionPanelToGeneralSymptomSearchPanel() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO create generalSymptomSearchPanel
+	    TODO create generalSymptomSearchPanel
 	    this.generalSymptomSearchPanel.setVisible(true);
 	    this.getContentPane().add(this.generalSymptomSearchPanel);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -566,16 +566,16 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromReasearcherDiseaseSearchPanelToCreateDiseasePanel() {
 	    setAllPanelsVisibilityOff();
-	    this.createDiseasePanel.setVisible(true);
-	    this.getContentPane().add(this.createDiseasePanel);
+	    //this.createDiseasePanel.setVisible(true);
+	    //this.getContentPane().add(this.createDiseasePanel);
 	    this.pack();
 	}
 
 	@Override
 	public void fromReasearcherDiseaseSearchPanelToModifyDiseasePanel() {
 	    setAllPanelsVisibilityOff();
-	    this.updateDiseasePanel.setVisible(true);
-	    this.getContentPane().add(this.updateDiseasePanel);
+	    //this.updateDiseasePanel.setVisible(true);
+	    //this.getContentPane().add(this.updateDiseasePanel);
 	    this.pack();
 	}
 
@@ -590,11 +590,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromReasearcherDiseaseSearchPanelToViewDiseasePanelForReasearcher() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO create viewDiseasePanelForReasearcher
+	    TODO create viewDiseasePanelForReasearcher
 	    this.viewDiseasePanelForReasearcher.setVisible(true);
 	    this.getContentPane().add(this.viewDiseasePanelForReasearcher);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -640,11 +640,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromCreateDiseasePanelToViewDiseasePanelForReasearcher() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO Create viewDiseasePanelForReasearcher
+	    TODO Create viewDiseasePanelForReasearcher
 	    this.viewDiseasePanelForReasearcher.setVisible(true);
 	    this.getContentPane().add(this.viewDiseasePanelForReasearcher);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -658,11 +658,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromModifyDiseasePanelToViewDiseasePanelForResearcher() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO Create viewDiseasePanelForResearcher
+	    TODO Create viewDiseasePanelForResearcher
 	    this.viewDiseasePanelForResearcher.setVisible(true);
 	    this.getContentPane().add(this.viewDiseasePanelForResearcher);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -676,8 +676,8 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromViewDiseasePanelForResearcherToModifyDiseasePanel() {
 	    setAllPanelsVisibilityOff();
-	    this.updateDiseasePanel.setVisible(true);
-	    this.getContentPane().add(this.updateDiseasePanel);
+	    //this.updateDiseasePanel.setVisible(true);
+	    //this.getContentPane().add(this.updateDiseasePanel);
 	    this.pack();
 	}
 
@@ -915,11 +915,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromReadReasearcher2_TreatmentPanelToViewDiagnosisPanelForDoctor() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO create
+	    TODO create
 	    this.viewDiagnosisPanelForDoctor.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanelForDoctor);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -933,11 +933,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromReadReasearcher2_TreatmentPanelToViewDiseasePanelForResearcher() {
 	    setAllPanelsVisibilityOff();
-	    /*TODO create viewDiseasePanelForResearcher
+	    TODO create viewDiseasePanelForResearcher
 	    this.viewDiseasePanelForResearcher.setVisible(true);
 	    this.getContentPane().add(this.viewDiseasePanelForResearcher);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -1030,12 +1030,12 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 
 	@Override
 	public void fromReadReasearcher2_SymptomPanelToViewDiagnosisPanelForDoctor() {
-		/*TODO
+		TODO
 	    setAllPanelsVisibilityOff();
 	    this.viewDiagnosisPanelForDoctor.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanelForDoctor);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -1048,12 +1048,12 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 
 	@Override
 	public void fromReadReasearcher2_SymptomPanelToViewDiseasePanelForResearcher() {
-		/**TODO create viewDiseasePanelForResearcher
+		TODO create viewDiseasePanelForResearcher
 	    setAllPanelsVisibilityOff();
 	    this.viewDiseasePanelForResearcher.setVisible(true);
 	    this.getContentPane().add(this.viewDiseasePanelForResearcher);
 	    this.pack();
-	    */
+	    
 	}
 
 	@Override
@@ -1179,3 +1179,5 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	
 
 }
+
+

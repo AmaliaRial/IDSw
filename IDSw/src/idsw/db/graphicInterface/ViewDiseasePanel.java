@@ -110,7 +110,7 @@ public class ViewDiseasePanel extends DiseaseTempletePanel implements ActionList
 	
 	 public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==this.backCancelButton) {
-			this.app.fromViewDiseasePanelToGeneralDiseaseSearchPanel();			
+			this.app.fromViewDiseasePanelToGeneralDiseaseSearchPanel();}			
 			}
 		
 	

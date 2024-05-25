@@ -14,7 +14,7 @@ import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Symptom;
 import idsw.db.pojos.Treatment;
 
-public class UpdateSymptomPanel extends SymptomTemplate{
+/*public class UpdateSymptomPanel extends SymptomTemplate{
 	public PlaceholderTextField nameField;
 	public JComboBox<String> PainManagementField;
 
@@ -45,4 +45,4 @@ public static void main(String[] args) {
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
 }
-}
+}*/

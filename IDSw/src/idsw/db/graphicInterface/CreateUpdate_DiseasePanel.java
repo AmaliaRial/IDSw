@@ -13,7 +13,7 @@ import idsw.db.graphicInterface.components.BuscadorTextoTreatments;
 import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jdbc.ConnectionManager;
 
-public class CreateUpdate_DiseasePanel extends DiseaseTempletePanel {
+/*public class CreateUpdate_DiseasePanel extends DiseaseTempletePanel {
 	public BuscadorTextoSymptoms symptomSearchPanel;
 	public BuscadorTextoTreatments treatmentSearchPanel;
 	public JComboBox<String>  diseaseCuaseBox;
@@ -45,4 +45,4 @@ public class CreateUpdate_DiseasePanel extends DiseaseTempletePanel {
 	    frame.setVisible(true);
 	    
 	}
-}
+}*/

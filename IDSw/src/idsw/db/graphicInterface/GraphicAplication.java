@@ -153,10 +153,742 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 			}
 		}
 	}
+
+	@Override
+	public void fromLogInPanelToChooseUserSignInPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogInPanelToHomePanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogInPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogInPanelToHomePanelPatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromChooseUserSignInPanelToLogInPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromChooseUserSignInToSingInPanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromChooseUserSignInToSingInPanelPatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromChooseUserSignInToSingInPanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSingInPanelDoctorToChooseUserSignInPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSingInPanelDoctorToHomePanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSingInPanelReasearcherToChooseUserSignInPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSingInPanelResearcherToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSingInPanelPatientToChooseUserSignInPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSingInPanelPatientToHomePanelPatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelDoctorToReadPatientDoctor_TreatmentPanel(Integer id_treatment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelDoctorToSearchPatientPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelDoctorToSearchDiseaseOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelDoctorToLogOutPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelPatientToViewDiagnosisPanel(Integer id_dignosis) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelPatientToMedicalRecordPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelPatientToSearchDiseaseOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelPatientToLogOutPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelResearcherToViewSimulationResultPanel(Integer id_simulation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelResearcherToCreateSearchSimulationOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelResearcherToResearcherTreatmentSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelResearcherToResearcherSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelResearcherToSearchDiseaseOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromHomePanelResearcherToLogOutPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchPatientPanelToMedicalRecordForDoctorPanel(Integer id_patient) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchPatientPanelToHomePanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordPanelToViewDiagnosisPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordPanelToHomePanelPatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordForDoctorPanelToViewDiagnosisPanelForDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordForDoctorPanelToHomePanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordForDoctorPanelToUpdateDiagnosisPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordForDoctorPanelToCreateDiagnosispanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromMedicalRecordForDoctorPanelToDeleteVerificationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromDeleteVerificationPanelToMedicalRecordForDoctorPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateDiagnosisPanelToMedicalRecordForDoctorPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateDiagnosisPanelToViewDiagnosisPanelForDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromModifyDiagnosisPanelToMedicalRecordForDoctorPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromModifyDiagnosisPanelToViewDiagnosisPanelForDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewDiagnosisPanelForDoctorToMedicalRecordForDoctorPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewDiagnosisPanelForDoctorToModifyDiagnosisPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchDiseaseOptionPanelToGeneralDiseaseSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchDiseaseOptionPanelToReasearcherDiseaseSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchDiseaseOptionPanelToGeneralSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherDiseaseSearchPanelToDeleteVerificationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherDiseaseSearchPanelToCreateDiseasePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherDiseaseSearchPanelToModifyDiseasePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherDiseaseSearchPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherDiseaseSearchPanelToViewDiseasePanelForReasearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromGeneralDiseaseSearchPanelToViewDiseasePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromGeneralDiseaseSearchPanelToHomePanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromGeneralDiseaseSearchPanelToHomePanelPatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewDiseasePanelToGeneralDiseaseSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromDeleteVerificationPanelToSearchDiseaseOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateDiseasePanelToSearchDiseaseOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateDiseasePanelToViewDiseasePanelForReasearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromModifyDiseasePanelToSearchDiseaseOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromModifyDiseasePanelToViewDiseasePanelForResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewDiseasePanelForResearcherToReasearcherDiseaseSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewDiseasePanelForResearcherToModifyDiseasePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogOutPanelToUpdateAcountPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogOutPanelToLogInPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogOutPanelToOUT() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogOutPanelToHomePanelDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogOutPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromLogOutPanelToHomePanelPatient() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromUpdateAcountPanelToLogOutPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherTreatmentSearchPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherTreatmentSearchPanelToDeleteVerificationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherTreatmentSearchPanelToCreate_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherTreatmentSearchPanelToUpdate_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherTreatmentSearchPanelToReadReasearcher2_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromDeleteVerificationPanelToReasearcherTreatmentSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherSymptomSearchPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherSymptomSearchPanelToDeleteVerificationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherSymptomSearchPanelToCreate_SymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherSymptomSearchPanelToUpdateSymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReasearcherSymptomSearchPanelToReadReasearcher2_SymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromDeleteVerificationPanelToReasearcherSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromUpdate_TreatmentPanelToReasearcherTreatmentSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromUpdate_TreatmentPanelToReadResearcher_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreate_TreatmentPanelToReasearcherTreatmentSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreate_TreatmentPanelToReadResearcher_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher_TreatmentPanelToUpdate_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher_TreatmentPanelToReasearcherTreatmentSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToReasearcherTreatmentSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToDeleteVerificationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToUpdate_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToViewDiagnosisPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToViewDiagnosisPanelForDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToViewDiseasePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_TreatmentPanelToViewDiseasePanelForResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromDeleteVerificationPanelToReadReasearcher2_TreatmentPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromUpdateSymptomPanelToReasearcherSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromUpdateSymptomPanelToReadResearcher_SymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreate_SymptomPanelToReasearcherSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreate_SymptomPanelToReadResearcher_SymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher_SymptomPanelToUpdateSymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher_SymptomPanelToReasearcherSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToReasearcherSymptomSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToDeleteVerificationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToUpdateSymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToViewDiagnosisPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToViewDiagnosisPanelForDoctor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToViewDiseasePanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromReadReasearcher2_SymptomPanelToViewDiseasePanelForResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromDeleteVerificationPanelToReadReasearcher2_SymptomPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateSearchSimulationOptionPanelToSearchOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromGeneralDiseaseSearchPanelToSearchPopulationFromDiseaseSimulationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromGeneralDiseaseSearchPanelToCreateSimulationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchPopulationFromDiseaseSimulationPanelToSearchSimulationByPopulation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchPopulationFromDiseaseSimulationPanelToGeneralDiseaseSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchSimulationByPopulationToViewSimulationResultFromSearchPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromSearchSimulationByPopulationToSearchPopulationFromDiseaseSimulationPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewSimulationResultFromSearchPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewSimulationResultFromSearchPanelToSearchSimulationByPopulation() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateSimulationPanelToSearchOptionPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromCreateSimulationPanelToViewSimulationResultPanel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fromViewSimulationResultPanelToHomePanelResearcher() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
-	
+	/*
 	public static void main(String[] args) {
 		GraphicAplication aplication= new GraphicAplication();
 	}
@@ -1168,7 +1900,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	    this.pack();
 		
 	}
-
+*/
 	public User getUser() {
 		return user;
 	}

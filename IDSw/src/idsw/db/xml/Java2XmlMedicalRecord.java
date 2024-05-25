@@ -1,8 +1,6 @@
 package idsw.db.xml;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -18,7 +16,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 
 import idsw.db.jdbc.ConnectionManager;
-import idsw.db.jdbcInterfaces.MedicalRecordManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
@@ -28,7 +25,6 @@ import idsw.db.pojos.Treatment;
 public class Java2XmlMedicalRecord {
 	
 	private static Connection c ;
-    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static ConnectionManager conMan = new ConnectionManager();
     
     public static void createXML(int record_id) {
@@ -115,8 +111,6 @@ public class Java2XmlMedicalRecord {
 			    }
 			    File file = new File("./xmls/MedicalRecord.xml");
 			    marshaller.marshal(record, file);
-			    // Printout
-			    marshaller.marshal(record, System.out);
 			} catch (Exception e) {
 			    e.printStackTrace();
 			}
@@ -129,7 +123,7 @@ public class Java2XmlMedicalRecord {
 		}
     }
     
-    private static void printMedicalRecords(Connection c) throws SQLException {
+    /*private static void printMedicalRecords(Connection c) throws SQLException {
         String selectSQL = "SELECT * FROM medical_records";
         PreparedStatement ps = c.prepareStatement(selectSQL);
         ResultSet rs = ps.executeQuery();
@@ -186,7 +180,7 @@ public class Java2XmlMedicalRecord {
         }
         rs.close();
         ps.close();
-    }
+    }*/
 
     public static void main(String[] args) throws Exception {
         /*// Get a connection to the database

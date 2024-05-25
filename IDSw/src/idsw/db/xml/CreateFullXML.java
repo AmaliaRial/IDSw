@@ -1,15 +1,7 @@
 package idsw.db.xml;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-
-import idsw.db.pojos.Medical_Record;
 
 public class CreateFullXML {
 	
@@ -19,7 +11,7 @@ public class CreateFullXML {
 	public static void createFULLxml() {
 		// Paths to the existing files
         Path dtdPath = Paths.get("./xmls/MedicalRecord.dtd");
-        Path xmlPath = Paths.get("./xmls/MedicalRecord.xml");
+        Path xmlPath = Paths.get("./xmls/MedicalRecord.xml"); //file just created by Java2XmlMedicalRecord.java
 
         // Path to the new file
         Path newPath = Paths.get("./xmls/External_MedicalRecord.xml");
@@ -31,7 +23,9 @@ public class CreateFullXML {
             // Read the contents of the XML file
             String xmlContent = Files.readString(xmlPath);
             
-            // Remove the XML declaration from the XML content
+            // Remove the XML declaration from the XML content because it will be added later
+            // The XML declaration was removed because the new file will have the DTD declaration and the XML declaration and it will give an error if it has two XML declarations
+            // Therefore the XML declaration was removed (since it appears after the DTD in the new file)
             xmlContent = xmlContent.replaceFirst("<\\?xml(.+?)\\?>", "").trim();
 
             // Combine the contents

@@ -6,13 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.PatientManager;
 import idsw.db.pojos.Patient;
-import idsw.db.pojos.Symptom;
-import idsw.db.pojos.Treatment;
 
 public class JDBCPatientManager implements PatientManager {
 	
@@ -54,6 +51,24 @@ public class JDBCPatientManager implements PatientManager {
 			Statement st;
 			st = c.createStatement();
 			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("dob"));
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}		
+		return patient;
+	}
+	
+	@Override
+	public Patient getPatientByUsername(String username) {
+		Patient patient = null;
+		try {
+			String sql = "SELECT * FROM patients WHERE username LIKE ?;";
+			PreparedStatement p;
+			p = c.prepareStatement(sql);
+			p.setString(1, username);
+			ResultSet rs= p.executeQuery();
 			rs.next();
 			patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("dob"));
 		} catch (SQLException e) {

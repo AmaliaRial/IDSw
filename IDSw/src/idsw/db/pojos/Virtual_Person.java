@@ -1,8 +1,6 @@
 package idsw.db.pojos;
 
 import java.io.Serializable;
-import java.util.Objects;
-
 import idsw.db.enums.*;
 
 public class Virtual_Person implements Serializable{

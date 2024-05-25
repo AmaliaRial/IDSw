@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import idsw.db.jdbcInterfaces.DiagnosisManager;
 import idsw.db.pojos.Diagnosis;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
-import idsw.db.pojos.Patient;
 
 
 public class JDBCDiagnosisManager implements DiagnosisManager {
@@ -207,6 +205,7 @@ public class JDBCDiagnosisManager implements DiagnosisManager {
 		return diagnoses;
 	}
 
+	
 	
 
 }

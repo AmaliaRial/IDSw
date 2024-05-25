@@ -88,7 +88,7 @@ public class Medical_Record implements Serializable{
 
 		@Override
 		public String toString() {
-			return "Medical_Record [idMedical_Record=" + idMedical_Record + ", Patient="
+			return "Medical_Record [id = " + idMedical_Record + ", "
 					+ patient + "]";
 		}
 		

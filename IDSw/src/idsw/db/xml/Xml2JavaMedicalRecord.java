@@ -2,7 +2,6 @@ package idsw.db.xml;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +18,8 @@ import idsw.db.pojos.Patient;
 public class Xml2JavaMedicalRecord {
 	
     private static ConnectionManager conMan;
-
-    public static void main(String[] args) throws JAXBException, SQLException {
+    
+    public static void importXML() throws JAXBException{
     	
     	conMan = new ConnectionManager();
         // Create the JAXBContext
@@ -29,7 +28,7 @@ public class Xml2JavaMedicalRecord {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
         // Use the Unmarshaller to unmarshal the XML document from a file
-        File file = new File("./xmls/External-MedicalRecord.xml");
+        File file = new File("./xmls/External_MedicalRecord.xml");
         Medical_Record record = (Medical_Record) unmarshaller.unmarshal(file);
 
         // Print the medical record
@@ -105,5 +104,9 @@ public class Xml2JavaMedicalRecord {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void main(String[] args) throws JAXBException, SQLException {
+    	importXML();
     }
 }

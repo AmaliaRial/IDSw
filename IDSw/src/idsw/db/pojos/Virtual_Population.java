@@ -1,9 +1,7 @@
 package idsw.db.pojos;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,13 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import javax.swing.ImageIcon;
 import idsw.db.jdbc.*;
 import idsw.db.utilities.GraphUtilities;
 

@@ -3,9 +3,6 @@ package idsw.db.jdbcInterfaces;
 import java.util.List;
 
 import idsw.db.pojos.Diagnosis;
-import idsw.db.pojos.Disease;
-import idsw.db.pojos.Patient;
-import idsw.db.pojos.Symptom;
 
 public interface DiagnosisManager {
 	
@@ -16,5 +13,4 @@ public interface DiagnosisManager {
 	public void deleteDiagnosis(int idDiagnosis);
 	public void addDiagnosis(Diagnosis diagnosis);
 	public void modifyDiagnosis(Diagnosis diagnosis);
-
 }

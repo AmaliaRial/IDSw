@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.TreatmentManager;
@@ -303,7 +302,7 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	 */
 	@Override
 	public List<Treatment> listTreatmentByDiagnoses(List<Diagnosis> diagnoses) {
-		List<Treatment> treatments = new ArrayList<Treatment>();
+		/*List<Treatment> treatments = new ArrayList<Treatment>();
 		try {
 			String template = "SELECT nameTreatment, t.comment_section FROM treatments AS t JOIN diagnosis_has_treatments ON IDtreatment = treatment_id JOIN diagnoses ON IDdiagnosis = diagnosis_id WHERE ?";
 			String condition = "";
@@ -331,7 +330,35 @@ public class JDBCTreatmentManager implements TreatmentManager {
 			System.out.println("The list provided is Null, please insert some data.");
 			e.printStackTrace();
 		}
-		return treatments;
+		return treatments;*/
+		List<Treatment> treatments = new ArrayList<>();
+	    try {
+	        StringBuilder conditionBuilder = new StringBuilder();
+	        for (Diagnosis diagnosis : diagnoses) {
+	            conditionBuilder.append("AND IDdiagnosis = ").append(diagnosis.getIdDiagnosis()).append(" ");
+	        }
+	        // Remove the first "AND "
+	        if (conditionBuilder.length() > 0) {
+	            conditionBuilder.delete(0, 4); //AND + " "
+	        }
+
+	        String template = "SELECT IDtreatment, nameTreatment, t.comment_section FROM treatments AS t JOIN diagnosis_has_treatments ON IDtreatment = treatment_id JOIN diagnoses ON IDdiagnosis = diagnosis_id WHERE "
+	                + conditionBuilder.toString();
+
+	        PreparedStatement p = c.prepareStatement(template);
+	        ResultSet rs = p.executeQuery();
+	        while (rs.next()) {
+	        	int idTreatment = rs.getInt("IDTreatment");
+	            String treatmentName = rs.getString("nameTreatment");
+	            String commentSection = rs.getString("comment_section");
+	            Treatment treatment = new Treatment(idTreatment, treatmentName, commentSection);
+	            treatments.add(treatment);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error in the database");
+	        e.printStackTrace();
+	    }
+	    return treatments;
 	}
 
 	@Override

@@ -11,7 +11,6 @@ import java.util.List;
 import idsw.db.jdbcInterfaces.DiseaseManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
-import idsw.db.pojos.Treatment;
 
 public class JDBCDiseaseManager implements DiseaseManager {
 	

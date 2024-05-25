@@ -1,17 +1,13 @@
 package idsw.db.jdbc;
 
-import idsw.db.utilitiesManager.StatisticsManager;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import idsw.db.pojos.Disease;
 import idsw.db.pojos.Simulation;
 import idsw.db.pojos.Virtual_Population;
 import idsw.db.utilities.GraphUtilities;
@@ -135,6 +131,7 @@ public class JDBCSimulationManager implements SimulationManager {
 		byte[] blob= graphUtility.graphIntoBinary(graphUtility.graphSimulation(illCounterData,deathCounterData, peopleCounterData));
 	
 		Simulation simulation=new Simulation(total_Infections,total_deaths, total_FinalInmunitations, peopleCounter, blob, virtualPopulation);
+		//addSimulation(simulation);
 		return simulation;
 	}
 	

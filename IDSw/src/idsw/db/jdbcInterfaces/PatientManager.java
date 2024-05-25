@@ -9,4 +9,5 @@ public interface PatientManager {
 	public void addPatient(Patient patient);
 	public void modifyPatient(Patient patient);
 	public List<Patient> listMatchingPatientByName(String search);
+	public Patient getPatientByUsername(String username);
 }

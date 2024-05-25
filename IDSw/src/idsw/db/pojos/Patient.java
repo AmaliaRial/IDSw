@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import idsw.db.jdbc.*;
 import idsw.db.xml.utils.SQLDateAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)

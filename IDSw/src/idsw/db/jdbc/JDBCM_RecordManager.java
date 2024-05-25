@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import idsw.db.jdbcInterfaces.MedicalRecordManager;
-import idsw.db.pojos.Disease;
 import idsw.db.pojos.Medical_Record;
 import idsw.db.pojos.Patient;
-import idsw.db.pojos.Treatment;
 
 public class JDBCM_RecordManager implements MedicalRecordManager {
 	

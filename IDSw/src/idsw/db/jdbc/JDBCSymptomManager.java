@@ -9,11 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import idsw.db.enums.Pain_Management;
 import idsw.db.jdbcInterfaces.SymptomManager;
 import idsw.db.pojos.Disease;
 import idsw.db.pojos.Symptom;
-import idsw.db.pojos.Treatment;
 
 public class JDBCSymptomManager implements SymptomManager {
 	

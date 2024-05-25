@@ -6,12 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import idsw.db.enums.State;
 import idsw.db.jdbcInterfaces.VirtualPopulationManager;
 import idsw.db.pojos.Disease;
-import idsw.db.pojos.Simulation;
 import idsw.db.pojos.Virtual_Person;
 import idsw.db.pojos.Virtual_Population;
 
@@ -136,6 +133,12 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 		}
 		return matchingPopulation;
 		
+	}
+
+	@Override
+	public Virtual_Population getVirtualPopulationsFromDisease(Integer disease_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

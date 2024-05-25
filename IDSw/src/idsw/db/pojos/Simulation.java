@@ -1,8 +1,6 @@
 package idsw.db.pojos;
 
 import java.io.Serializable;
-import java.sql.Blob;
-import java.util.List;
 import java.util.Objects;
 
 import javax.swing.JFrame;
@@ -10,7 +8,6 @@ import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
-import idsw.db.jdbc.ConnectionManager;
 import idsw.db.utilities.GraphUtilities;
 
 public class Simulation implements Serializable{

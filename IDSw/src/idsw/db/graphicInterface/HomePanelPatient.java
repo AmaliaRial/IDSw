@@ -20,12 +20,13 @@ public class HomePanelPatient extends HomePanel implements ActionListener{
 	public JPAUserManager jpaConMan;
 	public GraphicAplication app;
 	
-	public HomePanelPatient(JPAUserManager jpaConMan, GraphicAplication app, ConnectionManager conMan) {
+	//public HomePanelPatient(JPAUserManager jpaConMan, GraphicAplication app, ConnectionManager conMan) {
+	public HomePanelPatient(ConnectionManager conMan) {
 		super();
-		this.jpaConMan=jpaConMan;
-		this.app=app;
+		//this.jpaConMan=jpaConMan;
+		//this.app=app;
 		this.conMan=conMan;
-		this.sixDiagnosis= this.conMan.getDiagnosisMan().listSixRecentDiagnosis(this.conMan.getPatientMan().getPatientByName(this.app.getUser().getName()));
+		this.sixDiagnosis= this.conMan.getDiagnosisMan().listSixRecentDiagnosis((this.conMan.getPatientMan().getPatientByName("Amalia")).getIdPatient());
 		super.b1.setButtonText("Recent Diagnosis: "+sixDiagnosis.get(0).getNameDiagnosis()+"     Date: "+sixDiagnosis.get(0).getLocalDate());
 		super.b2.setButtonText("Recent Diagnosis: "+sixDiagnosis.get(1).getNameDiagnosis()+"     Date: "+sixDiagnosis.get(1).getLocalDate());
 		super.b3.setButtonText("Recent Diagnosis: "+sixDiagnosis.get(2).getNameDiagnosis()+"     Date: "+sixDiagnosis.get(2).getLocalDate());
@@ -81,7 +82,7 @@ public class HomePanelPatient extends HomePanel implements ActionListener{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // frame.getContentPane().add(new  HomePanelPatient());
+        frame.getContentPane().add(new  HomePanelPatient(new ConnectionManager()));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

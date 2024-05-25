@@ -20,6 +20,22 @@ public class JDBCPatientManager implements PatientManager {
 		this.conMan = conMan;
 		this.c = conMan.getConnection();
 	}
+	@Override
+	public Patient getPatientByName(String name) {
+		Patient patient = null;
+		try {
+			String sql = "SELECT * FROM patients WHERE namePatient = " + name;
+			Statement st;
+			st = c.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			patient = new Patient(rs.getInt("IDpatient"), rs.getString("namePatient"), rs.getString("surname"),rs.getString("username"), rs.getDate("dob"));
+		} catch (SQLException e) {
+			System.out.println("Error in the database");
+			e.printStackTrace();
+		}		
+		return patient;
+	}
 	
 	@Override
 	public List<Patient> listMatchingPatientByName(String search) {

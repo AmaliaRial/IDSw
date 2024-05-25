@@ -18,7 +18,7 @@ import idsw.db.graphicInterface.components.RoundedButton;
 import idsw.db.jpa.JPAUserManager;
 import idsw.db.pojos.User;
 
-public class ChooseUserSignInPanel extends JPanel implements ActionListener {
+public class ChooseUserSignInPanel extends JPanel implements ActionListener{
 	public JPanel titlePanel;
 	public JPanel midlePanel;
 		public JPanel choosePanel;
@@ -99,14 +99,17 @@ public class ChooseUserSignInPanel extends JPanel implements ActionListener {
         this.rightSpace.setBackground(Color.WHITE);
  
         this.patientButton.addActionListener(this);
+        this.doctorButton.addActionListener(this);
+        this.researcherButton.addActionListener(this);
+        this.LogInButton.addActionListener(this);
 		
 	}
-	
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==this.patientButton) {
-			this.app.fromChooseUserSignInToSingInPanelDoctor();
-		}else if(e.getSource()==this.doctorButton){
 			this.app.fromChooseUserSignInToSingInPanelPatient();
+		}else if(e.getSource()==this.doctorButton){
+			this.app.fromChooseUserSignInToSingInPanelDoctor();
 		}else if(e.getSource()==this.researcherButton) {
 			this.app.fromChooseUserSignInToSingInPanelResearcher();
 		}else if(e.getSource()==this.LogInButton) {

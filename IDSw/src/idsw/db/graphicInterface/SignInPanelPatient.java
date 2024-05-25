@@ -34,7 +34,7 @@ public class SignInPanelPatient extends SignInPanel implements ActionListener{
 	  
     public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==this.createAcountButton) {
-			
+			/**
 			String dni = this.dniField.getText();
 			String name = this.nameTextField.getText();
 			String surname = this.surnameTextField.getText();
@@ -76,8 +76,10 @@ public class SignInPanelPatient extends SignInPanel implements ActionListener{
 	       
 	        String roleText = "patient";
 	        Role role=new Role(roleText);
-			User user = new User(dni, dob, email, name, password, userNumberLong, phoneNumber, sex, surname, userName,role);
+			User user = new User(dni, dob, email, name, password, userNumberLong, phoneNumber, sex, surname, userName,null);
+			this.jpaConMan.assignRole(user, role);
 			this.jpaConMan.register(user);
+			this.app.setUser(user);*/
 			this.app.fromSingInPanelPatientToHomePanelPatient();
 		}else if(e.getSource()==this.cancelButton) {
 			
@@ -90,7 +92,7 @@ public class SignInPanelPatient extends SignInPanel implements ActionListener{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.getContentPane().add(new  SignInPanelPatient());
+        frame.getContentPane().add(new  SignInPanelPatient(new JPAUserManager(), new GraphicAplication()));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

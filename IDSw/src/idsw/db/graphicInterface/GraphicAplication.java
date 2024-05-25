@@ -96,6 +96,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         
         this.homePanelDoctor=new HomePanelDoctor(this.jpaConMan,this);
         this.allPanels.add(this.homePanelDoctor);
+     
         
         this.homePanelPatient=new HomePanelPatient(this.jpaConMan,this,this.conMan);
         this.allPanels.add(this.homePanelPatient);
@@ -141,15 +142,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         
         this.viewSimulationResultPanel=new ViewSimulationResultPanel(null, null, this.conMan,this);
         this.allPanels.add(this.viewSimulationResultPanel);
-        
-        
-        
-        
-        
-       
-        
-     
-        
+
 	
 	}
 	
@@ -221,6 +214,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromChooseUserSignInToSingInPanelPatient() {
 	    setAllPanelsVisibilityOff();
+	    this.signInPanelPatient=new SignInPanelPatient(this.jpaConMan,this);
 	    this.signInPanelPatient.setVisible(true);
 	    this.getContentPane().add(this.signInPanelPatient);
 	    this.pack();
@@ -277,9 +271,11 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromSingInPanelPatientToHomePanelPatient() {
 	    setAllPanelsVisibilityOff();
+	    //this.homePanelPatient=new HomePanelPatient(this.jpaConMan,this,this.conMan);
 	    this.homePanelPatient.setVisible(true);
 	    this.getContentPane().add(this.homePanelPatient);
 	    this.pack();
+	    this.setLocationRelativeTo(null);
 	}
 
 	@Override
@@ -318,7 +314,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
 	@Override
 	public void fromHomePanelPatientToViewDiagnosisPanel(Integer id_diagnosis) {
 	    setAllPanelsVisibilityOff();
-	    this.viewDiagnosisPanel=new ViewDiagnosisPanel(id_diagnosis);
+	    this.viewDiagnosisPanel=new ViewDiagnosisPanel(id_diagnosis, this.conMan,this, this.jpaConMan);
 	    this.viewDiagnosisPanel.setVisible(true);
 	    this.getContentPane().add(this.viewDiagnosisPanel);
 	    this.pack();

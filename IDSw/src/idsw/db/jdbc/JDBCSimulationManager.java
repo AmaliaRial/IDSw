@@ -1,5 +1,7 @@
 package idsw.db.jdbc;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -148,10 +150,11 @@ public class JDBCSimulationManager implements SimulationManager {
 	
 	/**
 	 * this
+	 * @throws IOException 
 	 */
 
 	@Override
-	public Simulation selectSimulation(Integer simulation_id) {
+	public Simulation selectSimulation(Integer simulation_id) throws IOException {
 		// TODO Auto-generated method stub
 		Simulation simulationSelected=new Simulation();
 		String template = "SELECT * FROM simulations WHERE IDsimulation="+simulation_id;
@@ -164,13 +167,21 @@ public class JDBCSimulationManager implements SimulationManager {
 			Integer totalDeaths= rs.getInt("totalDeaths");
 			Integer totalImmunity= rs.getInt("totalImmunity");
 			Integer totalPopulation= rs.getInt("totalPopulation");
-			byte[] graph=rs.getBytes("simulationGraph");
-			Virtual_Population vPopulation= conMan.getVirtualPopulationMan().getVirtualPopulation(rs.getInt("virtual_population"));
-			
-			simulationSelected=new Simulation(IDsimulation,totalInfections, totalDeaths,totalImmunity, totalPopulation, graph, vPopulation);
-					
-			rs.close();
-			pstmt.close();
+			InputStream blobStream = rs.getBinaryStream("simulationGraph");
+			byte[] graph = null;
+			try {
+				graph = new byte[blobStream.available()];
+				blobStream.read(graph);
+			}catch(IOException ioe){
+				System.err.println("Error in reading graph");
+			}finally {
+				Virtual_Population vPopulation= conMan.getVirtualPopulationMan().getVirtualPopulation(rs.getInt("virtual_population"));
+				
+				simulationSelected=new Simulation(IDsimulation,totalInfections, totalDeaths,totalImmunity, totalPopulation, graph, vPopulation);
+						
+				rs.close();
+				pstmt.close();
+			}
 		} catch (SQLException e) {
 			System.out.println("Error in database");
 			e.printStackTrace();
@@ -193,10 +204,17 @@ public class JDBCSimulationManager implements SimulationManager {
 				Integer totalDeaths= rs.getInt("totalDeaths");
 				Integer totalImmunity= rs.getInt("totalImmunity");
 				Integer totalPopulation= rs.getInt("totalPopulation");
-				byte[] graph=rs.getBytes("simulationGraph");
-				Virtual_Population vPopulation= conMan.getVirtualPopulationMan().getVirtualPopulation(rs.getInt("virtual_population"));
-				
-				matchingSimulations.add(new Simulation(IDsimulation,totalInfections, totalDeaths,totalImmunity, totalPopulation, graph, vPopulation));
+				InputStream blobStream = rs.getBinaryStream("simulationGraph");
+				byte[] graph = null;
+				try {
+					graph = new byte[blobStream.available()];
+					blobStream.read(graph);
+				}catch(IOException ioe){
+					System.err.println("Error in reading graph");
+				}finally {
+					Virtual_Population vPopulation= conMan.getVirtualPopulationMan().getVirtualPopulation(rs.getInt("virtual_population"));	
+					matchingSimulations.add(new Simulation(IDsimulation,totalInfections, totalDeaths,totalImmunity, totalPopulation, graph, vPopulation));
+				}
 			}
 			rs.close();
 			pstmt.close();

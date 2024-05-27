@@ -97,8 +97,12 @@ public class JPAUserManager implements UserManager {
 	
 	@Override
 	 public boolean verifyPassword(String inputPassword, String username) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.matches(inputPassword, returnPassword(username));
+		if(login(username)!=null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	        return encoder.matches(inputPassword, returnPassword(username));
+		}else{
+			return false;
+		}
 	 }
 
 	@Override

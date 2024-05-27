@@ -14,8 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -181,24 +184,30 @@ public class Menu {
 			System.out.println("0. Exit");
 			int choice1 = Integer.parseInt(r.readLine());
 			
-			switch (choice1) {
-				case 1: {
-					loggedInUser = menuLogin();
-					displayMenuBasedOnUser(loggedInUser);
-					break;
-				}
-	
-				case 2: {
-					loggedInUser = menuRegister();
-					displayMenuBasedOnUser(loggedInUser);
-					break;
+				switch (choice1) {
+					case 1: {
+						loggedInUser = menuLogin();
+						displayMenuBasedOnUser(loggedInUser);
+						break;
 					}
-					
-				case 0: {
-					System.out.println("Exiting...");				}
-					conMan.close();
-					return;
+		
+					case 2: {
+						loggedInUser = menuRegister();
+						displayMenuBasedOnUser(loggedInUser);
+						break;
+						}
+						
+					case 0: {
+						System.out.println("Exiting...");				
+						conMan.close();
+						return;
+					}
+					default:{
+						 System.err.println(choice1+" is not an available option. Please select another one.");
+						 break;
+					}
 				}
+			
 			}
 			
 		
@@ -269,10 +278,11 @@ public class Menu {
 					return;
 				}
 				default:
-					throw new IllegalArgumentException("Unexpected value: " + choice);
+				 System.err.println(choice+" is not an available option. Please select another one.");
+				 break;
 				}
 			
-			} while (choice != 9);
+			} while (choice != 0);
 			
 		}else if (user.getRole().getName().equalsIgnoreCase("doctor")) {
 			do {
@@ -335,10 +345,11 @@ public class Menu {
 					return;
 				}
 				default:
-					throw new IllegalArgumentException("Unexpected value: " + choice);
-				}
+					System.err.println(choice+" is not an available option. Please select another one.");
+					break;
+					}
 			
-			} while (choice != 13);
+			} while (choice != 0);
 		}else if (user.getRole().getName().equalsIgnoreCase("researcher")) {
 			do {
 				choice = menuResearcher();
@@ -437,10 +448,11 @@ public class Menu {
 					return;
 				}
 				default:
-					throw new IllegalArgumentException("Unexpected value: " + choice);
+					System.err.println(choice+" is not an available option. Please select another one.");
+					break;
 				}
 			
-			} while (choice != 23);
+			} while (choice !=0);
 		}
 	}
 	
@@ -452,19 +464,22 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static User menuLogin() throws NumberFormatException, IOException {
-		System.out.println("Please, type your username:");
-		String username = r.readLine();
-		System.out.println("Please, type your password:");
-		String password = r.readLine();
-		Boolean verified = userMan.verifyPassword(password, username);
-		if (verified.equals(true)) {
-			User user = userMan.login(username);
-			System.out.println("Welcome " + user.getName());
-			return user;
-		} else {
-			System.out.println("Invalid username or password");
-			return  null;
+		Boolean verified=false;
+		while(!verified) {
+			System.out.println("Please, type your username:");
+			String username = r.readLine();
+			System.out.println("Please, type your password:");
+			String password = r.readLine();
+			verified = userMan.verifyPassword(password, username);
+			if (verified) {
+				User user = userMan.login(username);
+				System.out.println("Welcome " + user.getName());
+				return user;
+			} else {
+				System.err.println("Invalid username or password");
+			}	
 		}
+		return null;	
 	}
 	
 	/**
@@ -473,31 +488,110 @@ public class Menu {
 	 * @return user
 	 * @throws NumberFormatException
 	 * @throws IOException
+	 * @throws ExistingUserNameException 
+	 * @throws InvalidSexException 
 	 */
 	private static User menuRegister() throws NumberFormatException, IOException {
+		Boolean exception=true;
 		System.out.println("Please, type your name:");
 		String name = r.readLine();
 		System.out.println("Please, type your surname:");
 		String surname = r.readLine();
-		System.out.println("Please, type a username:");
-		String username = r.readLine();
+		String username=null;
+		while(exception) {
+			System.out.println("Please, type a username:");
+			username = r.readLine();
+			if(userMan.login(username)!=null) {
+				System.err.println("Username already taken, please choose another one.");
+			}else {
+				exception=false;
+			}
+		}
+		exception=true;
 		System.out.println("Please, type a password:");
 		String password = r.readLine();
-		System.out.println("Please, type your date of birth (dd-mm-yyyy):");
-		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
+		LocalDate localDate=null;
+		while(exception) {
+			System.out.println("Please, type your date of birth (dd-mm-yyyy):");
+			try {
+				localDate = LocalDate.parse(r.readLine(), formatter);
+				exception=false;
+			}catch(DateTimeParseException dtpe){
+				System.err.println("Invalid date, please inset it as indicated");
+			}
+		}
+		exception=true;
 		Date dob = Date.valueOf(localDate);
-		System.out.println("Please, type your sex (MALE/FEMALE):");
-		String sex =  r.readLine();
-		System.out.println("Please, type your email: ");
-		String email = r.readLine();
-		System.out.println("Please, type your phone number: ");
-		Integer phone = Integer.parseInt(r.readLine());
-		System.out.println("Please, type your DNI (without the letter): ");
-		String dni = r.readLine();
-		System.out.println("Choose your role (type its NAME):");
-		List<Role> roles = userMan.getAllRoles();
-		System.out.println(roles);
-		String roleName = r.readLine();
+		String sex=null;
+		while(exception) {
+			System.out.println("Please, type your sex (MALE/FEMALE):");
+			sex =  r.readLine();
+			if(sex.equalsIgnoreCase("MALE")||sex.equalsIgnoreCase("FEMALE")) {
+				exception=false;
+			}else {
+				System.err.println("Invalid Sex, please select as shown");
+			}
+		}
+		exception=true;
+		String email=null;
+		while(exception) {
+			System.out.println("Please, type your email: ");
+			email = r.readLine();
+			Pattern patron = Pattern.compile(".*.@.*.\\..*.");
+			Matcher matcher = patron.matcher(email);
+			if(matcher.find()) {
+				exception=false;
+			}else {
+				System.err.println("Not existing email, shoud be x@x.x");
+			}
+		}
+		exception=true;
+		Integer phone=null;
+		while(exception) {
+			System.out.println("Please, type your phone number: ");
+			try {
+				phone = Integer.parseInt(r.readLine());
+				if(phone<1000000000 && phone>99999999) {
+					exception=false;
+				}else {
+					System.err.println("Not existing phone, please introduce a correct phone");
+				}
+			}catch(IllegalArgumentException iae) {
+				System.err.println("Not a number, please insert number");
+			}
+		}
+		exception=true;
+		String dni =null;
+		while(exception) {
+			System.out.println("Please, type your DNI (without the letter): ");
+			dni = r.readLine();
+			try {
+				int dniNumber = Integer.parseInt(dni);
+				if(dniNumber<100000000 && dniNumber>9999999) {
+					exception=false;
+				}else {
+					System.err.println("Not valid DNI, it must have 8 digits");
+				}
+			}catch(IllegalArgumentException iae) {
+				System.err.println("Not a number, please insert number");
+			}
+		}
+		exception=true;
+		
+		String roleName =null;
+		while(exception) {
+			System.out.println("Choose your role (type its NAME):");
+			List<Role> roles = userMan.getAllRoles();
+			System.out.println(roles);
+			roleName = r.readLine();
+			if(roleName.equalsIgnoreCase("patient")||roleName.equalsIgnoreCase("doctor")||roleName.equalsIgnoreCase("researcher")) {
+				exception=false;
+			}else {
+				System.err.println("Invalid role, please write one of the indicated roles");
+			}
+		}
+		exception=true;
+		
 		Role role = userMan.getRole(roleName);
 		Long verificationNumber = null;
 		if(roleName.equalsIgnoreCase("patient")) {

@@ -594,16 +594,24 @@ public class Menu {
 		
 		Role role = userMan.getRole(roleName);
 		Long verificationNumber = null;
-		if(roleName.equalsIgnoreCase("patient")) {
-			System.out.println("Please, enter your Insurance Number:");
-			verificationNumber =  Long.parseLong(r.readLine());
-		} else if (roleName.equalsIgnoreCase("doctor")) {
-			System.out.println("Please, enter your Collegiate Number:");
-			verificationNumber = Long.parseLong(r.readLine());
-		} else if (roleName.equalsIgnoreCase("researcher")) {
-			System.out.println("Please, enter your Collegiate Number:");
-			verificationNumber = Long.parseLong(r.readLine());
+		while(exception) {
+			try {
+				if(roleName.equalsIgnoreCase("patient")) {
+					System.out.println("Please, enter your Insurance Number:");
+					verificationNumber =  Long.parseLong(r.readLine());
+				} else if (roleName.equalsIgnoreCase("doctor")) {
+					System.out.println("Please, enter your Collegiate Number:");
+					verificationNumber = Long.parseLong(r.readLine());
+				} else if (roleName.equalsIgnoreCase("researcher")) {
+					System.out.println("Please, enter your Collegiate Number:");
+					verificationNumber = Long.parseLong(r.readLine());
+				}
+			exception=false;
+			}catch(IllegalArgumentException iae) {
+				System.err.println("Not a number, please insert number");
+			}	
 		}
+		exception=true;
 		
 		User u = new User(dni,dob,email,name, password, verificationNumber, phone, sex, surname, username, role);
 		userMan.register(u);

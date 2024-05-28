@@ -37,7 +37,6 @@ public class JPAUserManager implements UserManager {
 		em.getTransaction().begin();
 		em.persist(u);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	@Override
@@ -45,7 +44,6 @@ public class JPAUserManager implements UserManager {
 		em.getTransaction().begin();
 		em.persist(r);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	@Override
@@ -53,7 +51,6 @@ public class JPAUserManager implements UserManager {
 		Query query = em.createNativeQuery("SELECT * FROM roles WHERE name LIKE ?", Role.class);
 		query.setParameter(1, name);
 		Role r = (Role)query.getSingleResult();
-		em.close();
 		return r;
 	}
 
@@ -61,7 +58,6 @@ public class JPAUserManager implements UserManager {
 	public List<Role> getAllRoles() {
 		Query query = em.createNativeQuery("SELECT * FROM roles;",Role.class);
 		List<Role> roles = (List<Role>) query.getResultList();
-		em.close();
 		return roles;
 	}
 
@@ -71,7 +67,6 @@ public class JPAUserManager implements UserManager {
 		u.setRole(r);
 		r.addUser(u);
 		em.getTransaction().commit();
-		em.close();
 	}
 
 	@Override
@@ -84,7 +79,6 @@ public class JPAUserManager implements UserManager {
 		} catch (NoResultException e) {
 			return null;
 		}
-		em.close();
 		return u;
 	}
 	
@@ -98,7 +92,6 @@ public class JPAUserManager implements UserManager {
 		} catch (NoResultException e) {
 			return null;
 		}
-		em.close();
 		return password;
 	}
 	
@@ -106,7 +99,6 @@ public class JPAUserManager implements UserManager {
 	 public boolean verifyPassword(String inputPassword, String username) {
 		if(login(username)!=null) {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			em.close();
 	        return encoder.matches(inputPassword, returnPassword(username));
 		}else{
 			return false;
@@ -123,8 +115,11 @@ public class JPAUserManager implements UserManager {
 		} catch (NoResultException e) {
 			return null;
 		}
-		em.close();
 		return u;
+	}
+	
+	public void close() {
+		em.close();
 	}
 
 

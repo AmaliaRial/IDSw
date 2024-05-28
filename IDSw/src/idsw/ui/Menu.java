@@ -75,6 +75,8 @@ public class Menu {
 	private static MedicalRecordManager medicalRecordMan;
 	private static SimulationManager simulationMan;
 	private static VirtualPopulationManager virtualPopulationMan;
+	
+	private static JPAUserManager userManager;
 	private static UserManager userMan;
 
 	/**
@@ -200,6 +202,7 @@ public class Menu {
 					case 0: {
 						System.out.println("Exiting...");				
 						conMan.close();
+						userManager.close();
 						return;
 					}
 					default:{

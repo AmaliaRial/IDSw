@@ -22,7 +22,8 @@ public class HomePanelDoctor extends HomePanel implements ActionListener{
 	public JPAUserManager jpaConMan;
 	public GraphicAplication app;
 	
-	public HomePanelDoctor(JPAUserManager jpaConMan, GraphicAplication app) {
+	//public HomePanelDoctor(JPAUserManager jpaConMan, GraphicAplication app) {
+	public HomePanelDoctor() {
 		super();
 		
 		this.jpaConMan=jpaConMan;
@@ -68,7 +69,7 @@ public class HomePanelDoctor extends HomePanel implements ActionListener{
         // Crear y mostrar la ventana de prueba
         JFrame frame = new JFrame("Ejemplo de BorderLayout con Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.getContentPane().add(new  HomePanelDoctor());
+        frame.getContentPane().add(new  HomePanelDoctor());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

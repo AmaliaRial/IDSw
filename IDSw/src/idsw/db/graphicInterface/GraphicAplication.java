@@ -94,7 +94,7 @@ public class GraphicAplication extends JFrame implements PanelSwitchingInterface
         //this.signInPanelResearcher=new SignInPanelPatient(this.jpaConMan,this);
         //this.allPanels.add(this.signInPanelResearcher);
         
-        this.homePanelDoctor=new HomePanelDoctor(this.jpaConMan,this);
+        //this.homePanelDoctor=new HomePanelDoctor(this.jpaConMan,this);
         this.allPanels.add(this.homePanelDoctor);
      
         

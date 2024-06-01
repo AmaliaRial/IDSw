@@ -1,7 +1,9 @@
 package idsw.db.jdbc;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import idsw.db.pojos.Disease;
 import idsw.db.pojos.Simulation;
 import idsw.db.pojos.Virtual_Population;
 import idsw.db.utilities.GraphUtilities;
@@ -31,14 +34,15 @@ public class JDBCSimulationManager implements SimulationManager {
 	public void addSimulation(Simulation simulation) {
 		// TODO añadir los data del resultato
 		try {
-			String template = "INSERT INTO simulations(totalInfections, totalDeaths, totalImmunity, totalPopulation, virtual_population) VALUES (?,?,?,?,?)";
+			String template = "INSERT INTO simulations(totalInfections, totalDeaths, totalImmunity, totalPopulation, simulationGraph, virtual_population) VALUES (?,?,?,?,?,?)";
 			PreparedStatement pstmt;
 			pstmt = c.prepareStatement(template);
 			pstmt.setInt(1, simulation.getTotalInfections());
 			pstmt.setInt(2, simulation.getTotalDeaths());
 			pstmt.setInt(3, simulation.getTotalImmunity());
 			pstmt.setInt(4, simulation.getTotalPopulation());
-			pstmt.setInt(5, simulation.getVpopulation().getIdVirtual_population());
+			pstmt.setBytes(5, simulation.getSimulationGraph());
+			pstmt.setInt(6, simulation.getVpopulation().getIdVirtual_population());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -49,7 +53,6 @@ public class JDBCSimulationManager implements SimulationManager {
 	}
 	
 	public Simulation createSimulation(Virtual_Population virtualPopulation) {
-		conMan.getVirtualPopulationMan().fillPopulation(virtualPopulation);
 		List<Virtual_Person> people= virtualPopulation.getVirtual_people();
 		//TODO cambiar de atributo en simulation estas tres listas en vez de graph
 		List<Integer> illCounterData=new ArrayList<>();
@@ -57,6 +60,7 @@ public class JDBCSimulationManager implements SimulationManager {
 		List<Integer> peopleCounterData=new ArrayList<>();
 		Random random = new Random();
 		int randNum;
+		Disease disease= virtualPopulation.getDisease();
 		
 		int illCounter=illPeopleCounter(people);
 		illCounterData.add(illCounter);
@@ -67,12 +71,12 @@ public class JDBCSimulationManager implements SimulationManager {
 		int total_Infections=0;
 		int total_FinalInmunitations=0;
 		
-		int disease_FullCountdown= (int)(virtualPopulation.getDisease().getIncubation_period()+
-				 virtualPopulation.getDisease().getDevelopment_period()+
-				 virtualPopulation.getDisease().getConvalescence_period());
+		int disease_FullCountdown= (int)(disease.getIncubation_period()+
+				disease.getDevelopment_period()+
+				disease.getConvalescence_period());
 		int immunity_FullPeriod= virtualPopulation.getImmunity_period();
-		double likelihood_death= (virtualPopulation.getDisease().getMortality_rate())*100;
-		double infectiousRate=(double)virtualPopulation.getDisease().getInfectious_rate();
+		double likelihood_death= (disease.getMortality_rate())*100;
+		double infectiousRate=(double)disease.getInfectious_rate();
 		
 		while(peopleCounter!=0 && illCounter!=0) {
 			double exponent= -(infectiousRate*((double)illCounter/(double)peopleCounter));
@@ -130,11 +134,12 @@ public class JDBCSimulationManager implements SimulationManager {
 		
 		GraphUtilities graphUtility=new GraphUtilities();
 		
-		byte[] blob= graphUtility.graphIntoBinary(graphUtility.graphSimulation(illCounterData,deathCounterData, peopleCounterData));
+		byte[] blob= graphUtility.graphIntoBinary(graphUtility.graphSimulation(illCounterData,deathCounterData, peopleCounterData, disease.getNameDisease()));
 	
 		Simulation simulation=new Simulation(total_Infections,total_deaths, total_FinalInmunitations, peopleCounter, blob, virtualPopulation);
-		//addSimulation(simulation);
+		addSimulation(simulation);
 		return simulation;
+		
 	}
 	
 	private int illPeopleCounter(List<Virtual_Person> people) {

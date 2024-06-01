@@ -660,9 +660,24 @@ public class Menu {
 		Integer immunity_period = Integer.parseInt(r.readLine());
 		Virtual_Population virtual_Population = new Virtual_Population(population, p_infected, p_healthy, p_immune, immunity_period, disease);
 	    virtualPopulationMan.fillPopulation(virtual_Population);
-	    System.out.println(virtual_Population);
+	    //System.out.println(virtual_Population);
 	    Simulation simulation = simulationMan.createSimulation(virtual_Population);
-	    System.out.println(simulation);	
+	    System.out.println("\nINITIAL PARAMENTER"
+	    		+ "\nInitial polilation: "+virtual_Population.getInitial_population()
+	    		+ "\nInfected Percentage: "+virtual_Population.getP_infected()
+	    		+ "\nHealthy Percentage: "+virtual_Population.getP_healthy()
+	    		+ "\nInmune Percentage: "+virtual_Population.getP_immune()
+	    		+ "\nImmunity Period: "+virtual_Population.getImmunity_period()
+	    		+ "\nDisease: "+virtual_Population.getDisease().getNameDisease()
+	    		+ "\n");
+	    
+	    System.out.println("SIMULATION RESULTS"
+	    		+ "\nTotal Infections: "+ simulation.getTotalInfections()
+	    		+ "\nTotal Deaths: "+ simulation.getTotalDeaths()
+	    		+ "\nTotal Immunitation: "+ simulation.getTotalImmunity()
+	    		+ "\nTotal Population: "+ simulation.getTotalPopulation()
+	    		+ "\nSimulation Graph on the new window."
+	    		+ "\n");	
 	    
 	    GraphUtilities utilGraph = new GraphUtilities();
 	    BufferedImage chartSimulationImage = utilGraph.binaryIntoImage(simulation.getSimulationGraph());
@@ -724,7 +739,7 @@ public class Menu {
 		GraphUtilities graph = new GraphUtilities();
 		JFreeChart diseaseGraph = graph.graphDiseaseDevelopment(disease);
 		
-		JFrame frame = new JFrame("Combined Line Chart");
+		JFrame frame = new JFrame("Development Graph");
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		ChartPanel chartPanel = new ChartPanel(diseaseGraph);
 		frame.getContentPane().add(chartPanel);
@@ -1720,6 +1735,10 @@ public class Menu {
 		Integer simulationID = Integer.parseInt(r.readLine());
 		Simulation simulation = simulationMan.selectSimulation(simulationID);
 		System.out.println("\n"+simulation);
+		GraphUtilities utilGraph = new GraphUtilities();
+	    BufferedImage chartSimulationImage = utilGraph.binaryIntoImage(simulation.getSimulationGraph());
+	    
+	    showImage(chartSimulationImage);
 		
 	}
 	

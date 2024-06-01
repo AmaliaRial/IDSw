@@ -102,7 +102,9 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 				 people.add(vPerson);
 			 }
 		}
+		addVirtualPopulation(virtualPopulation);
 		virtualPopulation.setVirtual_people(people);
+		virtualPopulation.setIdVirtual_population(this.conMan.getLastInsertedID());
 	}
 	
 	
@@ -140,6 +142,8 @@ public class JDBCV_PopulationManager implements VirtualPopulationManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 	
 

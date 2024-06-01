@@ -8,7 +8,7 @@ import idsw.db.pojos.Disease;
 import java.awt.image.BufferedImage;
 
 public interface StatisticsManager {
-	public JFreeChart graphSimulation(List<Integer> illCounterData, List<Integer> deathCounterData, List<Integer> peopleCounterData);
+	public JFreeChart graphSimulation(List<Integer> illCounterData, List<Integer> deathCounterData, List<Integer> peopleCounterData,String diseaseName);
 	public BufferedImage graphIntoImage(JFreeChart graph);
 	public byte[] imageIntoBinary(BufferedImage image);
 	public byte[]  graphIntoBinary(JFreeChart graph);

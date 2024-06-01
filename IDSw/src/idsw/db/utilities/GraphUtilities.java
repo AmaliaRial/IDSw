@@ -69,10 +69,10 @@ public class GraphUtilities implements StatisticsManager{
 
 	@Override
 	public JFreeChart graphSimulation(List<Integer> illCounterData, List<Integer> deathCounterData,
-			List<Integer> peopleCounterData) {
+			List<Integer> peopleCounterData, String diseaseName) {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 
-        XYSeries illSeries = new XYSeries("Ill Counter");
+        XYSeries illSeries = new XYSeries("Infections Counter");
         XYSeries deathSeries = new XYSeries("Death Counter");
         XYSeries peopleSeries = new XYSeries("People Counter");
 
@@ -88,7 +88,7 @@ public class GraphUtilities implements StatisticsManager{
         dataset.addSeries(deathSeries);
         dataset.addSeries(peopleSeries);
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Development of the Disease","Days",
+        JFreeChart chart = ChartFactory.createXYLineChart("Development of "+ diseaseName ,"Days",
         		"People",dataset,PlotOrientation.VERTICAL,true,false,false);
 
         XYPlot plot = (XYPlot) chart.getPlot();

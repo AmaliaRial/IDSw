@@ -109,6 +109,7 @@ public class Menu {
 		System.out.println("20. List symptom by name");
 		System.out.println("21. Show development graph of a disease.");
 		System.out.println("22. Search Simulation by Population");
+		System.out.println("23. Add symptoms to a disease.");
 		System.out.println("0. Log Out");
 		int choice = Integer.parseInt(r.readLine());
 		return choice;
@@ -446,6 +447,10 @@ public class Menu {
 					searchSimulation();
 					break;
 				}
+				case 23: {
+					addSymptomsToDisease();
+					break;
+				}
 				case 0: {
 					conMan.close();
 					return;
@@ -520,7 +525,7 @@ public class Menu {
 				localDate = LocalDate.parse(r.readLine(), formatter);
 				exception=false;
 			}catch(DateTimeParseException dtpe){
-				System.err.println("Invalid date, please inset it as indicated");
+				System.err.println("Invalid date, please insert it as indicated");
 			}
 		}
 		exception=true;
@@ -711,7 +716,7 @@ public class Menu {
 		System.out.println("\nThese are the the diseases in the database:");
 		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
 		for (Disease disease : diseases) {
-			System.out.println(disease);
+			System.out.println("\n "+ disease);
 		}
 		System.out.println("\n Please enter the ID of the disease you wish to view its development graph:");
 		Integer id = Integer.parseInt(r.readLine());
@@ -923,7 +928,7 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static void ListMatchingSymptomsByName() throws NumberFormatException, IOException {
-		System.out.println("Please, type the symptom´s name:");
+		System.out.println("\nPlease, type the symptom´s name:");
 		String name = r.readLine();
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName(name);
 		for (Symptom symptom : symptoms) {
@@ -972,10 +977,10 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static void deleteSymptom() throws NumberFormatException, IOException{
-		System.out.println("These are the symptoms in the database:");
+		System.out.println("\nThese are the symptoms in the database:");
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
 		System.out.println(symptoms);
-		System.out.println("Please enter the id of the Symptom you want to delete:");
+		System.out.println("\nPlease enter the id of the Symptom you want to delete:");
 		Integer id = Integer.parseInt(r.readLine());
 		
 		symptomMan.deleteSymptom(id);
@@ -1001,7 +1006,7 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static void mostMatchingDiseaseBySymptom() throws NumberFormatException, IOException{
-		System.out.println("These are the symptoms in the database, please enter the IDs of the symptoms you wish to search, press enter to finish: ");
+		System.out.println("\nThese are the symptoms in the database, please enter the IDs of the symptoms you wish to search, press enter to finish: ");
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
 		for (Symptom symptom : symptoms) {
 			System.out.println("\n"+symptom.getIdSymptom()+ "   "+symptom.getNameSymptom() + "   "+ symptom.getPain_management());
@@ -1023,7 +1028,7 @@ public class Menu {
 		}
 
 		Disease disease = diseaseMan.getMostMatchingDiseaseBySymptoms(selectedSymptoms);
-		System.out.println("The most matching disease is: ");
+		System.out.println("\nThe most matching disease is: ");
 		System.out.println(disease);
 	}
 	
@@ -1035,7 +1040,7 @@ public class Menu {
 	 * @throws IOException
 	 */
 	private static void addDisease() throws NumberFormatException, IOException{
-		System.out.println("Please write the Disease info");
+		System.out.println("\nPlease write the Disease info");
 		System.out.println("Its name:");
 		String name = r.readLine();
 		System.out.println("Infectious Rate:");
@@ -1622,6 +1627,37 @@ public class Menu {
 	            treatmentMan.addTreatmentByDisease(disease, treatment);
 	        } else {
 	            System.out.println("Invalid treatment ID. Please try again.");
+	        }
+	    } while (true);
+	}
+	
+	private static void addSymptomsToDisease() throws NumberFormatException, IOException{
+		System.out.println("These are the diseases in the database, please insert the id of the one you wish to add treatments to: ");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for(Disease disease : diseases) {
+			System.out.println(disease);
+		}
+		Integer diseaseID = Integer.parseInt(r.readLine());
+		Disease disease = diseaseMan.getDisease(diseaseID);
+		System.out.println("\nThese are the symptoms in the database, please insert the Id of the ones belonging to the disease: ");
+		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
+		for(Symptom symptom : symptoms) {
+			System.out.println(symptom);
+		}
+		Integer id;
+		String input;
+	    do {
+	        System.out.println("\nPlease enter the ID of the symptom you want to add (enter END to finish): ");
+	        input = r.readLine();
+	        if (input.equalsIgnoreCase("END")) {
+	            break;
+	        }
+	        id = Integer.parseInt(input);
+	        Symptom symptom = symptomMan.getSymptom(id);
+	        if (symptom != null) {
+	            diseaseMan.addSymptomByDisease(disease, symptom);
+	        } else {
+	            System.out.println("Invalid symptom ID. Please try again.");
 	        }
 	    } while (true);
 	}

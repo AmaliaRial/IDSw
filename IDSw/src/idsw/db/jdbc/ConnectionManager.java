@@ -179,7 +179,7 @@ public class ConnectionManager {
 			
 			createVirtualPopulationsTable.executeUpdate(createTableVirtualPopulations);
 			createVirtualPopulationsTable.close();
-			
+			/*
 			//VIRTUAL PERSONS TABLE
 			Statement createVirtualPersonsTable = c.createStatement();
 			String createTableVirtualPersons = " CREATE TABLE virtual_persons ("
@@ -191,7 +191,7 @@ public class ConnectionManager {
 			
 			createVirtualPersonsTable.executeUpdate(createTableVirtualPersons);
 			createVirtualPersonsTable.close();
-			
+			*/
 			//SIMULATIONS TABLE
 			Statement createSimulationsTable = c.createStatement();
 			String createTableSimulations = "CREATE TABLE simulations ("

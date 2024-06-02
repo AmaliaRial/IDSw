@@ -24,7 +24,7 @@ Visualize disease development graphs on a person based on parameters stored in t
 Search for diseases and symptoms within the system.
 ## Users
 * **Patients**: Can search for diseases by symptoms and name, view disease profiles, and access their medical records including their diagnoses and treatments.
-* **Doctors**: Can perform all patient actions, as well as create and modify medical records and diagnoses, and also delete diagnoses.
+* **Doctors**: Can perform all patient actions, as well as create and modify medical records and diagnoses, and also delete diagnoses and create an XML and HTML file of a patients full Medical Record.
 * **Researchers**: Can create/modify/delete disease attributes, symptoms, and treatment plans. They can also create and search disease simulations based on virtual populations.
 ## Collaborators
 * **[Amalia Rial Plaza](https://github.com/AmaliaRial)**

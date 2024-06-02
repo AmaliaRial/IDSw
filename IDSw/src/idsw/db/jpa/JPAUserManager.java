@@ -118,8 +118,21 @@ public class JPAUserManager implements UserManager {
 		return u;
 	}
 	
+	
+	
 	public void close() {
 		em.close();
+	}
+
+	@Override
+	public void updateUser(User u) {
+		em.getTransaction().begin();
+		u.setName(u.getName());
+		u.setSurname(u.getSurname());
+		u.setPhoneNumber(u.getPhoneNumber());
+		u.setEmail(u.getEmail());
+		em.getTransaction().commit();
+		
 	}
 
 

@@ -110,6 +110,7 @@ public class Menu {
 		System.out.println("21. Show development graph of a disease.");
 		System.out.println("22. Search Simulation by Population");
 		System.out.println("23. Add symptoms to a disease.");
+		System.out.println("24. Edit Profile");
 		System.out.println("0. Log Out");
 		int choice = Integer.parseInt(r.readLine());
 		return choice;
@@ -131,6 +132,7 @@ public class Menu {
 		System.out.println("6. Search symptom by name");
 		System.out.println("7. Show development graph of a disease.");
 		System.out.println("8. List my 6 most recent diagnoses.");
+		System.out.println("9. Edit Profile");
 		System.out.println("0. Log Out");
 		int choice = Integer.parseInt(r.readLine());
 		return choice;
@@ -147,7 +149,7 @@ public class Menu {
 		System.out.println("1. Search a disease by its name");
 		System.out.println("2. Search treatment by name");
 		System.out.println("3. Search treatment by disease");
-		System.out.println("4. Search treatment by diagnosis");
+		System.out.println("4. Search treatments by diagnoses");
 		System.out.println("5. Search disease by symptom.");
 		System.out.println("6. Add Treatment by Diagnosis.");
 		System.out.println("7. Add Diagnosis.");
@@ -157,6 +159,8 @@ public class Menu {
 		System.out.println("11. Search symptom by name");
 		System.out.println("12. Show development graph of a disease.");
 		System.out.println("13. List 6 most recent treatments added.");
+		System.out.println("14. Delete a patients diagnosis");
+		System.out.println("15. Edit Profile");
 		System.out.println("0. Log Out");
 		int choice = Integer.parseInt(r.readLine());
 		return choice;
@@ -179,6 +183,7 @@ public class Menu {
 			c = DriverManager.getConnection("jdbc:sqlite:./db/idsw.db");
 			//JPA managers
 			userMan = new JPAUserManager();
+			userManager = new JPAUserManager();
 			
 			while(true) {
 			System.out.println("Choose your desired option");
@@ -203,7 +208,7 @@ public class Menu {
 					case 0: {
 						System.out.println("Exiting...");				
 						conMan.close();
-						userManager.close();
+						
 						return;
 					}
 					default:{
@@ -276,9 +281,16 @@ public class Menu {
 					list6recentdiagnoses();
 					break;
 				}
+				case 9: {
+					modifyUser();
+					break;
+				}
 					
 				case 0: {
 					conMan.close();
+					if (userManager != null) {
+					    userManager.close();
+					}
 					return;
 				}
 				default:
@@ -344,8 +356,19 @@ public class Menu {
 					list6treatments();
 					break;
 				}
+				case 14: {
+					deleteDiagnosis();
+					break;
+				}
+				case 15: {
+					modifyUser();
+					break;
+				}
 				case 0: {
 					conMan.close();
+					if (userManager != null) {
+					    userManager.close();
+					}
 					return;
 				}
 				default:
@@ -451,8 +474,15 @@ public class Menu {
 					addSymptomsToDisease();
 					break;
 				}
+				case 24: {
+					modifyUser();
+					break;
+				}
 				case 0: {
 					conMan.close();
+					if (userManager != null) {
+					    userManager.close();
+					}
 					return;
 				}
 				default:
@@ -545,8 +575,8 @@ public class Menu {
 		while(exception) {
 			System.out.println("Please, type your email: ");
 			email = r.readLine();
-			Pattern patron = Pattern.compile(".*.@.*.\\..*.");
-			Matcher matcher = patron.matcher(email);
+			Pattern pattern = Pattern.compile(".*.@.*.\\..*.");
+			Matcher matcher = pattern.matcher(email);
 			if(matcher.find()) {
 				exception=false;
 			}else {
@@ -1001,6 +1031,21 @@ public class Menu {
 		symptomMan.deleteSymptom(id);
 	}
 	
+	private static void deleteDiagnosis() throws SQLException, NumberFormatException, IOException {
+		System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
+		printMedicalRecords(c);
+		Integer record_id = Integer.parseInt(r.readLine());
+		Medical_Record record = medicalRecordMan.getMedical_Record(record_id);
+		System.out.println("\nThese are the diagnoses in the Medical Record, please enter the ID of the one you wish to delete:");
+		List<Diagnosis> diagnoses = diagnosisMan.listMatchinDiagnosesByPatient(record_id);
+		for (Diagnosis diagnosis : diagnoses) {
+			System.out.println("\n"+diagnosis.getIdDiagnosis() + "   " + diagnosis.getNameDiagnosis() + "   " + diagnosis.getLocalDate() + "   " + diagnosis.getComment_section() + "   " + diagnosis.getDisease().getNameDisease() + "  [ " + diagnosis.getMedicalRecord().getPatient().getNamePatient() + "   " + diagnosis.getMedicalRecord().getPatient().getSurname() + "   " + diagnosis.getMedicalRecord().getPatient().getDob() + " ]");
+		}
+		Integer id = Integer.parseInt(r.readLine());
+		
+		diagnosisMan.deleteDiagnosis(id);
+	}
+	
 	/*Method not used
 	 * 
 	 * private static void getUser() throws NumberFormatException, IOException {
@@ -1403,7 +1448,7 @@ public class Menu {
 		Integer id;
 		String input;
 	    do {
-	        System.out.println("\nPlease enter the ID of the symptom you want to add (enter END to finish): ");
+	        System.out.println("\nPlease enter the ID of the symptom you want to add (type END to finish): ");
 	        input = r.readLine();
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
@@ -1441,7 +1486,7 @@ public class Menu {
 		Integer id;
 		String input;
 	    do {
-	        System.out.println("\nPlease enter the ID of the treatment you want to add (enter END to finish): ");
+	        System.out.println("\nPlease enter the ID of the treatment you want to add (type END to finish): ");
 	        input = r.readLine();
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
@@ -1481,7 +1526,7 @@ public class Menu {
 		Integer id;
 		String input;
 	    do {
-	        System.out.println("\nPlease enter the ID of the treatment you want to add (enter END to finish): ");
+	        System.out.println("\nPlease enter the ID of the treatment you want to add (type END to finish): ");
 	        input = r.readLine();
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
@@ -1523,14 +1568,14 @@ public class Menu {
 		for (Treatment treatment : treatments) {
 			System.out.println(treatment);
 		}*/
-	    System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, press enter to finish: ");
+	    System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, type END to finish: ");
 	    List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
 	    for (Disease disease : diseases) {
 	        System.out.println(disease);
 	    }
 	    List<Integer> diseaseIds = new ArrayList<>();
 	    String lineread;
-	    while (!(lineread = r.readLine()).equals("")) {
+	    while (!(lineread = r.readLine()).equalsIgnoreCase("end")) {
 	        diseaseIds.add(Integer.parseInt(lineread));
 	    }
 
@@ -1560,14 +1605,14 @@ public class Menu {
 		System.out.println("These are the diagnosis in the database:");
 		List<Diagnosis> diagnoses1 = diagnosisMan.listAllDiagnosis();
 		for (Diagnosis diagnosis : diagnoses1) {
-			System.out.println("\n"+diagnosis);
+			System.out.println("\n"+diagnosis.getIdDiagnosis() + "   " + diagnosis.getNameDiagnosis() + "   " + diagnosis.getLocalDate() + "   " + diagnosis.getComment_section() + "   " + diagnosis.getDisease().getNameDisease() + "  [ " + diagnosis.getMedicalRecord().getPatient().getNamePatient() + "   " + diagnosis.getMedicalRecord().getPatient().getSurname() + "   " + diagnosis.getMedicalRecord().getPatient().getDob() + " ]");
 		}
-		System.out.println("Please, enter the id of the Diagnoses (Press Enter when done):");
+		System.out.println("\nPlease, enter the id of the Diagnoses (type END when done):");
 		List<Integer> ids = new ArrayList<Integer>();
 		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
 		Diagnosis diagnosis = new Diagnosis();
 		String lineread=r.readLine();
-		while(!lineread.equals("")) {
+		while(!lineread.equalsIgnoreCase("end")){
 			ids.add(Integer.parseInt(lineread));
 			lineread=r.readLine();
 		}
@@ -1740,6 +1785,39 @@ public class Menu {
 	    
 	    showImage(chartSimulationImage);
 		
+	}
+	
+	private static void modifyUser() throws IOException {
+		User user = loggedInUser;
+
+		System.out.println("Press enter to keep them or type a new value.");
+		System.out.println("Name (" + user.getName() + "): ");
+		String newName = r.readLine();
+		System.out.println("Surname ("+ user.getSurname() +"): ");
+		String newLastName = r.readLine();
+		System.out.println("Phone Number ("+ user.getPhoneNumber() +"): ");
+		String newPhoneNumber =r.readLine();
+		System.out.println("Email ("+ user.getEmail() +"): ");
+		String newEmail = r.readLine();
+		
+		if (!newName.equals("")) {
+			// If I don't keep
+			user.setName(newName);
+		}
+		if (!newLastName.equals("")) {
+			// If I don't keep
+			user.setSurname(newLastName);
+		}
+		if (!newPhoneNumber.equals("")) {
+			// If I don't keep
+			user.setPhoneNumber(Integer.parseInt(newPhoneNumber));;
+		}
+		if (!newEmail.equals("")) {
+			// If I don't keep
+			user.setEmail(newEmail);;
+		}
+		
+		userManager.updateUser(user);
 	}
 	
 }

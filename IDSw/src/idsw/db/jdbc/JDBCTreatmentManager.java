@@ -268,15 +268,15 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	    try {
 	        StringBuilder conditionBuilder = new StringBuilder();
 	        for (Disease disease : diseases) {
-	            conditionBuilder.append("AND IDdisease = ").append(disease.getIdDisease()).append(" ");
-	        }
-	        // Remove the first "AND "
-	        if (conditionBuilder.length() > 0) {
-	            conditionBuilder.delete(0, 4); //AND + " "
+	        	if (conditionBuilder.length() > 0) {
+	                conditionBuilder.append(" OR ");
+	            }
+	        	conditionBuilder.append("IDdisease = ").append(disease.getIdDisease());
 	        }
 
+
 	        String template = "SELECT IDtreatment, nameTreatment, t.comment_section FROM treatments AS t JOIN disease_has_treatments ON IDtreatment = treatment_id JOIN diseases ON IDdisease = disease_id WHERE "
-	                + conditionBuilder.toString();
+	                + conditionBuilder.toString() + " GROUP BY IDtreatment";
 
 	        PreparedStatement p = c.prepareStatement(template);
 	        ResultSet rs = p.executeQuery();
@@ -290,6 +290,10 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	    } catch (SQLException e) {
 	        System.out.println("Error in the database");
 	        e.printStackTrace();
+	    }
+	    
+	    if (treatments.isEmpty()) {
+	        System.out.println("No treatments found that match the provided diseases");
 	    }
 	    return treatments;
 	}
@@ -335,11 +339,10 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	    try {
 	        StringBuilder conditionBuilder = new StringBuilder();
 	        for (Diagnosis diagnosis : diagnoses) {
-	            conditionBuilder.append("AND IDdiagnosis = ").append(diagnosis.getIdDiagnosis()).append(" ");
-	        }
-	        // Remove the first "AND "
-	        if (conditionBuilder.length() > 0) {
-	            conditionBuilder.delete(0, 4); //AND + " "
+	        	if (conditionBuilder.length() > 0) {
+	                conditionBuilder.append(" OR ");
+	            }
+	            conditionBuilder.append(" IDdiagnosis = ").append(diagnosis.getIdDiagnosis());
 	        }
 
 	        String template = "SELECT IDtreatment, nameTreatment, t.comment_section FROM treatments AS t JOIN diagnosis_has_treatments ON IDtreatment = treatment_id JOIN diagnoses ON IDdiagnosis = diagnosis_id WHERE "
@@ -357,6 +360,9 @@ public class JDBCTreatmentManager implements TreatmentManager {
 	    } catch (SQLException e) {
 	        System.out.println("Error in the database");
 	        e.printStackTrace();
+	    }
+	    if (treatments.isEmpty()) {
+	        System.out.println("No treatments found that match the provided diagnoses");
 	    }
 	    return treatments;
 	}

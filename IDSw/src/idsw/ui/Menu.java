@@ -86,35 +86,43 @@ public class Menu {
 	 * @throws IOException
 	 */
 	public static int menuResearcher() throws IOException {
-		System.out.println("\n Choose your desired option");
-		System.out.println("1. Add a new disease");
-		System.out.println("2. Search a disease by its name");
-		System.out.println("3. Add a new treatment");
-		System.out.println("4. List 6 recent treatments");
-		System.out.println("5. Modify a treatment");
-		System.out.println("6. Delete a treatement");
-		System.out.println("7. Search treatment by name");
-		System.out.println("8. Search treatment by disease");
-		System.out.println("9. Search treatment by diagnosis");
-		System.out.println("10. Modify a disease");
-		System.out.println("11. Delete a disease");
-		System.out.println("12. Add symptom.");
-		System.out.println("13. Modify symptom.");
-		System.out.println("14. Delete symptom.");
-		System.out.println("15. Search disease by symptom.");
-		System.out.println("16. List 6 recent diseases.");
-		System.out.println("17. Add treatments to a disease.");
-		System.out.println("18. Search disease that most matches symptoms.");
-		System.out.println("19. Create a simulation.");
-		System.out.println("20. List symptom by name");
-		System.out.println("21. Show development graph of a disease.");
-		System.out.println("22. Search Simulation by Population");
-		System.out.println("23. Add symptoms to a disease.");
-		System.out.println("24. Edit Profile");
-		System.out.println("0. Log Out");
-		int choice = Integer.parseInt(r.readLine());
-		return choice;
+		int choice;
+		while (true) {
+			System.out.println("\n Choose your desired option");
+			System.out.println("1. Add a new disease");
+			System.out.println("2. Search a disease by its name");
+			System.out.println("3. Add a new treatment");
+			System.out.println("4. List 6 recent treatments");
+			System.out.println("5. Modify a treatment");
+			System.out.println("6. Delete a treatement");
+			System.out.println("7. Search treatment by name");
+			System.out.println("8. Search treatment by disease");
+			System.out.println("9. Search treatment by diagnosis");
+			System.out.println("10. Modify a disease");
+			System.out.println("11. Delete a disease");
+			System.out.println("12. Add symptom.");
+			System.out.println("13. Modify symptom.");
+			System.out.println("14. Delete symptom.");
+			System.out.println("15. Search disease by symptom.");
+			System.out.println("16. List 6 recent diseases.");
+			System.out.println("17. Add treatments to a disease.");
+			System.out.println("18. Search disease that most matches symptoms.");
+			System.out.println("19. Create a simulation.");
+			System.out.println("20. List symptom by name");
+			System.out.println("21. Show development graph of a disease.");
+			System.out.println("22. Search Simulation by Population");
+			System.out.println("23. Add symptoms to a disease.");
+			System.out.println("24. Edit Profile");
+			System.out.println("0. Log Out");
+			try {
+				choice = Integer.parseInt(r.readLine());
+				return choice;
+			}catch (NumberFormatException e) {
+	            System.err.println("Not a number");
+			}
+		}	
 	}
+		
  	
 	/**
 	 * Patient menu
@@ -123,6 +131,8 @@ public class Menu {
 	 * @throws IOException
 	 */
 	public static int menuPatient() throws IOException {
+		int choice;
+		while (true) {
 		System.out.println("\n Choose your desired option");
 		System.out.println("1. Search a disease by its name");
 		System.out.println("2. Search treatment by name");
@@ -134,8 +144,13 @@ public class Menu {
 		System.out.println("8. List my 6 most recent diagnoses.");
 		System.out.println("9. Edit Profile");
 		System.out.println("0. Log Out");
-		int choice = Integer.parseInt(r.readLine());
-		return choice;
+		try {
+			choice = Integer.parseInt(r.readLine());
+			return choice;
+		}catch (NumberFormatException e) {
+            System.err.println("Not a number");
+		}
+	}
 	}
 	
 	/**
@@ -145,6 +160,8 @@ public class Menu {
 	 * @throws IOException
 	 */
 	public static int menuDoctor() throws IOException {
+		int choice;
+		while (true) {
 		System.out.println("\n Choose your desired option");
 		System.out.println("1. Search a disease by its name");
 		System.out.println("2. Search treatment by name");
@@ -162,8 +179,13 @@ public class Menu {
 		System.out.println("14. Delete a patients diagnosis");
 		System.out.println("15. Edit Profile");
 		System.out.println("0. Log Out");
-		int choice = Integer.parseInt(r.readLine());
-		return choice;
+		try {
+			choice = Integer.parseInt(r.readLine());
+			return choice;
+		}catch (NumberFormatException e) {
+            System.err.println("Not a number");
+		}
+	}
 	}
 	
 	public static void main(String[] args) {
@@ -190,8 +212,14 @@ public class Menu {
 			System.out.println("1. Login");
 			System.out.println("2. Register");
 			System.out.println("0. Exit");
-			int choice1 = Integer.parseInt(r.readLine());
-			
+			int choice1=-1;
+			boolean b=false;
+			try {
+				choice1 = Integer.parseInt(r.readLine());
+			}catch (NumberFormatException e) {
+	            System.err.println("Not a number");
+	            b=true;
+			}
 				switch (choice1) {
 					case 1: {
 						loggedInUser = menuLogin();
@@ -212,8 +240,12 @@ public class Menu {
 						return;
 					}
 					default:{
+						if(b) {
+							
+						}else {
 						 System.err.println(choice1+" is not an available option. Please select another one.");
 						 break;
+						}
 					}
 				}
 			
@@ -674,20 +706,82 @@ public class Menu {
 		for (Disease disease : diseases) {
 			System.out.println(disease);
 		}
-		System.out.println("\n Please enter the ID of the disease you wish to do a simulation on:");
-		Integer id = Integer.parseInt(r.readLine());
-		Disease disease = diseaseMan.getDisease(id);
+		boolean b= true;
+		Disease disease=null;
+		while(b) {
+			try {
+				System.out.println("\n Please enter the ID of the disease you wish to do a simulation on:");
+				Integer id = Integer.parseInt(r.readLine());
+				disease = diseaseMan.getDisease(id);
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(disease==null) {	
+				System.err.println("Not exixting disease for that id");
+			}else {
+				b=false;
+			}
+		}
+		b=true;
 		System.out.println("Please enter the data on the virtual population for this simulation:");
-		System.out.println("Enter the number of people in the population:");
-		Integer population = Integer.parseInt(r.readLine());
-		System.out.println("Enter the percentage of people that are infected:");
-		Float p_infected = Float.parseFloat(r.readLine());
-		System.out.println("Enter the percentage of people that are healthy:");
-		Float p_healthy = Float.parseFloat(r.readLine());
-		System.out.println("Enter the percentage of people that are immune:");
-		Float p_immune = Float.parseFloat(r.readLine());
-		System.out.println("Enter the immunity period (number of days a person can be immune, can be 0):");
-		Integer immunity_period = Integer.parseInt(r.readLine());
+		Integer population=null;
+		while(b) {
+			try {
+			System.out.println("Enter the number of people in the population:");
+			population = Integer.parseInt(r.readLine());
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(population!=null) {
+				if(population<1) {	
+					System.err.println("should be grater than 0");
+				}else {
+					b=false;
+				}	
+			}
+		}
+		b=true;
+		Float p_infected = null;
+		Float p_healthy = null;
+		Float p_immune = null;
+		while(b) {
+			try {
+				System.out.println("Enter the percentage of people that are infected:");
+				p_infected = Float.parseFloat(r.readLine());
+				System.out.println("Enter the percentage of people that are healthy:");
+				p_healthy = Float.parseFloat(r.readLine());
+				System.out.println("Enter the percentage of people that are immune:");
+				p_immune = Float.parseFloat(r.readLine());
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(p_infected!=null&&p_healthy!=null&&p_immune!=null) {
+				if((p_infected+p_healthy+p_immune)==100) {	
+					b=false;
+				}else {
+					System.err.println("The percetiges shuold add 100");
+				}
+			}
+		}
+		b=true;
+		Integer immunity_period=null;
+		while (b) {
+			try {
+				System.out.println("Enter the immunity period (number of days a person can be immune, can be 0):");
+				immunity_period = Integer.parseInt(r.readLine());
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(immunity_period!=null){
+				if(immunity_period>=0) {	
+					b=false;
+				}else {
+					System.err.println("Can`t be less that 0");
+					
+				}
+			}
+			
+		}
 		Virtual_Population virtual_Population = new Virtual_Population(population, p_infected, p_healthy, p_immune, immunity_period, disease);
 	    virtualPopulationMan.fillPopulation(virtual_Population);
 	    //System.out.println(virtual_Population);
@@ -763,9 +857,23 @@ public class Menu {
 		for (Disease disease : diseases) {
 			System.out.println("\n "+ disease);
 		}
-		System.out.println("\n Please enter the ID of the disease you wish to view its development graph:");
-		Integer id = Integer.parseInt(r.readLine());
-		Disease disease = diseaseMan.getDisease(id);
+		boolean b= true;
+		Disease disease=null;
+		while(b) {
+			try {
+				System.out.println("\n Please enter the ID of the disease you wish to view its development graph:");
+				Integer id = Integer.parseInt(r.readLine());
+				disease = diseaseMan.getDisease(id);
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(disease==null) {	
+				System.err.println("Not exixting disease for that id");
+			}else {
+				b=false;
+			}
+		}
+		
 		GraphUtilities graph = new GraphUtilities();
 		JFreeChart diseaseGraph = graph.graphDiseaseDevelopment(disease);
 		
@@ -993,25 +1101,46 @@ public class Menu {
 		for (Symptom symptom : symptoms) {
 			System.out.println(symptom);
 		}
-		System.out.println("\nPlease enter the ID of the symptom you wish to modify:");
-		Integer id = Integer.parseInt(r.readLine());
-		Symptom symptom = symptomMan.getSymptom(id);
-		
+		boolean b= true;
+		Symptom symptom=null;
+		while(b) {
+			try {
+				System.out.println("\nPlease enter the ID of the symptom you wish to modify:");
+				Integer id = Integer.parseInt(r.readLine());
+				symptom = symptomMan.getSymptom(id);
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(symptom==null) {	
+				System.err.println("Not exixting symptom for that id");
+			}else {
+				b=false;
+			}
+		}
+		b=true;
 		System.out.println("Here are the actual Symptoms values");
 		System.out.println("Press enter to keep them or type a new value.");
 		System.out.println("Name (" + symptom.getNameSymptom() + "): ");
 		String newName = r.readLine();
-		System.out.println("Pain management (" + symptom.getPain_management().name() + "): ");
-		String pain_Management = r.readLine();
-		if (!newName.equals("")) {
-			// If I don't keep
-			symptom.setNameSymptom(newName);
+		while(b) {
+			System.out.println("Pain management (" + symptom.getPain_management().name() + "): ");
+			String pain_Management = r.readLine();
+			if (!newName.equals("")) {
+				// If I don't keep
+				symptom.setNameSymptom(newName);
+			}
+			if (!pain_Management.equals("")) {
+				if(pain_Management.equalsIgnoreCase("MILD")||pain_Management.equalsIgnoreCase("SEVERE")) {
+					Pain_Management newPain_management = Pain_Management.valueOf(pain_Management);	
+					symptom.setPain_management(newPain_management);
+					b=false;;
+				}else {
+					System.err.println("incorrect Pain Management value");
+				}
+			}else{
+				b=false;
+			}
 		}
-		if (!pain_Management.equals("")) { 
-			Pain_Management newPain_management = Pain_Management.valueOf(pain_Management);	
-			symptom.setPain_management(newPain_management);
-		}
-		
 		symptomMan.modifySymptom(symptom);
 	}
 
@@ -1024,25 +1153,72 @@ public class Menu {
 	private static void deleteSymptom() throws NumberFormatException, IOException{
 		System.out.println("\nThese are the symptoms in the database:");
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
-		System.out.println(symptoms);
-		System.out.println("\nPlease enter the id of the Symptom you want to delete:");
-		Integer id = Integer.parseInt(r.readLine());
-		
+		for(Symptom sumptom:symptoms) {
+			System.out.println(sumptom);
+		}
+
+		Integer id=null;
+		boolean b= true;
+		Symptom symptom=null;
+		while(b) {
+			try {
+				System.out.println("\nPlease enter the ID of the symptom you wish to modify:");
+				id = Integer.parseInt(r.readLine());
+				symptom = symptomMan.getSymptom(id);
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(symptom==null) {	
+				System.err.println("Not exixting symptom for that id");
+			}else {
+				b=false;
+			}
+		}
 		symptomMan.deleteSymptom(id);
 	}
 	
 	private static void deleteDiagnosis() throws SQLException, NumberFormatException, IOException {
 		System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
 		printMedicalRecords(c);
-		Integer record_id = Integer.parseInt(r.readLine());
-		Medical_Record record = medicalRecordMan.getMedical_Record(record_id);
+		Integer record_id=null;
+		Medical_Record record = null;
+		boolean b= true;
+		while(b) {
+			try {
+				System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
+				record_id = Integer.parseInt(r.readLine());
+				record = medicalRecordMan.getMedical_Record(record_id);
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(record==null) {	
+				System.err.println("Not exixting record for that id");
+			}else {
+				b=false;
+			}
+		}
+		b=true;
 		System.out.println("\nThese are the diagnoses in the Medical Record, please enter the ID of the one you wish to delete:");
 		List<Diagnosis> diagnoses = diagnosisMan.listMatchinDiagnosesByPatient(record_id);
 		for (Diagnosis diagnosis : diagnoses) {
 			System.out.println("\n"+diagnosis.getIdDiagnosis() + "   " + diagnosis.getNameDiagnosis() + "   " + diagnosis.getLocalDate() + "   " + diagnosis.getComment_section() + "   " + diagnosis.getDisease().getNameDisease() + "  [ " + diagnosis.getMedicalRecord().getPatient().getNamePatient() + "   " + diagnosis.getMedicalRecord().getPatient().getSurname() + "   " + diagnosis.getMedicalRecord().getPatient().getDob() + " ]");
 		}
 		Integer id = Integer.parseInt(r.readLine());
-		
+		Diagnosis diagnosis = null;
+		while(b) {
+			try {
+				System.out.println("\nPlease enter the ID of the symptom you wish to modify:");
+				id = Integer.parseInt(r.readLine());
+				diagnosis = diagnosisMan.getDiagnosis(id);
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(diagnosis==null) {	
+				System.err.println("Not exixting diagnosis for that id");
+			}else {
+				b=false;
+			}
+		}
 		diagnosisMan.deleteDiagnosis(id);
 	}
 	
@@ -1072,9 +1248,22 @@ public class Menu {
 			System.out.println("\n"+symptom.getIdSymptom()+ "   "+symptom.getNameSymptom() + "   "+ symptom.getPain_management());
 		}
 		List<Integer> symptomIds = new ArrayList<>();
+		Symptom symptomSelected=null;
+		Integer simptomId=null;
 		String lineread;
+		boolean b=true;
 		while (!(lineread = r.readLine()).equals("")) {
-			symptomIds.add(Integer.parseInt(lineread));
+			try {
+			simptomId=Integer.parseInt(lineread);
+			symptomSelected=symptomMan.getSymptom(simptomId) ;
+			}catch(NumberFormatException e){
+				System.err.println("Not a number");
+			}
+			if(symptomSelected==null) {
+				System.err.println("no existing simptom for that id");
+			}else {
+				symptomIds.add(simptomId);
+			}
 		}
 
 		List<Symptom> selectedSymptoms = new ArrayList<>();

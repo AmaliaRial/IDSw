@@ -9,8 +9,6 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -136,7 +134,7 @@ public class Menu {
 		System.out.println("\n Choose your desired option");
 		System.out.println("1. Search a disease by its name");
 		System.out.println("2. Search treatment by name");
-		System.out.println("3. Search treatment by diagnosis");
+		System.out.println("3. Search treatment by diagnosis (Look at your Medical Record)");
 		System.out.println("4. Search disease by symptom.");
 		System.out.println("5. Search disease that most matches symptoms.");
 		System.out.println("6. Search symptom by name");
@@ -208,7 +206,7 @@ public class Menu {
 			userManager = new JPAUserManager();
 			
 			while(true) {
-			System.out.println("Choose your desired option");
+			System.out.println("\nChoose your desired option");
 			System.out.println("1. Login");
 			System.out.println("2. Register");
 			System.out.println("0. Exit");
@@ -532,8 +530,9 @@ public class Menu {
 	 * @return user if the login is successful
 	 * @throws NumberFormatException
 	 * @throws IOException
+	 * @throws SQLException 
 	 */
-	private static User menuLogin() throws NumberFormatException, IOException {
+	private static User menuLogin() throws NumberFormatException, IOException, SQLException {
 		Boolean verified=false;
 		while(!verified) {
 			System.out.println("Please, type your username:");
@@ -543,8 +542,23 @@ public class Menu {
 			verified = userMan.verifyPassword(password, username);
 			if (verified) {
 				User user = userMan.login(username);
-				System.out.println("Welcome " + user.getName());
-				return user;
+				System.out.println("\nWelcome " + user.getName());
+				// After successful login, setup the database connection again
+			    conMan = new ConnectionManager();
+			    //Manager setup
+			    diseaseMan = conMan.getDiseaseMan();
+			    treatmentMan = conMan.getTreatmentMan();
+			    symptomMan = conMan.getSymptomMan();
+			    diagnosisMan = conMan.getDiagnosisMan();
+			    patientMan = conMan.getPatientMan();
+			    medicalRecordMan = conMan.getMedicalRecordMan();
+			    simulationMan = conMan.getSimulationMan();
+			    virtualPopulationMan = conMan.getVirtualPopulationMan();
+			    c = DriverManager.getConnection("jdbc:sqlite:./db/idsw.db");
+			    //JPA managers
+			    userMan = new JPAUserManager();
+			    userManager = new JPAUserManager();
+				return user;    
 			} else {
 				System.err.println("Invalid username or password");
 			}	
@@ -624,7 +638,7 @@ public class Menu {
 				if(phone<1000000000 && phone>99999999) {
 					exception=false;
 				}else {
-					System.err.println("Not existing phone, please introduce a correct phone");
+					System.err.println("Not existing phone, please introduce a correct phone number");
 				}
 			}catch(IllegalArgumentException iae) {
 				System.err.println("Not a number, please insert number");
@@ -888,18 +902,30 @@ public class Menu {
 	/**
 	 * Method to create an XML and an HTML file of a Medical Record
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 * @throws SQLException
 	 */
-	private static void createXMLandHTML() throws NumberFormatException, IOException, SQLException {
-		System.out.println("Please, type the ID of the Medical Record you want to create the XML and HTML files:");
-		medicalRecordMan.printMedicalRecords();
-		Integer record_id = Integer.parseInt(r.readLine());
-		Java2XmlMedicalRecord.createXML(record_id);
-		CreateFullXML.createFULLxml();
-		Xml2HtmlMedicalRecord.simpleTransform("./xmls/External_MedicalRecord.xml", "./xmls/MedicalRecord-Style.xslt", "./xmls/External-MedicalRecord.html");
+	private static void createXMLandHTML() throws IOException, SQLException {
+	    System.out.println("These are the Medical Records in the database: ");
+	    List<Medical_Record> records = medicalRecordMan.printMedicalRecords();
+	    for (Medical_Record record : records) {
+			System.out.println("\n"+record);
+		}
+	    System.out.println("Please, type the ID of the Medical Record you want to create the XML and HTML files:");
+	    Integer record_id = null;
+	    while (record_id == null) {
+	        try {
+	            record_id = Integer.parseInt(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	
+	    Java2XmlMedicalRecord.createXML(record_id);
+	    CreateFullXML.createFULLxml();
+	    Xml2HtmlMedicalRecord.simpleTransform("./xmls/External_MedicalRecord.xml", "./xmls/MedicalRecord-Style.xslt", "./xmls/External-MedicalRecord.html");
 	}
+
 	
 	/**
 	 * Imports an XML file of a Medical Record and stores it in the database
@@ -1015,11 +1041,10 @@ public class Menu {
 	/**
 	 * List symptoms by their name
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void ListMatchingSymptomsByName() throws NumberFormatException, IOException {
-		System.out.println("\nPlease, type the symptom´s name:");
+	private static void ListMatchingSymptomsByName() throws IOException {
+		System.out.println("\nPlease, type the symptom's name:");
 		String name = r.readLine();
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName(name);
 		for (Symptom symptom : symptoms) {
@@ -1030,10 +1055,9 @@ public class Menu {
 	/**
 	 * Updates a Symptom
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void modifySymptom() throws NumberFormatException, IOException{
+	private static void modifySymptom() throws IOException{
 		System.out.println("\nThese are the symptoms in the database:");
 		List <Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
 		for (Symptom symptom : symptoms) {
@@ -1085,10 +1109,9 @@ public class Menu {
 	/**
 	 * Deletes a symptom from the database
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void deleteSymptom() throws NumberFormatException, IOException{
+	private static void deleteSymptom() throws IOException{
 		System.out.println("\nThese are the symptoms in the database:");
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
 		for(Symptom sumptom:symptoms) {
@@ -1115,14 +1138,23 @@ public class Menu {
 		symptomMan.deleteSymptom(id);
 	}
 	
-	private static void deleteDiagnosis() throws SQLException, NumberFormatException, IOException {
+	/**
+	 * This method deletes a diagnosis from a specific medical Record
+	 * 
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	private static void deleteDiagnosis() throws SQLException, IOException {
 		Integer record_id=null;
 		Medical_Record record = null;
 		boolean b= true;
 		while(b) {
 			try {
 				System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
-				medicalRecordMan.printMedicalRecords();
+				List<Medical_Record> records = medicalRecordMan.printMedicalRecords();
+				for (Medical_Record medical_Record : records) {
+					System.out.println("\n"+medical_Record);
+				}
 				record_id = Integer.parseInt(r.readLine());
 				record = medicalRecordMan.getMedical_Record(record_id);
 			}catch(NumberFormatException e){
@@ -1135,7 +1167,7 @@ public class Menu {
 			}
 		}
 		b=true;
-		System.out.println("\nThese are the diagnoses in the Medical Record, please enter the ID of the one you wish to delete:");
+		System.out.println("\nThese are the diagnoses in the Medical Record:");
 		List<Diagnosis> diagnoses = diagnosisMan.listMatchinDiagnosesByPatient(record_id);
 		for (Diagnosis diagnosis : diagnoses) {
 			System.out.println("\n"+diagnosis.getIdDiagnosis() + "   " + diagnosis.getNameDiagnosis() + "   " + diagnosis.getLocalDate() + "   " + diagnosis.getComment_section() + "   " + diagnosis.getDisease().getNameDisease() + "  [ " + diagnosis.getMedicalRecord().getPatient().getNamePatient() + "   " + diagnosis.getMedicalRecord().getPatient().getSurname() + "   " + diagnosis.getMedicalRecord().getPatient().getDob() + " ]");
@@ -1144,7 +1176,7 @@ public class Menu {
 		Diagnosis diagnosis = null;
 		while(b) {
 			try {
-				System.out.println("\nPlease enter the ID of the symptom you wish to modify:");
+				System.out.println("\n Please enter the ID of the one you wish to delete:");
 				id = Integer.parseInt(r.readLine());
 				diagnosis = diagnosisMan.getDiagnosis(id);
 			}catch(NumberFormatException e){
@@ -1175,21 +1207,20 @@ public class Menu {
 	/**
 	 * Method that allows the user to search a disease that most matches the symptoms selected 
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void mostMatchingDiseaseBySymptom() throws NumberFormatException, IOException{
-		System.out.println("\nThese are the symptoms in the database, please enter the IDs of the symptoms you wish to search, press enter to finish: ");
+	private static void mostMatchingDiseaseBySymptom() throws IOException{
+		System.out.println("\nThese are the symptoms in the database: ");
 		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
 		for (Symptom symptom : symptoms) {
 			System.out.println("\n"+symptom.getIdSymptom()+ "   "+symptom.getNameSymptom() + "   "+ symptom.getPain_management());
 		}
+		System.out.println("\nPlease enter the IDs of the symptoms you wish to search, type END to finish: ");
 		List<Integer> symptomIds = new ArrayList<>();
 		Symptom symptomSelected=null;
 		Integer simptomId=null;
 		String lineread;
-		boolean b=true;
-		while (!(lineread = r.readLine()).equals("")) {
+		while (!(lineread = r.readLine()).equalsIgnoreCase("end")) {
 			try {
 			simptomId=Integer.parseInt(lineread);
 			symptomSelected=symptomMan.getSymptom(simptomId) ;
@@ -1197,7 +1228,7 @@ public class Menu {
 				System.err.println("Not a number");
 			}
 			if(symptomSelected==null) {
-				System.err.println("no existing simptom for that id");
+				System.err.println("no existing symptom for that id");
 			}else {
 				symptomIds.add(simptomId);
 			}
@@ -1222,47 +1253,91 @@ public class Menu {
 	/**
 	 * Method to add a new disease
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void addDisease() throws NumberFormatException, IOException{
-		System.out.println("\nPlease write the Disease info");
-		System.out.println("Its name:");
-		String name = r.readLine();
-		System.out.println("Infectious Rate:");
-		Float infectRate = Float.parseFloat(r.readLine());
-		System.out.println("Mortality Rate:");
-		Float mortRate = Float.parseFloat(r.readLine());
-		System.out.println("Incubation Period:");
-		Float incubPeriod = Float.parseFloat(r.readLine());
-		System.out.println("Development Period:");
-		Float devPeriod = Float.parseFloat(r.readLine());
-		System.out.println("Convalescense Period:");
-		Float convPeriod = Float.parseFloat(r.readLine());
-		System.out.println("Cause:");
-		String cause = r.readLine();
-		System.out.println("Comment Section:");
-		String commentSec = r.readLine();
-		
-		Disease disease = new Disease(name, infectRate, mortRate, incubPeriod, devPeriod, convPeriod, cause, commentSec);
-		diseaseMan.addDisease(disease);
-		Integer lastId = conMan.getLastInsertedID();
-		disease.setIdDisease(lastId);
-		
-		System.out.println("\n Would you like to add treatments to this disease? Please answer with a Yes or a NO :");
-		String answer = r.readLine();
-		if (answer.equalsIgnoreCase("Yes")) {
-			newTreatmentByDisease(disease);
-		} else {
-		}
-		System.out.println("\n Would you like to add symptoms to this disease? Please answer with a Yes or a NO :");
-		String answer2 = r.readLine();
-		if (answer2.equalsIgnoreCase("Yes")) {
-			newSymptomByDisease(disease);
-		} else {
-		}
-		
+	private static void addDisease() throws IOException {
+	    System.out.println("\nPlease write the Disease info");
+	
+	    System.out.println("Its name:");
+	    String name = r.readLine();
+	
+	    Float infectRate = null;
+	    while (infectRate == null) {
+	        try {
+	            System.out.println("Infectious Rate:");
+	            infectRate = Float.parseFloat(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	
+	    Float mortRate = null;
+	    while (mortRate == null) {
+	        try {
+	            System.out.println("Mortality Rate:");
+	            mortRate = Float.parseFloat(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	
+	    Float incubPeriod = null;
+	    while (incubPeriod == null) {
+	        try {
+	            System.out.println("Incubation Period:");
+	            incubPeriod = Float.parseFloat(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	
+	    Float devPeriod = null;
+	    while (devPeriod == null) {
+	        try {
+	            System.out.println("Development Period:");
+	            devPeriod = Float.parseFloat(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	
+	    Float convPeriod = null;
+	    while (convPeriod == null) {
+	        try {
+	            System.out.println("Convalescense Period:");
+	            convPeriod = Float.parseFloat(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	
+	    System.out.println("Cause (VIRUS/BACTERIA):");
+	    String cause = r.readLine();
+	    if (!cause.equalsIgnoreCase("VIRUS") && !cause.equalsIgnoreCase("BACTERIA")) {
+	        throw new IllegalArgumentException("Invalid cause. Please enter either VIRUS or BACTERIA.");
+	    }
+	
+	    System.out.println("Comment Section:");
+	    String commentSec = r.readLine();
+	
+	    Disease disease = new Disease(name, infectRate, mortRate, incubPeriod, devPeriod, convPeriod, cause, commentSec);
+	    diseaseMan.addDisease(disease);
+	    Integer lastId = conMan.getLastInsertedID();
+	    disease.setIdDisease(lastId);
+	
+	    System.out.println("\n Would you like to add treatments to this disease? Please answer with a Yes or a NO :");
+	    String answer = r.readLine();
+	    if (answer.equalsIgnoreCase("Yes")) {
+	        newTreatmentByDisease(disease);
+	    }
+	
+	    System.out.println("\n Would you like to add symptoms to this disease? Please answer with a Yes or a NO :");
+	    String answer2 = r.readLine();
+	    if (answer2.equalsIgnoreCase("Yes")) {
+	        newSymptomByDisease(disease);
+	    }
 	}
+
 	
 	/**
 	 * Method to search a disease by its name
@@ -1283,81 +1358,119 @@ public class Menu {
 	 * 
 	 * @throws IOException
 	 */
-	private static void searchDiseaseBySymptom() throws IOException{
-	    System.out.println("These are the symptoms in the database, please enter the IDs of the symptoms you wish to search, press enter to finish: ");
-	    List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
-	    for (Symptom symptom : symptoms) {
-	        System.out.println(symptom);
-	    }
-	    List<Integer> symptomIds = new ArrayList<>();
-	    String lineread;
-	    while (!(lineread = r.readLine()).equals("")) {
+	private static void searchDiseaseBySymptom() throws IOException {
+	System.out.println("These are the symptoms in the database: ");
+	List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
+	for (Symptom symptom : symptoms) {
+	    System.out.println(symptom);
+	}
+	System.out.println("\nPlease enter the IDs of the symptoms you wish to search, type END to finish: ");
+	List<Integer> symptomIds = new ArrayList<>();
+	String lineread;
+	while (!(lineread = r.readLine()).equalsIgnoreCase("end")) {
+	    try {
 	        symptomIds.add(Integer.parseInt(lineread));
+	    } catch (NumberFormatException e) {
+	        System.err.println("Invalid input. Please enter a number.");
+	        continue;
 	    }
-
-	    List<Symptom> selectedSymptoms = new ArrayList<>();
-	    for (Integer id : symptomIds) {
-	        Symptom symptom = symptomMan.getSymptom(id);
-	        if (symptom != null) {
-	            selectedSymptoms.add(symptom);
-	        } else {
-	            System.out.println("Symptom with ID " + id + " not found.");
+	}
+	
+	List<Symptom> selectedSymptoms = new ArrayList<>();
+	for (Integer id : symptomIds) {
+	    Symptom symptom = symptomMan.getSymptom(id);
+	    if (symptom != null) {
+	        selectedSymptoms.add(symptom);
+	    } else {
+	        System.out.println("Symptom with ID " + id + " not found.");
 	        }
 	    }
-
+	
 	    List<Disease> diseases = diseaseMan.listMatchingDiseaseBySymptoms(selectedSymptoms);
 	    for (Disease disease : diseases) {
 	        System.out.println(disease);
 	    }
 	}
+
 	
 	/**
 	 * Method to add a new diagnosis
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void addDiagnosis() throws NumberFormatException, IOException{
-		System.out.println("Please write the Diagnosis info");
-		System.out.println("Name:");
-		String name = r.readLine();
-		System.out.println("Date (dd-mm-yyyy):");
-		LocalDate localDate = LocalDate.parse(r.readLine(), formatter);
-		Date todaysDate = Date.valueOf(localDate);
-		System.out.println("\nThese are the the diseases in the database:");
-		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
-		for (Disease disease : diseases) {
-			System.out.println(disease);
-		}
-		System.out.println("\n Please enter the ID of the disease:");
-		Integer idDisease = Integer.parseInt(r.readLine());
-		Disease disease = diseaseMan.getDisease(idDisease);
-		System.out.println("\nThese are the the medical records in the database:");
-		List<Medical_Record> medical_Records = medicalRecordMan.listMedicalRecords();
-		for (Medical_Record medicalR : medical_Records) {
-			System.out.println(medicalR + " " + medicalR.getPatient().getNamePatient() + " " + medicalR.getPatient().getSurname() + " " + medicalR.getPatient().getDob());
-		}
-		System.out.println("Please select the ID of the Medical_Record:");
-		Integer idMedicalRecord = Integer.parseInt(r.readLine());
-		Medical_Record medicalRecord = medicalRecordMan.getMedical_Record(idMedicalRecord);
-		System.out.println("Comments: ");
-		String comment_section = r.readLine();
-		Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, medicalRecord, disease);
-		diagnosisMan.addDiagnosis(diagnosis);
+	private static void addDiagnosis() throws IOException {
+	    System.out.println("Please write the Diagnosis info");
+	
+	    System.out.println("Name:");
+	    String name = r.readLine();
+	
+	    LocalDate localDate = null;
+	    while (localDate == null) {
+	        try {
+	            System.out.println("Date (dd-mm-yyyy):");
+	            localDate = LocalDate.parse(r.readLine(), formatter);
+	        } catch (DateTimeParseException e) {
+	            System.err.println("Invalid input. Please enter a date in the format dd-mm-yyyy.");
+	        }
+	    }
+	    Date todaysDate = Date.valueOf(localDate);
+	
+	    System.out.println("\nThese are the the diseases in the database:");
+	    List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+	    for (Disease disease : diseases) {
+	        System.out.println(disease);
+	    }
+	
+	    Integer idDisease = null;
+	    while (idDisease == null) {
+	        try {
+	            System.out.println("\n Please enter the ID of the disease:");
+	            idDisease = Integer.parseInt(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	    Disease disease = diseaseMan.getDisease(idDisease);
+	
+	    System.out.println("\nThese are the the medical records in the database:");
+	    List<Medical_Record> medical_Records = medicalRecordMan.listMedicalRecords();
+	    for (Medical_Record medicalR : medical_Records) {
+	        System.out.println(medicalR + " " + medicalR.getPatient().getNamePatient() + " " + medicalR.getPatient().getSurname() + " " + medicalR.getPatient().getDob());
+	    }
+	
+	    Integer idMedicalRecord = null;
+	    while (idMedicalRecord == null) {
+	        try {
+	            System.out.println("Please select the ID of the Medical_Record:");
+	            idMedicalRecord = Integer.parseInt(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	    Medical_Record medicalRecord = medicalRecordMan.getMedical_Record(idMedicalRecord);
+	
+	    System.out.println("Comments: ");
+	    String comment_section = r.readLine();
+	
+	    Diagnosis diagnosis = new Diagnosis(name, todaysDate, comment_section, medicalRecord, disease);
+	    diagnosisMan.addDiagnosis(diagnosis);
 	}
+
 	
 	/**
 	 * Method to add a new symptom
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void addSymptom() throws NumberFormatException, IOException{
+	private static void addSymptom() throws IOException{
 		System.out.println("Please write the symptom info");
 		System.out.println("Its name:");
 		String name = r.readLine();
-		System.out.println("Its pain management (MILD/SEVERE):");
-		String pain_Management =  r.readLine(); 
+		System.out.println("Its pain level (MILD/SEVERE):");
+		String pain_Management =  r.readLine();
+	    if (!pain_Management.equalsIgnoreCase("mild") && !pain_Management.equalsIgnoreCase("severe")) {
+	        throw new IllegalArgumentException("Invalid pain level. Please enter either MILD or SEVERE.");
+	    }
 		
 		Symptom symptom = new Symptom(name, pain_Management);
 		symptomMan.addSymptom(symptom);
@@ -1366,10 +1479,9 @@ public class Menu {
 	/**
 	 * Method to add a new treatment
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void addTreatment() throws NumberFormatException, IOException{
+	private static void addTreatment() throws IOException{
 		System.out.println("Please, enter the treatments info");
 		System.out.println("Name:");
 		String name = r.readLine();
@@ -1406,62 +1518,82 @@ public class Menu {
 	/**
 	 * Method to modify a treatment
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void modifyTreatment() throws NumberFormatException, IOException{
-		System.out.println("\nThese are the the treatments in the database:");
-		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
-		for (Treatment treatment : treatments) {
-			System.out.println(treatment);
-		}
-		System.out.println("\nPlease enter the ID of the treatment you wish to modify:");
-		Integer id = Integer.parseInt(r.readLine());
-		Treatment treatment = treatmentMan.getTreatment(id);
-		
-		System.out.println("Here are the actual Treatment's values");
-		System.out.println("Press enter to keep them or type a new value.");
-		System.out.println("Name (" + treatment.getNameTreatment() + "): ");
-		String newName = r.readLine();
-		System.out.println("Comments (" + treatment.getComment_Section() + "): ");
-		String newComments = r.readLine();
-		if (!newName.equals("")) {
-			// If I don't keep
-			treatment.setNameTreatment(newName);
-		}
-		if (newComments.equals("")) { // If I keep
-		}
-		else { // If I don't keep
-			treatment.setComment_Section(newComments);
-		}
-		
-		treatmentMan.modifyTreatment(treatment);
+	private static void modifyTreatment() throws IOException {
+	    System.out.println("\nThese are the the treatments in the database:");
+	    List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+	    for (Treatment treatment : treatments) {
+	        System.out.println(treatment);
+	    }
+	
+	    Integer id = null;
+	    String lineRead;
+	    while (id == null) {
+	        try {
+	            System.out.println("\nPlease enter the ID of the treatment you wish to modify:");
+	            lineRead = r.readLine();
+	            if (!lineRead.isEmpty()) {
+	                id = Integer.parseInt(lineRead);
+	            } else {
+	                break;
+	            }
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	    Treatment treatment = treatmentMan.getTreatment(id);
+	
+	    System.out.println("Here are the actual Treatment's values");
+	    System.out.println("Press enter to keep them or type a new value.");
+	    System.out.println("Name (" + treatment.getNameTreatment() + "): ");
+	    String newName = r.readLine();
+	    System.out.println("Comments (" + treatment.getComment_Section() + "): ");
+	    String newComments = r.readLine();
+	    if (!newName.isEmpty()) {
+	        // If I don't keep
+	        treatment.setNameTreatment(newName);
+	    }
+	    if (!newComments.isEmpty()) { // If I don't keep
+	        treatment.setComment_Section(newComments);
+	    }
+	
+	    treatmentMan.modifyTreatment(treatment);
 	}
+
+
 	
 	/**
 	 * Method to delete a treatment
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void deleteTreatment() throws NumberFormatException, IOException{
-		System.out.println("These are the treatements in the database:");
-		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
-		for(Treatment treatment : treatments) {
-			System.out.println(treatment);
-		}
-		System.out.println("\n Please enter the id of the Treatment you want to delete:");
-		Integer id = Integer.parseInt(r.readLine());
-		treatmentMan.deleteTreatment(id);
+	private static void deleteTreatment() throws IOException {
+	    System.out.println("These are the treatments in the database:");
+	    List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+	    for(Treatment treatment : treatments) {
+	        System.out.println(treatment);
+	    }
+	
+	    Integer id = null;
+	    while (id == null) {
+	        try {
+	            System.out.println("\n Please enter the id of the Treatment you want to delete:");
+	            id = Integer.parseInt(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	    treatmentMan.deleteTreatment(id);
 	}
+
 	
 	/**
 	 * Method to search a treatment by its name
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void searchTreatmentByName() throws NumberFormatException, IOException{
+	private static void searchTreatmentByName() throws IOException{
 		System.out.println("Please enter the name of the treatment:");
 		String name = r.readLine();
 		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName(name);
@@ -1473,113 +1605,194 @@ public class Menu {
 	/**
 	 * Method to update/modify a disease
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void updateDisease() throws NumberFormatException, IOException{	
-		System.out.println("\nThese are the the diseases in the database:");
-		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
-		for (Disease disease : diseases) {
-			System.out.println(disease);
-		}
-		System.out.println("\n Please enter the ID of the disease you wish to modify:");
-		Integer id = Integer.parseInt(r.readLine());
-		Disease disease = diseaseMan.getDisease(id);
-		
-		System.out.println("Press enter to keep them or type a new value.");
-		System.out.println("Name (" + disease.getNameDisease() + "): ");
-		String newName = r.readLine();
-		System.out.println("Infectious Rate ("+ disease.getInfectious_rate() +"): ");
-		String newInfectiousRate = r.readLine();
-		System.out.println("Mortality Rate ("+ disease.getMortality_rate() +"): ");
-		String newMortalityRate = r.readLine();
-		System.out.println("Incubation Period ("+ disease.getIncubation_period() +"): ");
-		String newIncubationPeriod = r.readLine();
-		System.out.println("Development Period ("+ disease.getDevelopment_period() +"): ");
-		String newDevelopmentPeriod = r.readLine();
-		System.out.println("Convalescence Period ("+ disease.getConvalescence_period() +"): ");
-		String newConvalescencePeriod = r.readLine();
-		System.out.println("Cause ("+ disease.getCause().name() +"): ");
-		String cause = r.readLine();
-		
-		System.out.println("Comments (" + disease.getComment_section() + "): ");
-		String newComments = r.readLine();
-		if (!newName.equals("")) {
-			// If I don't keep
-			disease.setNameDisease(newName);
-		}
-		if (!newInfectiousRate.equals("")) {
-			// If I don't keep
-			disease.setInfectious_rate(Float.parseFloat(newInfectiousRate));
-		}
-		if (!newMortalityRate.equals("")) {
-			// If I don't keep
-			disease.setMortality_rate(Float.parseFloat(newMortalityRate));
-		}
-		if (!newIncubationPeriod.equals("")) {
-			// If I don't keep
-			disease.setIncubation_period(Float.parseFloat(newIncubationPeriod));
-		}
-		if (!newDevelopmentPeriod.equals("")) {
-			// If I don't keep
-			disease.setDevelopment_period(Float.parseFloat(newDevelopmentPeriod));
-		}
-		if (!newConvalescencePeriod.equals("")) {
-			// If I don't keep
-			disease.setConvalescence_period(Float.parseFloat(newConvalescencePeriod));
-		}
-		if (!cause.equals("")) {
-			// If I don't keep
-			Cause newCause = Cause.valueOf(cause);
-			disease.setCause(newCause);
-		}
-		if (newComments.equals("")) { // If I keep
-		}
-		else { // If I don't keep
-			disease.setComment_section(newComments);
-		}
-		
-		diseaseMan.modifyDisease(disease);
+	private static void updateDisease() throws IOException {
+	    System.out.println("\nThese are the the diseases in the database:");
+	    List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+	    for (Disease disease : diseases) {
+	        System.out.println(disease);
+	    }
+	
+	    Integer id = null;
+	    while (id == null) {
+	        try {
+	            System.out.println("\n Please enter the ID of the disease you wish to modify:");
+	            id = Integer.parseInt(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
+	    Disease disease = diseaseMan.getDisease(id);
+	
+	    System.out.println("Press enter to keep them or type a new value.");
+	    System.out.println("Name (" + disease.getNameDisease() + "): ");
+	    String newName = r.readLine();
+	
+	    String input;
+	    Float newInfectiousRate = null;
+	    while (newInfectiousRate == null) {
+	        System.out.println("Infectious Rate ("+ disease.getInfectious_rate() +"): ");
+	        input = r.readLine();
+	        if (!input.isEmpty()) {
+	            try {
+	                newInfectiousRate = Float.parseFloat(input);
+	            } catch (NumberFormatException e) {
+	                System.err.println("Invalid input. Please enter a float number.");
+	            }
+	        } else {
+	            break;
+	        }
+	    }
+	
+	    Float newMortalityRate = null;
+	    while (newMortalityRate == null) {
+	        System.out.println("Mortality Rate ("+ disease.getMortality_rate() +"): ");
+	        input = r.readLine();
+	        if (!input.isEmpty()) {
+	            try {
+	                newMortalityRate = Float.parseFloat(input);
+	            } catch (NumberFormatException e) {
+	                System.err.println("Invalid input. Please enter a float number.");
+	            }
+	        } else {
+	            break;
+	        }
+	    }
+	
+	    Float newIncubationPeriod = null;
+	    while (newIncubationPeriod == null) {
+	        System.out.println("Incubation Period ("+ disease.getIncubation_period() +"): ");
+	        input = r.readLine();
+	        if (!input.isEmpty()) {
+	            try {
+	                newIncubationPeriod = Float.parseFloat(input);
+	            } catch (NumberFormatException e) {
+	                System.err.println("Invalid input. Please enter a float number.");
+	            }
+	        } else {
+	            break;
+	        }
+	    }
+	
+	    Float newDevelopmentPeriod = null;
+	    while (newDevelopmentPeriod == null) {
+	        System.out.println("Development Period ("+ disease.getDevelopment_period() +"): ");
+	        input = r.readLine();
+	        if (!input.isEmpty()) {
+	            try {
+	                newDevelopmentPeriod = Float.parseFloat(input);
+	            } catch (NumberFormatException e) {
+	                System.err.println("Invalid input. Please enter a float number.");
+	            }
+	        } else {
+	            break;
+	        }
+	    }
+	
+	    Float newConvalescencePeriod = null;
+	    while (newConvalescencePeriod == null) {
+	        System.out.println("Convalescence Period ("+ disease.getConvalescence_period() +"): ");
+	        input = r.readLine();
+	        if (!input.isEmpty()) {
+	            try {
+	                newConvalescencePeriod = Float.parseFloat(input);
+	            } catch (NumberFormatException e) {
+	                System.err.println("Invalid input. Please enter a float number.");
+	            }
+	        } else {
+	            break;
+	        }
+	    }
+	
+	    System.out.println("Cause ("+ disease.getCause().name() +"): ");
+	    String cause = r.readLine();
+	    if (!cause.equalsIgnoreCase("VIRUS") && !cause.equalsIgnoreCase("BACTERIA")) {
+	        throw new IllegalArgumentException("Invalid cause. Please enter either VIRUS or BACTERIA.");
+	    }
+	    System.out.println("Comments (" + disease.getComment_section() + "): ");
+	    String newComments = r.readLine();
+	
+	    if (!newName.isEmpty()) {
+	        disease.setNameDisease(newName);
+	    }
+	    if (newInfectiousRate != null) {
+	        disease.setInfectious_rate(newInfectiousRate);
+	    }
+	    if (newMortalityRate != null) {
+	        disease.setMortality_rate(newMortalityRate);
+	    }
+	    if (newIncubationPeriod != null) {
+	        disease.setIncubation_period(newIncubationPeriod);
+	    }
+	    if (newDevelopmentPeriod != null) {
+	        disease.setDevelopment_period(newDevelopmentPeriod);
+	    }
+	    if (newConvalescencePeriod != null) {
+	        disease.setConvalescence_period(newConvalescencePeriod);
+	    }
+	    if (!cause.isEmpty()) {
+	        Cause newCause = Cause.valueOf(cause);
+	        disease.setCause(newCause);
+	    }
+	    if (!newComments.isEmpty()) {
+	        disease.setComment_section(newComments);
+	    }
+	
+	    diseaseMan.modifyDisease(disease);
 	}
+
+
 
 	/**
 	 * Method to delete a disease
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void deleteDisease() throws NumberFormatException, IOException{
+	private static void deleteDisease() throws IOException{
 		System.out.println("These are the Diseases in the database:");
 		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
 		for(Disease disease : diseases) {
 			System.out.println(disease);
 		}
-		System.out.println("Please enter the id of the Disease you want to delete:");
-		Integer id = Integer.parseInt(r.readLine());
+	
+	    Integer id = null;
+	    while (id == null) {
+	        try {
+	            System.out.println("\n Please enter the id of the Disease you want to delete:");
+	            id = Integer.parseInt(r.readLine());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Invalid input. Please enter a number.");
+	        }
+	    }
 		diseaseMan.deleteDisease(id);
 	}
 	
 	/**
 	 * Method to add a new symptom by disease
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void newSymptomByDisease(Disease disease) throws NumberFormatException, IOException{
-		System.out.println("\nThese are the symptoms in the database, please insert the Id of the ones belonging to the disease: ");
-		List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
-		for(Symptom symptom : symptoms) {
-			System.out.println(symptom);
-		}
-		Integer id;
-		String input;
+	private static void newSymptomByDisease(Disease disease) throws IOException {
+	    System.out.println("\nThese are the symptoms in the database: ");
+	    List<Symptom> symptoms = symptomMan.listMatchingSymptomsByName("");
+	    for(Symptom symptom : symptoms) {
+	        System.out.println(symptom);
+	    }
+	    Integer id = null;
+	    String input;
 	    do {
 	        System.out.println("\nPlease enter the ID of the symptom you want to add (type END to finish): ");
 	        input = r.readLine();
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
 	        }
-	        id = Integer.parseInt(input);
+	        try {
+	            id = Integer.parseInt(input);
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid number.");
+	            continue;
+	        }
 	        Symptom symptom = symptomMan.getSymptom(id);
 	        if (symptom != null) {
 	            diseaseMan.addSymptomByDisease(disease, symptom);
@@ -1588,92 +1801,100 @@ public class Menu {
 	        }
 	    } while (true);
 	}
+
 	
 	/**
 	 * Method to add a new treatment by disease
 	 * 
 	 * @param disease
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void newTreatmentByDisease(Disease disease) throws NumberFormatException, IOException{
-		/*System.out.println("These are the diseases in the database, please insert the id of the one you wish to add treatments to: ");
-		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
-		for(Disease disease : diseases) {
-			System.out.println(disease);
-		}*/
-		//Integer diseaseID = Integer.parseInt(r.readLine());
-		//Disease disease = diseaseMan.getDisease(diseaseID);
-		System.out.println("\nThese are the treatments in the database, please insert the Id of the ones belonging to the disease: ");
-		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
-		for(Treatment treatment : treatments) {
-			System.out.println(treatment);
-		}
-		Integer id;
-		String input;
+	private static void newTreatmentByDisease(Disease disease) throws IOException {
+	    System.out.println("\nThese are the treatments in the database: ");
+	    List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
+	    for(Treatment treatment : treatments) {
+	        System.out.println(treatment);
+	    }
+	    Integer id;
+	    String input;
 	    do {
 	        System.out.println("\nPlease enter the ID of the treatment you want to add (type END to finish): ");
 	        input = r.readLine();
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
 	        }
-	        id = Integer.parseInt(input);
-	        Treatment treatment = treatmentMan.getTreatment(id);
-	        if (treatment != null) {
-	            treatmentMan.addTreatmentByDisease(disease, treatment);
-	        } else {
-	            System.out.println("Invalid treatment ID. Please try again.");
+	        try {
+	            id = Integer.parseInt(input);
+	            Treatment treatment = treatmentMan.getTreatment(id);
+	            if (treatment != null) {
+	                treatmentMan.addTreatmentByDisease(disease, treatment);
+	            } else {
+	                System.out.println("Invalid treatment ID. Please try again.");
+	            }
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid number.");
 	        }
 	    } while (true);
 	}
-	
-	
+
 	
 	/**
 	 * Method to add a new treatment by diagnosis
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void newTreatmentByDiagnosis() throws NumberFormatException, IOException{
-		System.out.println("These are the diagnoses in the database, please insert the id of the one you wish to add treatments to: ");
-		List<Diagnosis> diagnoses = diagnosisMan.listAllDiagnosis();
-		for (Diagnosis diagnosis : diagnoses) {
-			System.out.println(diagnosis);
-		}		
-		Integer diagnosisID = Integer.parseInt(r.readLine());
-		Diagnosis diagnosis = diagnosisMan.getDiagnosis(diagnosisID);
-		Disease disease = diagnosis.getDisease();
-		System.out.println("\nThese are the treatments in the database belonging to the disease diagnosed: ");
-		List<Treatment> treatments = treatmentMan.getTreatmentsByDisease(disease);
-		for(Treatment treatment : treatments) {
-			System.out.println(treatment);
-		}
-		Integer id;
-		String input;
+	private static void newTreatmentByDiagnosis() throws IOException {
+	    System.out.println("These are the diagnoses in the database: ");
+	    List<Diagnosis> diagnoses = diagnosisMan.listAllDiagnosis();
+	    for (Diagnosis diagnosis : diagnoses) {
+	        System.out.println(diagnosis);
+	    }
+	    Integer diagnosisID;
+	    String input;
 	    do {
-	        System.out.println("\nPlease enter the ID of the treatment you want to add (type END to finish): ");
+	        System.out.println("\nPlease enter the ID of the diagnosis you want to add treatments to (type END to finish): ");
 	        input = r.readLine();
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
 	        }
-	        id = Integer.parseInt(input);
-	        Treatment treatment = treatmentMan.getTreatment(id);
-	        if (treatment != null) {
-	            treatmentMan.addTreatmentByDiagnosis(diagnosis, treatment);
-	        } else {
-	            System.out.println("Invalid treatment ID. Please try again.");
+	        try {
+	            diagnosisID = Integer.parseInt(input);
+	            Diagnosis diagnosis = diagnosisMan.getDiagnosis(diagnosisID);
+	            Disease disease = diagnosis.getDisease();
+	            System.out.println("\nThese are the treatments in the database belonging to the disease diagnosed: ");
+	            List<Treatment> treatments = treatmentMan.getTreatmentsByDisease(disease);
+	            for(Treatment treatment : treatments) {
+	                System.out.println(treatment);
+	            }
+	            Integer id;
+	            do {
+	                System.out.println("\nPlease enter the ID of the treatment you want to add (type END to finish): ");
+	                input = r.readLine();
+	                if (input.equalsIgnoreCase("END")) {
+	                    break;
+	                }
+	                id = Integer.parseInt(input);
+	                Treatment treatment = treatmentMan.getTreatment(id);
+	                if (treatment != null) {
+	                    treatmentMan.addTreatmentByDiagnosis(diagnosis, treatment);
+	                } else {
+	                    System.out.println("Invalid treatment ID. Please try again.");
+	                }
+	            } while (true);
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid number.");
 	        }
-	    } while (true);	}
+	    } while (true);
+	}
+
 	
 	
 	/**
 	 * Method to search a treatment by disease
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void searchTreatmentByDisease() throws NumberFormatException, IOException{
+	private static void searchTreatmentByDisease() throws IOException{
 		/*System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, press enter to finish: ");
 		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
 		for(Disease disease : diseases) {
@@ -1694,63 +1915,71 @@ public class Menu {
 		for (Treatment treatment : treatments) {
 			System.out.println(treatment);
 		}*/
-	    System.out.println("These are the diseases in the database, please enter the IDs of the diseases you wish to search, type END to finish: ");
-	    List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
-	    for (Disease disease : diseases) {
-	        System.out.println(disease);
-	    }
-	    List<Integer> diseaseIds = new ArrayList<>();
-	    String lineread;
-	    while (!(lineread = r.readLine()).equalsIgnoreCase("end")) {
-	        diseaseIds.add(Integer.parseInt(lineread));
-	    }
 
-	    List<Disease> selectedDiseases = new ArrayList<>();
-	    for (Integer id : diseaseIds) {
-	        Disease disease = diseaseMan.getDisease(id);
-	        if (disease != null) {
-	            selectedDiseases.add(disease);
-	        } else {
-	            System.out.println("Disease with ID " + id + " not found.");
-	        }
-	    }
+		System.out.println("These are the diseases in the database: ");
+		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+		for (Disease disease : diseases) {
+		    System.out.println(disease);
+		}
+		System.out.println("\nPlease enter the IDs of the diseases you wish to search, type END to finish");
+		List<Integer> diseaseIds = new ArrayList<>();
+		String lineread;
+		while (!(lineread = r.readLine()).equalsIgnoreCase("end")) {
+		    try {
+		        diseaseIds.add(Integer.parseInt(lineread));
+		    } catch (NumberFormatException e) {
+		        System.out.println("Invalid input. Please enter a valid number.");
+		    }
+		}
+		List<Disease> selectedDiseases = new ArrayList<>();
+		for (Integer id : diseaseIds) {
+		    Disease disease = diseaseMan.getDisease(id);
+		    if (disease != null) {
+		        selectedDiseases.add(disease);
+		    } else {
+		        System.out.println("Disease with ID " + id + " not found.");
+		    }
+		}
+		List<Treatment> treatments = treatmentMan.listTreatmentsByDisease(selectedDiseases);
+		for (Treatment treatment : treatments) {
+		    System.out.println(treatment);
+		}
 
-	    List<Treatment> treatments = treatmentMan.listTreatmentsByDisease(selectedDiseases);
-	    for (Treatment treatment : treatments) {
-	        System.out.println(treatment);
-	    }
 	}
 	
 	/**
 	 * Method to search a treatment by diagnosis
 	 * 
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void searchTreatmentByDiagnosis() throws NumberFormatException, IOException{
-		System.out.println("These are the diagnosis in the database:");
-		List<Diagnosis> diagnoses1 = diagnosisMan.listAllDiagnosis();
-		for (Diagnosis diagnosis : diagnoses1) {
-			System.out.println("\n"+diagnosis.getIdDiagnosis() + "   " + diagnosis.getNameDiagnosis() + "   " + diagnosis.getLocalDate() + "   " + diagnosis.getComment_section() + "   " + diagnosis.getDisease().getNameDisease() + "  [ " + diagnosis.getMedicalRecord().getPatient().getNamePatient() + "   " + diagnosis.getMedicalRecord().getPatient().getSurname() + "   " + diagnosis.getMedicalRecord().getPatient().getDob() + " ]");
-		}
-		System.out.println("\nPlease, enter the id of the Diagnoses (type END when done):");
-		List<Integer> ids = new ArrayList<Integer>();
-		List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
-		Diagnosis diagnosis = new Diagnosis();
-		String lineread=r.readLine();
-		while(!lineread.equalsIgnoreCase("end")){
-			ids.add(Integer.parseInt(lineread));
-			lineread=r.readLine();
-		}
-		for (Integer integer : ids) {
-			diagnosis = diagnosisMan.getDiagnosis(integer);
-			diagnoses.add(diagnosis);
-		}
-		List <Treatment> treatments = treatmentMan.listTreatmentByDiagnoses(diagnoses);
-		for (Treatment treatment : treatments) {
-			System.out.println(treatment);
-		}
+	private static void searchTreatmentByDiagnosis() throws IOException {
+	    System.out.println("These are the diagnosis in the database:");
+	    List<Diagnosis> diagnoses1 = diagnosisMan.listAllDiagnosis();
+	    for (Diagnosis diagnosis : diagnoses1) {
+	        System.out.println("\n"+diagnosis.getIdDiagnosis() + "   " + diagnosis.getNameDiagnosis() + "   " + diagnosis.getLocalDate() + "   " + diagnosis.getComment_section() + "   " + diagnosis.getDisease().getNameDisease() + "  [ " + diagnosis.getMedicalRecord().getPatient().getNamePatient() + "   " + diagnosis.getMedicalRecord().getPatient().getSurname() + "   " + diagnosis.getMedicalRecord().getPatient().getDob() + " ]");
+	    }
+	    System.out.println("\nPlease, enter the id of the Diagnoses (type END when done):");
+	    List<Integer> ids = new ArrayList<Integer>();
+	    List<Diagnosis> diagnoses = new ArrayList<Diagnosis>();
+	    Diagnosis diagnosis = new Diagnosis();
+	    String lineread;
+	    while (!(lineread = r.readLine()).equalsIgnoreCase("end")) {
+	        try {
+	            ids.add(Integer.parseInt(lineread));
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid number.");
+	        }
+	    }
+	    for (Integer integer : ids) {
+	        diagnosis = diagnosisMan.getDiagnosis(integer);
+	        diagnoses.add(diagnosis);
+	    }
+	    List <Treatment> treatments = treatmentMan.listTreatmentByDiagnoses(diagnoses);
+	    for (Treatment treatment : treatments) {
+	        System.out.println(treatment);
+	    }
 	}
+
 	
 	/*Method not used since a new patient when a user signs up as a patient
 	 *
@@ -1783,18 +2012,19 @@ public class Menu {
 	/**
 	 * Method to add treatments to a disease
 	 * 
-     * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void addTreatmentsToaDisease() throws NumberFormatException, IOException{
-		System.out.println("These are the diseases in the database, please insert the id of the one you wish to add treatments to: ");
+	private static void addTreatmentsToaDisease() throws IOException{
+		System.out.println("These are the diseases in the database: ");
 		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
 		for(Disease disease : diseases) {
 			System.out.println(disease);
 		}
+		System.out.println("\nPlease insert the id of the one you wish to add treatments to:");
 		Integer diseaseID = Integer.parseInt(r.readLine());
 		Disease disease = diseaseMan.getDisease(diseaseID);
-		System.out.println("\nThese are the treatments in the database, please insert the Id of the ones belonging to the disease: ");
+		
+		System.out.println("\nThese are the treatments in the database: ");
 		List<Treatment> treatments = treatmentMan.listMatchingTreatmentsByName("");
 		for(Treatment treatment : treatments) {
 			System.out.println(treatment);
@@ -1807,22 +2037,32 @@ public class Menu {
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
 	        }
-	        id = Integer.parseInt(input);
-	        Treatment treatment = treatmentMan.getTreatment(id);
-	        if (treatment != null) {
-	            treatmentMan.addTreatmentByDisease(disease, treatment);
-	        } else {
-	            System.out.println("Invalid treatment ID. Please try again.");
+	        try {
+	            id = Integer.parseInt(input);
+	            Treatment treatment = treatmentMan.getTreatment(id);
+	            if (treatment != null) {
+	                treatmentMan.addTreatmentByDisease(disease, treatment);
+	            } else {
+	                System.out.println("Invalid treatment ID. Please try again.");
+	            }
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid number.");
 	        }
 	    } while (true);
 	}
 	
-	private static void addSymptomsToDisease() throws NumberFormatException, IOException{
-		System.out.println("These are the diseases in the database, please insert the id of the one you wish to add treatments to: ");
+	/**
+	 * This method adds existing symptoms to existing diseases in case it wasn't done in the addDisease method
+	 * 
+	 * @throws IOException
+	 */
+	private static void addSymptomsToDisease() throws IOException{
+		System.out.println("These are the diseases in the database: ");
 		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
 		for(Disease disease : diseases) {
 			System.out.println(disease);
 		}
+		System.out.println("\nPlease insert the id of the one you wish to add symptoms to:");
 		Integer diseaseID = Integer.parseInt(r.readLine());
 		Disease disease = diseaseMan.getDisease(diseaseID);
 		System.out.println("\nThese are the symptoms in the database, please insert the Id of the ones belonging to the disease: ");
@@ -1838,13 +2078,18 @@ public class Menu {
 	        if (input.equalsIgnoreCase("END")) {
 	            break;
 	        }
-	        id = Integer.parseInt(input);
-	        Symptom symptom = symptomMan.getSymptom(id);
-	        if (symptom != null) {
-	            diseaseMan.addSymptomByDisease(disease, symptom);
-	        } else {
-	            System.out.println("Invalid symptom ID. Please try again.");
+	        try {
+	            id = Integer.parseInt(input);
+	            Symptom symptom = symptomMan.getSymptom(id);
+		        if (symptom != null) {
+		            diseaseMan.addSymptomByDisease(disease, symptom);
+		        } else {
+		            System.out.println("Invalid symptom ID. Please try again.");
+		        }
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid number.");
 	        }
+	        
 	    } while (true);
 	}
 	
@@ -1883,67 +2128,121 @@ public class Menu {
 		
 	}
 	
-	private static void searchSimulation() throws NumberFormatException, IOException {
-		List<Virtual_Population> virtual_Populations = new ArrayList<Virtual_Population>();
-		System.out.println("\nThese are the diseases in the database, please insert the id of the one you wish search its simulation: ");
-		List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
-		for(Disease disease : diseases) {
-			System.out.println(disease);
-		}
-		Integer diseaseID = Integer.parseInt(r.readLine());
-		virtual_Populations = virtualPopulationMan.listMatchingV_PopulationByDiseasease(diseaseID);
-		System.out.println("T\nThe virtual populations linked to this disease are the following, please insert the ID of the one you want to search:");
-		for (Virtual_Population virtual_Population : virtual_Populations) {
-			System.out.println(virtual_Population);
-		}
-		Integer virtualPopID = Integer.parseInt(r.readLine());
-		List<Simulation> simulations = new ArrayList<Simulation>();
-		simulations = simulationMan.listMatchingSimulationByV_Population(virtualPopID);
-		System.out.println("\nThese are the simulations linked to this virtual population, please insert the ID of the one you wish to view:");
-		for (Simulation simulation : simulations) {
-			System.out.println(simulation);
-		}
-		Integer simulationID = Integer.parseInt(r.readLine());
-		Simulation simulation = simulationMan.selectSimulation(simulationID);
-		System.out.println("\n"+simulation);
-		GraphUtilities utilGraph = new GraphUtilities();
+	/**
+	 * This method a researcher to search for an already existing simulation
+	 * 
+	 * @throws IOException
+	 */
+	private static void searchSimulation() throws IOException {
+	    List<Virtual_Population> virtual_Populations = new ArrayList<Virtual_Population>();
+	    System.out.println("\nThese are the diseases in the database: ");
+	    List<Disease> diseases = diseaseMan.listMatchingDiseaseByName("");
+	    for(Disease disease : diseases) {
+	        System.out.println(disease);
+	    }
+	    System.out.println("\nPlease insert the id of the one you wish search its simulation");
+	    Integer diseaseID;
+	    try {
+	        diseaseID = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid input. Please enter a valid number.");
+	        return;
+	    }
+	    virtual_Populations = virtualPopulationMan.listMatchingV_PopulationByDiseasease(diseaseID);
+	    System.out.println("\nThe virtual populations linked to this disease are the following, please insert the ID of the one you want to search:");
+	    for (Virtual_Population virtual_Population : virtual_Populations) {
+	        System.out.println(virtual_Population);
+	    }
+	    Integer virtualPopID;
+	    try {
+	        virtualPopID = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid input. Please enter a valid number.");
+	        return;
+	    }
+	    List<Simulation> simulations = new ArrayList<Simulation>();
+	    simulations = simulationMan.listMatchingSimulationByV_Population(virtualPopID);
+	    System.out.println("\nThese are the simulations linked to this virtual population, please insert the ID of the one you wish to view:");
+	    for (Simulation simulation : simulations) {
+	        System.out.println(simulation);
+	    }
+	    Integer simulationID;
+	    try {
+	        simulationID = Integer.parseInt(r.readLine());
+	    } catch (NumberFormatException e) {
+	        System.out.println("Invalid input. Please enter a valid number.");
+	        return;
+	    }
+	    Simulation simulation = simulationMan.selectSimulation(simulationID);
+	    System.out.println("\n"+simulation);
+	    GraphUtilities utilGraph = new GraphUtilities();
 	    BufferedImage chartSimulationImage = utilGraph.binaryIntoImage(simulation.getSimulationGraph());
-	    
 	    showImage(chartSimulationImage);
-		
 	}
-	
-	private static void modifyUser() throws IOException {
-		User user = loggedInUser;
 
-		System.out.println("Press enter to keep them or type a new value.");
-		System.out.println("Name (" + user.getName() + "): ");
-		String newName = r.readLine();
-		System.out.println("Surname ("+ user.getSurname() +"): ");
-		String newLastName = r.readLine();
-		System.out.println("Phone Number ("+ user.getPhoneNumber() +"): ");
-		String newPhoneNumber =r.readLine();
-		System.out.println("Email ("+ user.getEmail() +"): ");
-		String newEmail = r.readLine();
-		
-		if (!newName.equals("")) {
-			// If I don't keep
-			user.setName(newName);
-		}
-		if (!newLastName.equals("")) {
-			// If I don't keep
-			user.setSurname(newLastName);
-		}
-		if (!newPhoneNumber.equals("")) {
-			// If I don't keep
-			user.setPhoneNumber(Integer.parseInt(newPhoneNumber));;
-		}
-		if (!newEmail.equals("")) {
-			// If I don't keep
-			user.setEmail(newEmail);;
-		}
-		
-		userManager.updateUser(user);
+	/**
+	 * This method allows a user to modify some of their account info
+	 * 
+	 * @throws IOException
+	 */
+	private static void modifyUser() throws IOException {
+	    User user = loggedInUser;
+	    System.out.println("Press enter to keep them or type a new value.");
+	    System.out.println("Name (" + user.getName() + "): ");
+	    String newName = r.readLine();
+	    System.out.println("Surname ("+ user.getSurname() +"): ");
+	    String newLastName = r.readLine();
+	    System.out.println("Phone Number ("+ user.getPhoneNumber() +"): ");
+	    String newPhoneNumber =null;
+	    boolean exception = true;
+	    while(exception) {
+	        newPhoneNumber = r.readLine();
+	        if (newPhoneNumber.isEmpty()) {
+	            exception = false;
+	        } else {
+	            try {
+	                int phone = Integer.parseInt(newPhoneNumber);
+	                if(phone < 1000000000 && phone > 99999999) {
+	                    exception = false;
+	                } else {
+	                    System.err.println("Not existing phone, please introduce a correct phone");
+	                }
+	            } catch(NumberFormatException nfe) {
+	                System.err.println("Not a number, please insert number");
+	            }
+	        }
+	    }
+	    System.out.println("Email ("+ user.getEmail() +"): ");
+	    String newEmail = null;
+	    exception = true;
+	    while(exception) {
+	        newEmail = r.readLine();
+	        if (newEmail.isEmpty()) {
+	            exception = false;
+	        } else {
+	            Pattern pattern = Pattern.compile(".*.@.*.\\..*.");
+	            Matcher matcher = pattern.matcher(newEmail);
+	            if(matcher.find()) {
+	                exception = false;
+	            } else {
+	                System.err.println("Not existing email, should be x@x.x");
+	            }
+	        }
+	    }
+	    if (!newName.equals("")) {
+	        user.setName(newName);
+	    }
+	    if (!newLastName.equals("")) {
+	        user.setSurname(newLastName);
+	    }
+	    if (newPhoneNumber != null && !newPhoneNumber.equals("")) {
+	        user.setPhoneNumber(Integer.parseInt(newPhoneNumber));
+	    }
+	    if (newEmail != null && !newEmail.equals("")) {
+	        user.setEmail(newEmail);
+	    }
+	    userManager.updateUser(user);
 	}
+
 	
 }

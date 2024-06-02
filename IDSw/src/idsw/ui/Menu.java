@@ -786,7 +786,7 @@ public class Menu {
 	 */
 	private static void createXMLandHTML() throws NumberFormatException, IOException, SQLException {
 		System.out.println("Please, type the ID of the Medical Record you want to create the XML and HTML files:");
-		printMedicalRecords(c);
+		medicalRecordMan.printMedicalRecords();
 		Integer record_id = Integer.parseInt(r.readLine());
 		Java2XmlMedicalRecord.createXML(record_id);
 		CreateFullXML.createFULLxml();
@@ -802,70 +802,8 @@ public class Menu {
 		Xml2JavaMedicalRecord.importXML();
 	}
 	
-	/**
-	 * Prints the medical records from the database foe the creation of the XML
-	 * 
-	 * @param c
-	 * @throws SQLException
-	 */
-	private static void printMedicalRecords(Connection c) throws SQLException {
-        String selectSQL = "SELECT * FROM medical_records";
-        PreparedStatement ps = c.prepareStatement(selectSQL);
-        ResultSet rs = ps.executeQuery();
-        List<Medical_Record> records = new ArrayList<>();
-        while (rs.next()) {
-        	Integer id = rs.getInt("IDMedical_Record");
-        	Integer patient_id = rs.getInt("patient");
-            Medical_Record record = new Medical_Record(rs.getInt("idMedical_Record"), conMan.getPatientMan().getPatient(patient_id));
-            
-         // Fetch the diagnoses for the current medical record
-            String selectDiagnosesSQL = "SELECT * FROM diagnoses WHERE medicalRecord_id = ?";
-            PreparedStatement psDiagnoses = c.prepareStatement(selectDiagnosesSQL);
-            psDiagnoses.setInt(1, id);
-            ResultSet rsDiagnoses = psDiagnoses.executeQuery();
-            List<Diagnosis> diagnoses = new ArrayList<>();
-            while (rsDiagnoses.next()) {
-				Integer idDiag = rsDiagnoses.getInt("IDdiagnosis");
-				String name = rsDiagnoses.getString("nameDiagnosis");
-				Date date = rsDiagnoses.getDate("date");
-				String comments = rsDiagnoses.getString("comment_section");
-				Integer idDisease = rsDiagnoses.getInt("disease_id");
-				Disease disease = conMan.getDiseaseMan().getDisease(idDisease);
-				Diagnosis diagnosis = new Diagnosis(idDiag, name, date, comments,disease);
-				
-				// Fetch the treatments for the current diagnosis
-	            String selectTreatmentsSQL = "SELECT treatments.* FROM treatments "
-	                                        + "JOIN diagnosis_has_treatments ON IDtreatment = treatment_id WHERE diagnosis_id = ?";
-	            PreparedStatement psTreatments = c.prepareStatement(selectTreatmentsSQL);
-	            psTreatments.setInt(1, idDiag);
-	            ResultSet rsTreatments = psTreatments.executeQuery();
-	            List<Treatment> treatments = new ArrayList<>();
-	            while (rsTreatments.next()) {
-	            	String treatmentName = rsTreatments.getString("nameTreatment");
-					String comment_section = rsTreatments.getString("comment_section");
-					Treatment treatment = new Treatment(treatmentName, comment_section);
-					treatments.add(treatment);
-	            }
-	            rsTreatments.close();
-	            psTreatments.close();
 
-	            // Set the treatments to the diagnosis
-	            diagnosis.setTreatments(treatments);
-				
-				diagnoses.add(diagnosis);			
-            }
-            rsDiagnoses.close();
-            psDiagnoses.close();
-
-            // Set the diagnoses to the medical record
-            record.setDiagnoses(diagnoses);
-            
-            records.add(record);
-            System.out.println(record);
-        }
-        rs.close();
-        ps.close();
-    }
+	
 	
 	/*Stupid for the same method to be here and in Java2XmlMedicalRecord
 	 * 
@@ -1033,7 +971,7 @@ public class Menu {
 	
 	private static void deleteDiagnosis() throws SQLException, NumberFormatException, IOException {
 		System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
-		printMedicalRecords(c);
+		medicalRecordMan.printMedicalRecords();
 		Integer record_id = Integer.parseInt(r.readLine());
 		Medical_Record record = medicalRecordMan.getMedical_Record(record_id);
 		System.out.println("\nThese are the diagnoses in the Medical Record, please enter the ID of the one you wish to delete:");

@@ -10,6 +10,6 @@ public interface MedicalRecordManager {
 	public Medical_Record getMedical_Record ( int idMedical_record);
 	public void addMedicalRecord(Patient patient);
 	public List<Medical_Record> listMedicalRecords();
-
+	public List<Medical_Record> printMedicalRecords();
 
 }

@@ -759,7 +759,7 @@ public class Menu {
 				if((p_infected+p_healthy+p_immune)==100) {	
 					b=false;
 				}else {
-					System.err.println("The percetiges shuold add 100");
+					System.err.println("The percenteges should add up to 100");
 				}
 			}
 		}
@@ -1116,19 +1116,13 @@ public class Menu {
 	}
 	
 	private static void deleteDiagnosis() throws SQLException, NumberFormatException, IOException {
-		System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
-<<<<<<< HEAD
-		medicalRecordMan.printMedicalRecords();
-		Integer record_id = Integer.parseInt(r.readLine());
-		Medical_Record record = medicalRecordMan.getMedical_Record(record_id);
-=======
-		printMedicalRecords(c);
 		Integer record_id=null;
 		Medical_Record record = null;
 		boolean b= true;
 		while(b) {
 			try {
 				System.out.println("\nThese are the Medical Records in the database, please enter the ID of the one you wish to modify:");
+				medicalRecordMan.printMedicalRecords();
 				record_id = Integer.parseInt(r.readLine());
 				record = medicalRecordMan.getMedical_Record(record_id);
 			}catch(NumberFormatException e){
@@ -1141,7 +1135,6 @@ public class Menu {
 			}
 		}
 		b=true;
->>>>>>> branch 'master' of https://github.com/AmaliaRial/IDSw
 		System.out.println("\nThese are the diagnoses in the Medical Record, please enter the ID of the one you wish to delete:");
 		List<Diagnosis> diagnoses = diagnosisMan.listMatchinDiagnosesByPatient(record_id);
 		for (Diagnosis diagnosis : diagnoses) {

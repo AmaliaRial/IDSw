@@ -16,4 +16,5 @@ public interface UserManager {
 	public User login(String username); // or do a throws UserNotFoundException
 	public boolean verifyPassword(String inputPassword, String username);
 	public User getUser(String username);
+	public void updateUser(User u);
 }
